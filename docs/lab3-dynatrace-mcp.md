@@ -55,7 +55,7 @@ Other tools let you *see* traces. Dynatrace MCP lets you:
 
 ## Step 1: Configure the Dynatrace MCP Server
 
-The Dynatrace MCP server is already pre-configured in this workshop! You just need to add your Dynatrace environment URL (provided by your instructor).
+The Dynatrace MCP server is already pre-configured in this workshop! The authentication token was automatically configured when you ran the setup script in Lab 0.
 
 ### 1.1 Open the MCP Configuration
 
@@ -69,47 +69,34 @@ You'll see the following configuration:
 ```json
 {
   "servers": {
-    "npx-dynatrace-mcp-server": {
-      "command": "npx",
-      "args": ["-y", "@dynatrace-oss/dynatrace-mcp-server@latest"],
-      "env": {
-        "DT_ENVIRONMENT": ""
+    "Dynatrace-MCP": {
+      "type": "sse",
+      "url": "https://your-dynatrace-tenant.apps.dynatrace.com/platform-reserved/mcp-gateway/v0.1/servers/dynatrace-mcp/mcp",
+      "headers": {
+        "Authorization": "Bearer ${env:DT_MCP_BEARER_TOKEN}"
       }
     }
   }
 }
 ```
 
-### 1.2 Add Your Dynatrace Environment URL
+> **✅ Already Configured:** The `DT_MCP_BEARER_TOKEN` environment variable was automatically set when you ran the secrets setup in Lab 0. No manual token entry required!
 
-Update the `DT_ENVIRONMENT` value with your Dynatrace environment URL (provided by your instructor):
+### 1.2 Verify Your Token is Set
 
-```json
-{
-  "servers": {
-    "npx-dynatrace-mcp-server": {
-      "command": "npx",
-      "args": ["-y", "@dynatrace-oss/dynatrace-mcp-server@latest"],
-      "env": {
-        "DT_ENVIRONMENT": "https://abc12345.apps.dynatrace.com"
-      }
-    }
-  }
-}
+To confirm the token is configured, run this in your terminal:
+
+```bash
+echo $DT_MCP_BEARER_TOKEN | head -c 20
 ```
 
-| Placeholder | Replace With | Example |
-|-------------|--------------|---------|
-| `DT_ENVIRONMENT` | Your Dynatrace environment URL | `https://abc12345.apps.dynatrace.com` |
+You should see the first 20 characters of your token.
 
-> **Tip:** Your environment URL is the same base URL you used to access Dynatrace in your browser from the previous lab exercises (without any path after the domain).
+### 1.3 Reload VS Code
 
-### 1.3 Save and Reload
-
-1. Save/Close the `mcp.json` file (auto-saved if in Codespaces VS Code)
-2. Open the Command Palette (`Cmd+Shift+P` or `Ctrl+Shift+P`)
-3. Type **"Developer: Reload Window"**
-4. Press Enter
+1. Open the Command Palette (`Cmd+Shift+P` or `Ctrl+Shift+P`)
+2. Type **"Developer: Reload Window"**
+3. Press Enter
 
 ---
 
@@ -217,6 +204,78 @@ Is it embeddings, vector search, or the LLM call?
 @dynatrace Help me understand why some of my RAG queries might be slow. Look at the trace data for patterns.
 ```
 
+---
+
+## 💻 Step 4.4: Investigate Errors with MCP (Developer)
+
+Now let's generate some realistic errors and use MCP to investigate them — without leaving your IDE!
+
+### Generate Errors
+
+1. Go to your AI Chat Service UI (http://localhost:8000)
+2. Enable the **🐛 Simulate Errors** toggle in the options row
+3. Send 5-10 messages to trigger various error types
+
+The app will randomly generate realistic RAG/LLM errors like:
+- `EMB_NULL_VECTOR`: Embedding service returning null vectors
+- `CHROMA_COLLECTION_ERR`: Vector store connection issues
+- `LLM_MALFORMED_RESPONSE`: Invalid LLM responses
+- `CTX_WINDOW_EXCEEDED`: Context window limit errors
+- `CONTENT_FILTER_BLOCK`: Content policy violations
+
+### Find Your Errors with MCP
+
+Now use Dynatrace MCP to investigate the errors you generated:
+
+```
+@dynatrace Show me all errors in the last 15 minutes for my ai-chat-service-{YOUR_ATTENDEE_ID} service.
+What error codes are appearing most frequently?
+```
+
+### View Specific Log Entries
+
+Ask MCP to show you the actual log details:
+
+```
+@dynatrace Show me the log entries for EMB_NULL_VECTOR errors in my ai-chat-service-{YOUR_ATTENDEE_ID}.
+Include the error_message, stage, and timestamp for each.
+```
+
+### Understand Error Attributes
+
+Each error log has structured attributes. Ask MCP to explain them:
+
+```
+@dynatrace For the errors in my ai-chat-service-{YOUR_ATTENDEE_ID}, 
+show me all the log attributes like error_code, error_message, and stage.
+What patterns do you see?
+```
+
+### Deep Dive on a Specific Error
+
+```
+@dynatrace I'm seeing CTX_WINDOW_EXCEEDED errors in my service. 
+Show me the full log details for these errors and explain what's happening.
+```
+
+### Get Root Cause Analysis
+
+```
+@dynatrace What's causing the errors in my ai-chat-service-{YOUR_ATTENDEE_ID}?
+Analyze the error logs and tell me which component is failing most often.
+```
+
+### Generate a DQL Query (Optional)
+
+If you want to see what DQL query would find these logs:
+
+```
+@dynatrace Generate a DQL query to find all logs where error_code equals 'EMB_NULL_VECTOR' 
+for my ai-chat-service-{YOUR_ATTENDEE_ID} in the last hour.
+```
+
+> **Pro tip:** You just investigated production errors without leaving your IDE — no dashboard tabs, no context switching!
+
 </div>
 
 ---
@@ -274,6 +333,164 @@ Draft a Slack message summarizing the incident.
 @dynatrace Analyze my ai-chat-service-{YOUR_ATTENDEE_ID} service and suggest optimizations to reduce token usage while maintaining response quality
 ```
 
+---
+
+## 🔧 Step 6.4: Error Triage with MCP (SRE)
+
+Time to simulate a production incident and practice rapid triage using MCP!
+
+### Generate Errors
+
+1. Go to your AI Chat Service UI (http://localhost:8000)
+2. Enable the **🐛 Simulate Errors** toggle
+3. Send 10-15 messages rapidly to trigger various errors
+
+### Rapid Error Assessment
+
+Get an immediate overview of the error situation:
+
+```
+@dynatrace Give me a quick summary of all errors hitting my ai-chat-service-{YOUR_ATTENDEE_ID} in the last 15 minutes.
+How many errors occurred? What types? What's the error rate percentage?
+```
+
+### View Error Log Details
+
+Ask MCP to show you what's in the actual logs:
+
+```
+@dynatrace Show me the error log entries for my ai-chat-service-{YOUR_ATTENDEE_ID}.
+Include the error_code, error_message, stage, and timestamp for each error.
+```
+
+### Analyze Error Timeline
+
+```
+@dynatrace When did errors start occurring in my ai-chat-service-{YOUR_ATTENDEE_ID}?
+Show me the timeline of errors over the last 15 minutes.
+```
+
+### Determine Error Impact
+
+```
+@dynatrace What percentage of requests to my ai-chat-service-{YOUR_ATTENDEE_ID} are failing?
+Is this affecting all users or just specific request types?
+```
+
+### Identify Top Error Types
+
+```
+@dynatrace What are the most common error_code values in my ai-chat-service-{YOUR_ATTENDEE_ID}?
+Rank them by frequency.
+```
+
+### Root Cause with Davis AI
+
+```
+@dynatrace Analyze the error patterns in my ai-chat-service-{YOUR_ATTENDEE_ID}.
+What is Davis AI's assessment of the root cause?
+Which component is the source of the failures?
+```
+
+### Create Incident Communication
+
+```
+@dynatrace I need to communicate an incident to stakeholders.
+Based on the errors in my ai-chat-service-{YOUR_ATTENDEE_ID}, draft a brief incident summary
+including: affected service, error types, error rate, and preliminary root cause.
+```
+
+> **SRE Pro tip:** You just triaged a production incident without opening a single dashboard. Error logs, timelines, root cause, and stakeholder communication — all from your IDE!
+
+</div>
+
+---
+
+## 🎭 New! Dynatrace Intelligence Exercises
+
+Dynatrace Intelligence provides agentic workflows that go beyond simple queries. These exercises showcase the latest capabilities for each persona.
+
+<div class="persona-box developer" markdown="1">
+
+## 💻 Developer Exercise: Propose & Fix Regressions
+
+Use Dynatrace Intelligence's agentic capabilities to not just identify issues, but propose fixes.
+
+### Detect Code-Level Issues
+
+```
+@dynatrace Look at the error traces for my ai-chat-service-{YOUR_ATTENDEE_ID}.
+Can you identify which function or code path is causing the failures?
+Provide code-level details and stack traces if available.
+```
+
+### Get Fix Recommendations
+
+```
+@dynatrace Based on the EMB_NULL_VECTOR errors in my service, 
+what code changes would you recommend to handle this error gracefully?
+Show me a Python code example for proper error handling.
+```
+
+### Link Errors to Changes
+
+```
+@dynatrace Have there been any recent deployments or configuration changes 
+to my ai-chat-service-{YOUR_ATTENDEE_ID} that correlate with the increase in errors?
+```
+
+### Generate DQL for Custom Investigation
+
+```
+@dynatrace Generate a DQL query to find all logs where error_code equals 'CTX_WINDOW_EXCEEDED' 
+for my ai-chat-service-{YOUR_ATTENDEE_ID} in the last hour.
+Explain what the query does.
+```
+
+</div>
+
+<div class="persona-box sre" markdown="1">
+
+## 🔧 SRE Exercise: Agentic Incident Response
+
+Use Dynatrace Intelligence's agentic workflows for automated incident management.
+
+### Map Error Impact Across Dependencies
+
+```
+@dynatrace For the errors in my ai-chat-service-{YOUR_ATTENDEE_ID}, 
+show me the full dependency map. Which downstream services are affected?
+What's the blast radius of this issue?
+```
+
+### Auto-Enrich Incident Data
+
+```
+@dynatrace Create a comprehensive incident report for the issues affecting 
+my ai-chat-service-{YOUR_ATTENDEE_ID}. Include:
+- Timeline of when errors started
+- Affected components and their relationships
+- Error counts by type
+- Recommended severity level
+```
+
+### Suggest Runbook Actions
+
+```
+@dynatrace Based on the current error patterns in my ai-chat-service-{YOUR_ATTENDEE_ID},
+what remediation actions would you recommend?
+Are there any runbooks or automation workflows that could help resolve this?
+```
+
+### Generate Operations Dashboard Query
+
+```
+@dynatrace Generate a DQL query for a dashboard tile that shows:
+- Error rate over time for my ai-chat-service-{YOUR_ATTENDEE_ID}
+- Breakdown by error_code
+- 5-minute time buckets for the last hour
+```
+
 </div>
 
 ---
@@ -316,8 +533,10 @@ Before completing the workshop, verify:
 - [ ] You've reloaded VS Code after saving the configuration
 - [ ] You can query Dynatrace using `@dynatrace` in Copilot Chat
 - [ ] You've successfully retrieved information about your AI service
+- [ ] You've used the 🐛 **Simulate Errors** toggle to generate test errors
+- [ ] You've investigated errors using MCP without leaving your IDE
 - [ ] You understand how to use MCP for problem analysis
-- [ ] You've explored agentic workflow capabilities
+- [ ] You've explored the Dynatrace Intelligence agentic workflow exercises
 
 ---
 
@@ -374,10 +593,12 @@ You can now debug without leaving your IDE:
 1. ✅ Configure Dynatrace MCP in VS Code
 2. ✅ Query your service performance using natural language
 3. ✅ Find bottlenecks in your RAG pipeline from the IDE
-4. ✅ Get optimization suggestions while you code
-5. ✅ Combine code context with observability data
+4. ✅ **Investigate errors** using error simulation and MCP queries
+5. ✅ Get **fix recommendations** with code examples
+6. ✅ Generate DQL queries for custom investigations
+7. ✅ Combine code context with observability data
 
-**Your new workflow:** See a slow response? Just ask `@dynatrace` what's happening instead of context-switching to dashboards.
+**Your new workflow:** See an error? Enable 🐛 Simulate Errors, reproduce the issue, then ask `@dynatrace` for the root cause and fix suggestions — all while looking at your code!
 
 </div>
 
@@ -389,11 +610,13 @@ You can now respond to incidents faster:
 
 1. ✅ Configure Dynatrace MCP for terminal/IDE access
 2. ✅ Check for anomalies and error rates instantly
-3. ✅ Get Davis AI root cause analysis via natural language
-4. ✅ Draft incident communications directly from MCP
-5. ✅ Query service architecture and capacity data
+3. ✅ **Triage errors** with rapid assessment queries
+4. ✅ **Map impact** across service dependencies
+5. ✅ Get Davis AI root cause analysis via natural language
+6. ✅ **Auto-generate incident reports** and communications
+7. ✅ Query service architecture and capacity data
 
-**Your 2 AM incident response:** Ask `@dynatrace` for the root cause and draft a Slack message — all without opening a browser.
+**Your 2 AM incident response:** Enable error simulation, generate test errors, then practice full incident triage — ask `@dynatrace` for error summary, root cause, blast radius, and draft a Slack message — all without opening a browser!
 
 </div>
 

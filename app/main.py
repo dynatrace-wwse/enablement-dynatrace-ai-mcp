@@ -66,6 +66,7 @@ DT_API_TOKEN = os.getenv("DT_API_TOKEN")
 ATTENDEE_ID_FOR_LOGS = os.getenv("ATTENDEE_ID", "workshop-attendee")
 
 # Configure OpenTelemetry logging to Dynatrace
+logger_provider = None
 if DT_ENDPOINT and DT_API_TOKEN:
     # Create a resource with service name
     resource = Resource.create({
@@ -76,12 +77,19 @@ if DT_ENDPOINT and DT_API_TOKEN:
     logger_provider = LoggerProvider(resource=resource)
     set_logger_provider(logger_provider)
     
-    # Configure OTLP log exporter
+    # Configure OTLP log exporter - endpoint should be DT_ENDPOINT + /v1/logs
+    log_endpoint = f"{DT_ENDPOINT}/v1/logs"
+    print(f"📋 Log exporter endpoint: {log_endpoint}")
+    
     log_exporter = OTLPLogExporter(
-        endpoint=f"{DT_ENDPOINT}/v1/logs",
+        endpoint=log_endpoint,
         headers={"Authorization": f"Api-Token {DT_API_TOKEN}"}
     )
-    logger_provider.add_log_record_processor(BatchLogRecordProcessor(log_exporter))
+    
+    # Use BatchLogRecordProcessor with shorter export interval for faster delivery
+    logger_provider.add_log_record_processor(
+        BatchLogRecordProcessor(log_exporter, schedule_delay_millis=1000)
+    )
     
     # Attach OpenTelemetry handler to Python's root logger
     otel_handler = LoggingHandler(level=logging.INFO, logger_provider=logger_provider)
@@ -179,6 +187,7 @@ class ChatRequest(BaseModel):
     """Request model for chat endpoint"""
     message: str
     use_rag: bool = True
+    simulate_errors: bool = False
 
 class ChatResponse(BaseModel):
     """Response model for chat endpoint"""
@@ -258,6 +267,131 @@ llm = None
 def format_docs(docs):
     """Format retrieved documents into a single string"""
     return "\n\n".join(doc.page_content for doc in docs)
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Error Simulation for Workshop Demos
+# ═══════════════════════════════════════════════════════════════════════════
+
+import random
+from opentelemetry import trace
+
+# Get a tracer for creating spans around error simulation
+tracer = trace.get_tracer(__name__)
+
+class RAGPipelineError(Exception):
+    """Custom exception for RAG pipeline errors"""
+    pass
+
+class EmbeddingServiceError(Exception):
+    """Error when embedding service fails"""
+    pass
+
+class VectorStoreConnectionError(Exception):
+    """Error when vector store connection fails"""
+    pass
+
+class LLMResponseError(Exception):
+    """Error when LLM returns invalid response"""
+    pass
+
+class ContextWindowExceededError(Exception):
+    """Error when context window is exceeded"""
+    pass
+
+class DocumentRetrievalError(Exception):
+    """Error when document retrieval fails"""
+    pass
+
+SIMULATED_ERRORS = [
+    {
+        "exception": EmbeddingServiceError,
+        "message": "Embedding model 'text-embedding-3-large' returned null vector for input chunk",
+        "log_level": "error",
+        "error_code": "EMB_NULL_VECTOR"
+    },
+    {
+        "exception": VectorStoreConnectionError,
+        "message": "ChromaDB collection 'workshop_documents' not found or corrupted",
+        "log_level": "error",
+        "error_code": "CHROMA_COLLECTION_ERR"
+    },
+    {
+        "exception": LLMResponseError,
+        "message": "Azure OpenAI returned malformed JSON in function call response",
+        "log_level": "error",
+        "error_code": "LLM_MALFORMED_RESPONSE"
+    },
+    {
+        "exception": ContextWindowExceededError,
+        "message": "Context window exceeded: 128,500 tokens provided, max is 128,000",
+        "log_level": "error",
+        "error_code": "CTX_WINDOW_EXCEEDED"
+    },
+    {
+        "exception": DocumentRetrievalError,
+        "message": "Semantic search returned 0 documents with similarity score > 0.7 threshold",
+        "log_level": "warning",
+        "error_code": "DOC_NO_MATCHES"
+    },
+    {
+        "exception": RAGPipelineError,
+        "message": "RAG pipeline failed: LangChain chain execution timeout after 30 seconds",
+        "log_level": "error",
+        "error_code": "RAG_CHAIN_TIMEOUT"
+    },
+    {
+        "exception": LLMResponseError,
+        "message": "Content filter triggered: Response blocked due to policy violation (category: hate_speech, severity: medium)",
+        "log_level": "warning",
+        "error_code": "CONTENT_FILTER_BLOCK"
+    },
+    {
+        "exception": EmbeddingServiceError,
+        "message": "Token count mismatch: Expected 512 tokens, received 0 from embedding endpoint",
+        "log_level": "error",
+        "error_code": "EMB_TOKEN_MISMATCH"
+    }
+]
+
+def maybe_simulate_error(simulate: bool, stage: str = "processing"):
+    """
+    Simulate errors for workshop demonstration.
+    This helps attendees learn to identify and debug errors in Dynatrace.
+    Always triggers when enabled (100% rate for reliable demos).
+    """
+    if not simulate:
+        return
+    
+    # Select a random error type
+    error_config = random.choice(SIMULATED_ERRORS)
+    
+    # Debug print to confirm code is executing
+    print(f"🐛 SIMULATING ERROR: {error_config['error_code']} - {error_config['message']}")
+    
+    # Log the error at ERROR level - always use error for simulated errors
+    # so they show up clearly in Dynatrace with ERROR status
+    log_message = f"[SIMULATED ERROR] {error_config['error_code']}: {error_config['message']}"
+    
+    # Always log at ERROR level for visibility in Dynatrace
+    logger.error(log_message, extra={
+        "error.code": error_config["error_code"],
+        "error.message": error_config["message"],
+        "error.stage": stage,
+        "error.simulated": "true",
+        "attendee.id": ATTENDEE_ID
+    })
+    
+    # Force flush logs to Dynatrace before raising the exception
+    if logger_provider:
+        try:
+            logger_provider.force_flush(timeout_millis=5000)
+            print("✅ Logs flushed to Dynatrace")
+        except Exception as flush_err:
+            print(f"❌ Failed to flush logs: {flush_err}")
+    else:
+        print("⚠️ logger_provider is None - logs may not be sent to Dynatrace")
+    
+    raise error_config["exception"](error_config["message"])
 
 # ═══════════════════════════════════════════════════════════════════════════
 # RAG Pipeline Functions (Each creates distinct trace spans)
@@ -594,6 +728,7 @@ async def chat(request: ChatRequest):
     logger.info("Chat request received", extra={
         "message_length": len(request.message),
         "use_rag": request.use_rag,
+        "simulate_errors": request.simulate_errors,
         "attendee_id": ATTENDEE_ID
     })
     
@@ -603,14 +738,27 @@ async def chat(request: ChatRequest):
     
     # Add user's original question as a trace attribute for better visibility in Dynatrace
     # This captures the actual user input separately from the full RAG prompt
+    # IMPORTANT: Set trace context FIRST so error logs correlate with the service
     try:
         from traceloop.sdk import Traceloop
         Traceloop.set_association_properties({
             "user.question": request.message,
-            "use_rag": str(request.use_rag)
+            "use_rag": str(request.use_rag),
+            "simulate_errors": str(request.simulate_errors)
         })
     except Exception:
         pass  # Traceloop not initialized, skip
+    
+    # Simulate errors for workshop demonstration if enabled
+    # This happens AFTER trace context is set so logs correlate with the service
+    # Wrap in a span to ensure trace context is available for log correlation
+    try:
+        with tracer.start_as_current_span("error_simulation") as span:
+            span.set_attribute("simulate_errors", request.simulate_errors)
+            maybe_simulate_error(request.simulate_errors, stage="pre_processing")
+    except (RAGPipelineError, EmbeddingServiceError, VectorStoreConnectionError, 
+            LLMResponseError, ContextWindowExceededError, DocumentRetrievalError) as e:
+        raise HTTPException(status_code=500, detail=str(e))
     
     try:
         if request.use_rag and retriever and llm:
