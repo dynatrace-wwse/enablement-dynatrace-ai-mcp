@@ -82,17 +82,7 @@ You'll see the following configuration:
 
 > **✅ Already Configured:** The `DT_MCP_BEARER_TOKEN` environment variable was automatically set when you ran the secrets setup in Lab 0. No manual token entry required!
 
-### 1.2 Verify Your Token is Set
-
-To confirm the token is configured, run this in your terminal:
-
-```bash
-echo $DT_MCP_BEARER_TOKEN | head -c 20
-```
-
-You should see the first 20 characters of your token.
-
-### 1.3 Reload VS Code
+### 1.2 Reload VS Code
 
 1. Open the Command Palette (`Cmd+Shift+P` or `Ctrl+Shift+P`)
 2. Type **"Developer: Reload Window"**
