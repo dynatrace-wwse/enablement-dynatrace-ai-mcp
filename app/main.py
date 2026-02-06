@@ -66,6 +66,7 @@ DT_API_TOKEN = os.getenv("DT_API_TOKEN")
 ATTENDEE_ID_FOR_LOGS = os.getenv("ATTENDEE_ID", "workshop-attendee")
 
 # Configure OpenTelemetry logging to Dynatrace
+logger_provider = None
 if DT_ENDPOINT and DT_API_TOKEN:
     # Create a resource with service name
     resource = Resource.create({
@@ -76,12 +77,19 @@ if DT_ENDPOINT and DT_API_TOKEN:
     logger_provider = LoggerProvider(resource=resource)
     set_logger_provider(logger_provider)
     
-    # Configure OTLP log exporter
+    # Configure OTLP log exporter - endpoint should be DT_ENDPOINT + /v1/logs
+    log_endpoint = f"{DT_ENDPOINT}/v1/logs"
+    print(f"📋 Log exporter endpoint: {log_endpoint}")
+    
     log_exporter = OTLPLogExporter(
-        endpoint=f"{DT_ENDPOINT}/v1/logs",
+        endpoint=log_endpoint,
         headers={"Authorization": f"Api-Token {DT_API_TOKEN}"}
     )
-    logger_provider.add_log_record_processor(BatchLogRecordProcessor(log_exporter))
+    
+    # Use BatchLogRecordProcessor with shorter export interval for faster delivery
+    logger_provider.add_log_record_processor(
+        BatchLogRecordProcessor(log_exporter, schedule_delay_millis=1000)
+    )
     
     # Attach OpenTelemetry handler to Python's root logger
     otel_handler = LoggingHandler(level=logging.INFO, logger_provider=logger_provider)
@@ -265,6 +273,10 @@ def format_docs(docs):
 # ═══════════════════════════════════════════════════════════════════════════
 
 import random
+from opentelemetry import trace
+
+# Get a tracer for creating spans around error simulation
+tracer = trace.get_tracer(__name__)
 
 class RAGPipelineError(Exception):
     """Custom exception for RAG pipeline errors"""
@@ -343,35 +355,43 @@ SIMULATED_ERRORS = [
 
 def maybe_simulate_error(simulate: bool, stage: str = "processing"):
     """
-    Randomly simulate errors for workshop demonstration.
+    Simulate errors for workshop demonstration.
     This helps attendees learn to identify and debug errors in Dynatrace.
+    Always triggers when enabled (100% rate for reliable demos).
     """
     if not simulate:
         return
     
-    # 70% chance of triggering an error when simulation is enabled
-    if random.random() < 0.7:
-        error_config = random.choice(SIMULATED_ERRORS)
-        
-        # Log the error before raising (so it shows in Dynatrace)
-        if error_config["log_level"] == "error":
-            logger.error(f"Simulated {stage} error", extra={
-                "error_code": error_config["error_code"],
-                "error_message": error_config["message"],
-                "stage": stage,
-                "simulated": True,
-                "attendee_id": ATTENDEE_ID
-            })
-        else:
-            logger.warning(f"Simulated {stage} warning", extra={
-                "error_code": error_config["error_code"],
-                "error_message": error_config["message"],
-                "stage": stage,
-                "simulated": True,
-                "attendee_id": ATTENDEE_ID
-            })
-        
-        raise error_config["exception"](error_config["message"])
+    # Select a random error type
+    error_config = random.choice(SIMULATED_ERRORS)
+    
+    # Debug print to confirm code is executing
+    print(f"🐛 SIMULATING ERROR: {error_config['error_code']} - {error_config['message']}")
+    
+    # Log the error at ERROR level - always use error for simulated errors
+    # so they show up clearly in Dynatrace with ERROR status
+    log_message = f"[SIMULATED ERROR] {error_config['error_code']}: {error_config['message']}"
+    
+    # Always log at ERROR level for visibility in Dynatrace
+    logger.error(log_message, extra={
+        "error.code": error_config["error_code"],
+        "error.message": error_config["message"],
+        "error.stage": stage,
+        "error.simulated": "true",
+        "attendee.id": ATTENDEE_ID
+    })
+    
+    # Force flush logs to Dynatrace before raising the exception
+    if logger_provider:
+        try:
+            logger_provider.force_flush(timeout_millis=5000)
+            print("✅ Logs flushed to Dynatrace")
+        except Exception as flush_err:
+            print(f"❌ Failed to flush logs: {flush_err}")
+    else:
+        print("⚠️ logger_provider is None - logs may not be sent to Dynatrace")
+    
+    raise error_config["exception"](error_config["message"])
 
 # ═══════════════════════════════════════════════════════════════════════════
 # RAG Pipeline Functions (Each creates distinct trace spans)
@@ -716,24 +736,29 @@ async def chat(request: ChatRequest):
         logger.warning("Empty message rejected")
         raise HTTPException(status_code=400, detail="Message cannot be empty")
     
-    # Simulate errors for workshop demonstration if enabled
-    # This helps attendees learn to identify and debug errors in Dynatrace
-    try:
-        maybe_simulate_error(request.simulate_errors, stage="pre_processing")
-    except (RAGPipelineError, EmbeddingServiceError, VectorStoreConnectionError, 
-            LLMResponseError, ContextWindowExceededError, DocumentRetrievalError) as e:
-        raise HTTPException(status_code=500, detail=str(e))
-    
     # Add user's original question as a trace attribute for better visibility in Dynatrace
     # This captures the actual user input separately from the full RAG prompt
+    # IMPORTANT: Set trace context FIRST so error logs correlate with the service
     try:
         from traceloop.sdk import Traceloop
         Traceloop.set_association_properties({
             "user.question": request.message,
-            "use_rag": str(request.use_rag)
+            "use_rag": str(request.use_rag),
+            "simulate_errors": str(request.simulate_errors)
         })
     except Exception:
         pass  # Traceloop not initialized, skip
+    
+    # Simulate errors for workshop demonstration if enabled
+    # This happens AFTER trace context is set so logs correlate with the service
+    # Wrap in a span to ensure trace context is available for log correlation
+    try:
+        with tracer.start_as_current_span("error_simulation") as span:
+            span.set_attribute("simulate_errors", request.simulate_errors)
+            maybe_simulate_error(request.simulate_errors, stage="pre_processing")
+    except (RAGPipelineError, EmbeddingServiceError, VectorStoreConnectionError, 
+            LLMResponseError, ContextWindowExceededError, DocumentRetrievalError) as e:
+        raise HTTPException(status_code=500, detail=str(e))
     
     try:
         if request.use_rag and retriever and llm:
