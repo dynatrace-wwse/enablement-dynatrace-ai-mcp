@@ -219,7 +219,7 @@ Is it embeddings, vector search, or the LLM call?
 
 ---
 
-## 💻 Step 4.5: Investigate Errors with MCP (Developer)
+## 💻 Step 4.4: Investigate Errors with MCP (Developer)
 
 Now let's generate some realistic errors and use MCP to investigate them — without leaving your IDE!
 
@@ -348,7 +348,7 @@ Draft a Slack message summarizing the incident.
 
 ---
 
-## 🔧 Step 6.5: Error Triage with MCP (SRE)
+## 🔧 Step 6.4: Error Triage with MCP (SRE)
 
 Time to simulate a production incident and practice rapid triage using MCP!
 
