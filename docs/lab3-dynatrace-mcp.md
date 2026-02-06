@@ -246,7 +246,7 @@ Include the error_message, stage, and timestamp for each.
 Each error log has structured attributes. Ask MCP to explain them:
 
 ```
-@dynatrace For the errors in my ai-chat-service-{YOUR_ATTENDEE_ID}, 
+@dynatrace For the errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service, 
 show me all the log attributes like error_code, error_message, and stage.
 What patterns do you see?
 ```
@@ -254,14 +254,14 @@ What patterns do you see?
 ### Deep Dive on a Specific Error
 
 ```
-@dynatrace I'm seeing CTX_WINDOW_EXCEEDED errors in my service. 
+@dynatrace I'm seeing CTX_WINDOW_EXCEEDED errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service. 
 Show me the full log details for these errors and explain what's happening.
 ```
 
 ### Get Root Cause Analysis
 
 ```
-@dynatrace What's causing the errors in my ai-chat-service-{YOUR_ATTENDEE_ID}?
+@dynatrace What's causing the errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service?
 Analyze the error logs and tell me which component is failing most often.
 ```
 
@@ -271,7 +271,7 @@ If you want to see what DQL query would find these logs:
 
 ```
 @dynatrace Generate a DQL query to find all logs where error_code equals 'EMB_NULL_VECTOR' 
-for my ai-chat-service-{YOUR_ATTENDEE_ID} in the last hour.
+for my ai-chat-service-{YOUR_ATTENDEE_ID} service in the last hour.
 ```
 
 > **Pro tip:** You just investigated production errors without leaving your IDE — no dashboard tabs, no context switching!
@@ -295,7 +295,7 @@ Use MCP for quick incident triage without leaving your terminal.
 ### 5.2 Check for Anomalies
 
 ```
-@dynatrace Are there any anomalies in the last hour for ai-chat-service-{YOUR_ATTENDEE_ID}?
+@dynatrace Are there any anomalies in the last hour for my ai-chat-service-{YOUR_ATTENDEE_ID} service?
 What's the current error rate and how does it compare to the baseline?
 ```
 
@@ -304,7 +304,7 @@ Get Davis AI insights without opening the Dynatrace UI!
 ### 5.3 Analyze Token Usage
 
 ```
-@dynatrace What is the total input and output token usage for spans in regards to the ai-chat-service-{YOUR_ATTENDEE_ID}
+@dynatrace What is the total input and output token usage for spans in regards to the ai-chat-service-{YOUR_ATTENDEE_ID} service?
 ```
 
 ---
@@ -350,7 +350,7 @@ Time to simulate a production incident and practice rapid triage using MCP!
 Get an immediate overview of the error situation:
 
 ```
-@dynatrace Give me a quick summary of all errors hitting my ai-chat-service-{YOUR_ATTENDEE_ID} in the last 15 minutes.
+@dynatrace Give me a quick summary of all errors hitting my ai-chat-service-{YOUR_ATTENDEE_ID} service in the last 15 minutes.
 How many errors occurred? What types? What's the error rate percentage?
 ```
 
@@ -359,35 +359,35 @@ How many errors occurred? What types? What's the error rate percentage?
 Ask MCP to show you what's in the actual logs:
 
 ```
-@dynatrace Show me the error log entries for my ai-chat-service-{YOUR_ATTENDEE_ID}.
+@dynatrace Show me the error log entries for my ai-chat-service-{YOUR_ATTENDEE_ID} service.
 Include the error_code, error_message, stage, and timestamp for each error.
 ```
 
 ### Analyze Error Timeline
 
 ```
-@dynatrace When did errors start occurring in my ai-chat-service-{YOUR_ATTENDEE_ID}?
+@dynatrace When did errors start occurring in my ai-chat-service-{YOUR_ATTENDEE_ID} service?
 Show me the timeline of errors over the last 15 minutes.
 ```
 
 ### Determine Error Impact
 
 ```
-@dynatrace What percentage of requests to my ai-chat-service-{YOUR_ATTENDEE_ID} are failing?
+@dynatrace What percentage of requests to my ai-chat-service-{YOUR_ATTENDEE_ID} service are failing?
 Is this affecting all users or just specific request types?
 ```
 
 ### Identify Top Error Types
 
 ```
-@dynatrace What are the most common error_code values in my ai-chat-service-{YOUR_ATTENDEE_ID}?
+@dynatrace What are the most common error_code values in my ai-chat-service-{YOUR_ATTENDEE_ID} service?
 Rank them by frequency.
 ```
 
 ### Root Cause with Davis AI
 
 ```
-@dynatrace Analyze the error patterns in my ai-chat-service-{YOUR_ATTENDEE_ID}.
+@dynatrace Analyze the error patterns in my ai-chat-service-{YOUR_ATTENDEE_ID} service.
 What is Davis AI's assessment of the root cause?
 Which component is the source of the failures?
 ```
@@ -396,7 +396,7 @@ Which component is the source of the failures?
 
 ```
 @dynatrace I need to communicate an incident to stakeholders.
-Based on the errors in my ai-chat-service-{YOUR_ATTENDEE_ID}, draft a brief incident summary
+Based on the errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service, draft a brief incident summary
 including: affected service, error types, error rate, and preliminary root cause.
 ```
 
@@ -419,7 +419,7 @@ Use Dynatrace Intelligence's agentic capabilities to not just identify issues, b
 ### Detect Code-Level Issues
 
 ```
-@dynatrace Look at the error traces for my ai-chat-service-{YOUR_ATTENDEE_ID}.
+@dynatrace Look at the error traces for my ai-chat-service-{YOUR_ATTENDEE_ID} service.
 Can you identify which function or code path is causing the failures?
 Provide code-level details and stack traces if available.
 ```
@@ -427,7 +427,7 @@ Provide code-level details and stack traces if available.
 ### Get Fix Recommendations
 
 ```
-@dynatrace Based on the EMB_NULL_VECTOR errors in my service, 
+@dynatrace Based on the EMB_NULL_VECTOR errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service, 
 what code changes would you recommend to handle this error gracefully?
 Show me a Python code example for proper error handling.
 ```
@@ -436,14 +436,14 @@ Show me a Python code example for proper error handling.
 
 ```
 @dynatrace Have there been any recent deployments or configuration changes 
-to my ai-chat-service-{YOUR_ATTENDEE_ID} that correlate with the increase in errors?
+to my ai-chat-service-{YOUR_ATTENDEE_ID} service that correlate with the increase in errors?
 ```
 
 ### Generate DQL for Custom Investigation
 
 ```
 @dynatrace Generate a DQL query to find all logs where error_code equals 'CTX_WINDOW_EXCEEDED' 
-for my ai-chat-service-{YOUR_ATTENDEE_ID} in the last hour.
+for my ai-chat-service-{YOUR_ATTENDEE_ID} service in the last hour.
 Explain what the query does.
 ```
 
@@ -458,7 +458,7 @@ Use Dynatrace Intelligence's agentic workflows for automated incident management
 ### Map Error Impact Across Dependencies
 
 ```
-@dynatrace For the errors in my ai-chat-service-{YOUR_ATTENDEE_ID}, 
+@dynatrace For the errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service, 
 show me the full dependency map. Which downstream services are affected?
 What's the blast radius of this issue?
 ```
@@ -467,7 +467,7 @@ What's the blast radius of this issue?
 
 ```
 @dynatrace Create a comprehensive incident report for the issues affecting 
-my ai-chat-service-{YOUR_ATTENDEE_ID}. Include:
+my ai-chat-service-{YOUR_ATTENDEE_ID} service. Include:
 - Timeline of when errors started
 - Affected components and their relationships
 - Error counts by type
@@ -477,7 +477,7 @@ my ai-chat-service-{YOUR_ATTENDEE_ID}. Include:
 ### Suggest Runbook Actions
 
 ```
-@dynatrace Based on the current error patterns in my ai-chat-service-{YOUR_ATTENDEE_ID},
+@dynatrace Based on the current error patterns in my ai-chat-service-{YOUR_ATTENDEE_ID} service,
 what remediation actions would you recommend?
 Are there any runbooks or automation workflows that could help resolve this?
 ```
@@ -486,7 +486,7 @@ Are there any runbooks or automation workflows that could help resolve this?
 
 ```
 @dynatrace Generate a DQL query for a dashboard tile that shows:
-- Error rate over time for my ai-chat-service-{YOUR_ATTENDEE_ID}
+- Error rate over time for my ai-chat-service-{YOUR_ATTENDEE_ID} service
 - Breakdown by error_code
 - 5-minute time buckets for the last hour
 ```
@@ -501,7 +501,7 @@ Are there any runbooks or automation workflows that could help resolve this?
 
 **Good prompts are specific:**
 
-✅ Good: `@dynatrace Show me the P95 response time for ai-chat-service-{YOUR_ATTENDEE_ID} over the last 4 hours`
+✅ Good: `@dynatrace Show me the P95 response time for my ai-chat-service-{YOUR_ATTENDEE_ID} service over the last 4 hours`
 
 ❌ Vague: `@dynatrace How is my service doing?`
 
