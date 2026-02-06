@@ -55,7 +55,7 @@ Other tools let you *see* traces. Dynatrace MCP lets you:
 
 ## Step 1: Configure the Dynatrace MCP Server
 
-The Dynatrace MCP server is already pre-configured in this workshop! You just need to add your Dynatrace environment URL (provided by your instructor).
+The Dynatrace MCP server is already pre-configured in this workshop! The authentication token was automatically configured when you ran the setup script in Lab 0.
 
 ### 1.1 Open the MCP Configuration
 
@@ -69,47 +69,34 @@ You'll see the following configuration:
 ```json
 {
   "servers": {
-    "npx-dynatrace-mcp-server": {
-      "command": "npx",
-      "args": ["-y", "@dynatrace-oss/dynatrace-mcp-server@latest"],
-      "env": {
-        "DT_ENVIRONMENT": ""
+    "Dynatrace-MCP": {
+      "type": "sse",
+      "url": "https://your-dynatrace-tenant.apps.dynatrace.com/platform-reserved/mcp-gateway/v0.1/servers/dynatrace-mcp/mcp",
+      "headers": {
+        "Authorization": "Bearer ${env:DT_MCP_BEARER_TOKEN}"
       }
     }
   }
 }
 ```
 
-### 1.2 Add Your Dynatrace Environment URL
+> **✅ Already Configured:** The `DT_MCP_BEARER_TOKEN` environment variable was automatically set when you ran the secrets setup in Lab 0. No manual token entry required!
 
-Update the `DT_ENVIRONMENT` value with your Dynatrace environment URL (provided by your instructor):
+### 1.2 Verify Your Token is Set
 
-```json
-{
-  "servers": {
-    "npx-dynatrace-mcp-server": {
-      "command": "npx",
-      "args": ["-y", "@dynatrace-oss/dynatrace-mcp-server@latest"],
-      "env": {
-        "DT_ENVIRONMENT": "https://abc12345.apps.dynatrace.com"
-      }
-    }
-  }
-}
+To confirm the token is configured, run this in your terminal:
+
+```bash
+echo $DT_MCP_BEARER_TOKEN | head -c 20
 ```
 
-| Placeholder | Replace With | Example |
-|-------------|--------------|---------|
-| `DT_ENVIRONMENT` | Your Dynatrace environment URL | `https://abc12345.apps.dynatrace.com` |
+You should see the first 20 characters of your token.
 
-> **Tip:** Your environment URL is the same base URL you used to access Dynatrace in your browser from the previous lab exercises (without any path after the domain).
+### 1.3 Reload VS Code
 
-### 1.3 Save and Reload
-
-1. Save/Close the `mcp.json` file (auto-saved if in Codespaces VS Code)
-2. Open the Command Palette (`Cmd+Shift+P` or `Ctrl+Shift+P`)
-3. Type **"Developer: Reload Window"**
-4. Press Enter
+1. Open the Command Palette (`Cmd+Shift+P` or `Ctrl+Shift+P`)
+2. Type **"Developer: Reload Window"**
+3. Press Enter
 
 ---
 

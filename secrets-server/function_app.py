@@ -118,6 +118,9 @@ def get_credentials(req: func.HttpRequest) -> func.HttpResponse:
     azure_openai_embedding_deployment = (os.environ.get("AZURE_OPENAI_EMBEDDING_DEPLOYMENT") or "text-embedding-ada-002").strip()
     azure_openai_api_version = (os.environ.get("AZURE_OPENAI_API_VERSION") or "2024-08-01-preview").strip()
     
+    # Dynatrace MCP Bearer Token for Lab 3
+    dt_mcp_bearer_token = (os.environ.get("DT_MCP_BEARER_TOKEN") or "").strip()
+    
     # Validate configuration
     if not valid_token:
         logging.error("Workshop token not set. Use /api/rotate-token to set one.")
@@ -164,7 +167,8 @@ def get_credentials(req: func.HttpRequest) -> func.HttpResponse:
         "azure_openai_api_key": azure_openai_api_key,
         "azure_openai_chat_deployment": azure_openai_chat_deployment,
         "azure_openai_embedding_deployment": azure_openai_embedding_deployment,
-        "azure_openai_api_version": azure_openai_api_version
+        "azure_openai_api_version": azure_openai_api_version,
+        "dt_mcp_bearer_token": dt_mcp_bearer_token
     }
     
     return func.HttpResponse(

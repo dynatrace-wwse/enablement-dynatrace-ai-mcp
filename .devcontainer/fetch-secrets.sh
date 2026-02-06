@@ -73,6 +73,7 @@ if [ "$http_code" = "200" ]; then
         azure_openai_chat_deployment=$(echo "$body" | jq -r '.azure_openai_chat_deployment // empty')
         azure_openai_embedding_deployment=$(echo "$body" | jq -r '.azure_openai_embedding_deployment // empty')
         azure_openai_api_version=$(echo "$body" | jq -r '.azure_openai_api_version // empty')
+        dt_mcp_bearer_token=$(echo "$body" | jq -r '.dt_mcp_bearer_token // empty')
     else
         # Fallback: use sed (less reliable)
         body_clean=$(echo "$body" | tr -d '\n\r')
@@ -81,6 +82,7 @@ if [ "$http_code" = "200" ]; then
         azure_openai_chat_deployment=$(echo "$body_clean" | sed -n 's/.*"azure_openai_chat_deployment": *"\([^"]*\)".*/\1/p')
         azure_openai_embedding_deployment=$(echo "$body_clean" | sed -n 's/.*"azure_openai_embedding_deployment": *"\([^"]*\)".*/\1/p')
         azure_openai_api_version=$(echo "$body_clean" | sed -n 's/.*"azure_openai_api_version": *"\([^"]*\)".*/\1/p')
+        dt_mcp_bearer_token=$(echo "$body_clean" | sed -n 's/.*"dt_mcp_bearer_token": *"\([^"]*\)".*/\1/p')
     fi
     
     if [ -n "$azure_openai_endpoint" ] && [ -n "$azure_openai_api_key" ]; then
@@ -90,6 +92,7 @@ if [ "$http_code" = "200" ]; then
         export AZURE_OPENAI_CHAT_DEPLOYMENT="${azure_openai_chat_deployment}"
         export AZURE_OPENAI_EMBEDDING_DEPLOYMENT="${azure_openai_embedding_deployment}"
         export AZURE_OPENAI_API_VERSION="${azure_openai_api_version}"
+        export DT_MCP_BEARER_TOKEN="${dt_mcp_bearer_token}"
         
         # Add to bashrc for new terminals
         add_secret_to_bashrc "AZURE_OPENAI_ENDPOINT" "${azure_openai_endpoint}"
@@ -97,6 +100,7 @@ if [ "$http_code" = "200" ]; then
         add_secret_to_bashrc "AZURE_OPENAI_CHAT_DEPLOYMENT" "${azure_openai_chat_deployment}"
         add_secret_to_bashrc "AZURE_OPENAI_EMBEDDING_DEPLOYMENT" "${azure_openai_embedding_deployment}"
         add_secret_to_bashrc "AZURE_OPENAI_API_VERSION" "${azure_openai_api_version}"
+        add_secret_to_bashrc "DT_MCP_BEARER_TOKEN" "${dt_mcp_bearer_token}"
         
         echo ""
         echo "✅ Azure OpenAI credentials configured!"
