@@ -390,6 +390,18 @@
             accent-color: var(--dt-purple);
         }
 
+        .toggle-option.error-toggle {
+            color: #F59E0B;
+        }
+
+        .toggle-option.error-toggle input[type="checkbox"]:checked + span {
+            color: #EF4444;
+        }
+
+        .toggle-option.error-toggle input[type="checkbox"] {
+            accent-color: #EF4444;
+        }
+
         /* Quick Actions */
         .quick-actions {
             padding: 15px 20px;
@@ -571,6 +583,10 @@
                         <input type="checkbox" id="useRag" checked>
                         <span>Use RAG (Knowledge Base)</span>
                     </label>
+                    <label class="toggle-option error-toggle">
+                        <input type="checkbox" id="simulateErrors">
+                        <span>🐛 Simulate Errors</span>
+                    </label>
                 </div>
             </div>
 
@@ -592,6 +608,7 @@
         const sendButton = document.getElementById('sendButton');
         const emptyState = document.getElementById('emptyState');
         const useRagCheckbox = document.getElementById('useRag');
+        const simulateErrorsCheckbox = document.getElementById('simulateErrors');
         const attendeeIdEl = document.getElementById('attendeeId');
         const serviceNameEl = document.getElementById('serviceName');
         const statusDot = document.getElementById('statusDot');
@@ -644,7 +661,8 @@
                     },
                     body: JSON.stringify({
                         message: message,
-                        use_rag: useRagCheckbox.checked
+                        use_rag: useRagCheckbox.checked,
+                        simulate_errors: simulateErrorsCheckbox.checked
                     }),
                     signal: controller.signal
                 });

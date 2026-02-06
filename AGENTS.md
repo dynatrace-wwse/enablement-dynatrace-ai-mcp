@@ -97,8 +97,24 @@ Attendees add code at this marker in `app/main.py`:
 | Lab 0 | Environment Setup | All |
 | Lab 1 | Add Instrumentation | Developer: See your code in traces |
 | Lab 2 | Explore Traces & Token Economics | Developer: Debug RAG pipeline; SRE: Cost analysis |
-| Lab 3 | Dynatrace MCP | Developer: Debug while coding; SRE: Incident response from IDE |
+| Lab 3 | Dynatrace MCP + Error Investigation | Developer: Debug errors from IDE; SRE: Incident triage with MCP |
 | Lab 4 | Workflow Automation | SRE: Automate cost alerts, daily summaries ("Hero Moment") |
+
+## Error Simulation Feature
+
+The UI has a **🐛 Simulate Errors** toggle that generates realistic RAG/LLM errors for workshop demos:
+
+| Error Code | Exception | Simulates |
+|------------|-----------|-----------|
+| `EMB_NULL_VECTOR` | EmbeddingServiceError | Null vectors from embedding model |
+| `CHROMA_COLLECTION_ERR` | VectorStoreConnectionError | ChromaDB connection failure |
+| `LLM_MALFORMED_RESPONSE` | LLMResponseError | Invalid JSON from Azure OpenAI |
+| `CTX_WINDOW_EXCEEDED` | ContextWindowExceededError | Token limit exceeded |
+| `DOC_NO_MATCHES` | DocumentRetrievalError | No relevant documents found |
+| `RAG_CHAIN_TIMEOUT` | RAGPipelineError | LangChain execution timeout |
+| `CONTENT_FILTER_BLOCK` | LLMResponseError | Content policy violation |
+
+Used in Lab 3 for practicing error investigation with Dynatrace MCP.
 
 ## Known Issues & Fixes
 

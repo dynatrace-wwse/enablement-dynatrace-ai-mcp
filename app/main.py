@@ -179,6 +179,7 @@ class ChatRequest(BaseModel):
     """Request model for chat endpoint"""
     message: str
     use_rag: bool = True
+    simulate_errors: bool = False
 
 class ChatResponse(BaseModel):
     """Response model for chat endpoint"""
@@ -258,6 +259,119 @@ llm = None
 def format_docs(docs):
     """Format retrieved documents into a single string"""
     return "\n\n".join(doc.page_content for doc in docs)
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Error Simulation for Workshop Demos
+# ═══════════════════════════════════════════════════════════════════════════
+
+import random
+
+class RAGPipelineError(Exception):
+    """Custom exception for RAG pipeline errors"""
+    pass
+
+class EmbeddingServiceError(Exception):
+    """Error when embedding service fails"""
+    pass
+
+class VectorStoreConnectionError(Exception):
+    """Error when vector store connection fails"""
+    pass
+
+class LLMResponseError(Exception):
+    """Error when LLM returns invalid response"""
+    pass
+
+class ContextWindowExceededError(Exception):
+    """Error when context window is exceeded"""
+    pass
+
+class DocumentRetrievalError(Exception):
+    """Error when document retrieval fails"""
+    pass
+
+SIMULATED_ERRORS = [
+    {
+        "exception": EmbeddingServiceError,
+        "message": "Embedding model 'text-embedding-3-large' returned null vector for input chunk",
+        "log_level": "error",
+        "error_code": "EMB_NULL_VECTOR"
+    },
+    {
+        "exception": VectorStoreConnectionError,
+        "message": "ChromaDB collection 'workshop_documents' not found or corrupted",
+        "log_level": "error",
+        "error_code": "CHROMA_COLLECTION_ERR"
+    },
+    {
+        "exception": LLMResponseError,
+        "message": "Azure OpenAI returned malformed JSON in function call response",
+        "log_level": "error",
+        "error_code": "LLM_MALFORMED_RESPONSE"
+    },
+    {
+        "exception": ContextWindowExceededError,
+        "message": "Context window exceeded: 128,500 tokens provided, max is 128,000",
+        "log_level": "error",
+        "error_code": "CTX_WINDOW_EXCEEDED"
+    },
+    {
+        "exception": DocumentRetrievalError,
+        "message": "Semantic search returned 0 documents with similarity score > 0.7 threshold",
+        "log_level": "warning",
+        "error_code": "DOC_NO_MATCHES"
+    },
+    {
+        "exception": RAGPipelineError,
+        "message": "RAG pipeline failed: LangChain chain execution timeout after 30 seconds",
+        "log_level": "error",
+        "error_code": "RAG_CHAIN_TIMEOUT"
+    },
+    {
+        "exception": LLMResponseError,
+        "message": "Content filter triggered: Response blocked due to policy violation (category: hate_speech, severity: medium)",
+        "log_level": "warning",
+        "error_code": "CONTENT_FILTER_BLOCK"
+    },
+    {
+        "exception": EmbeddingServiceError,
+        "message": "Token count mismatch: Expected 512 tokens, received 0 from embedding endpoint",
+        "log_level": "error",
+        "error_code": "EMB_TOKEN_MISMATCH"
+    }
+]
+
+def maybe_simulate_error(simulate: bool, stage: str = "processing"):
+    """
+    Randomly simulate errors for workshop demonstration.
+    This helps attendees learn to identify and debug errors in Dynatrace.
+    """
+    if not simulate:
+        return
+    
+    # 70% chance of triggering an error when simulation is enabled
+    if random.random() < 0.7:
+        error_config = random.choice(SIMULATED_ERRORS)
+        
+        # Log the error before raising (so it shows in Dynatrace)
+        if error_config["log_level"] == "error":
+            logger.error(f"Simulated {stage} error", extra={
+                "error_code": error_config["error_code"],
+                "error_message": error_config["message"],
+                "stage": stage,
+                "simulated": True,
+                "attendee_id": ATTENDEE_ID
+            })
+        else:
+            logger.warning(f"Simulated {stage} warning", extra={
+                "error_code": error_config["error_code"],
+                "error_message": error_config["message"],
+                "stage": stage,
+                "simulated": True,
+                "attendee_id": ATTENDEE_ID
+            })
+        
+        raise error_config["exception"](error_config["message"])
 
 # ═══════════════════════════════════════════════════════════════════════════
 # RAG Pipeline Functions (Each creates distinct trace spans)
@@ -594,12 +708,21 @@ async def chat(request: ChatRequest):
     logger.info("Chat request received", extra={
         "message_length": len(request.message),
         "use_rag": request.use_rag,
+        "simulate_errors": request.simulate_errors,
         "attendee_id": ATTENDEE_ID
     })
     
     if not request.message.strip():
         logger.warning("Empty message rejected")
         raise HTTPException(status_code=400, detail="Message cannot be empty")
+    
+    # Simulate errors for workshop demonstration if enabled
+    # This helps attendees learn to identify and debug errors in Dynatrace
+    try:
+        maybe_simulate_error(request.simulate_errors, stage="pre_processing")
+    except (RAGPipelineError, EmbeddingServiceError, VectorStoreConnectionError, 
+            LLMResponseError, ContextWindowExceededError, DocumentRetrievalError) as e:
+        raise HTTPException(status_code=500, detail=str(e))
     
     # Add user's original question as a trace attribute for better visibility in Dynatrace
     # This captures the actual user input separately from the full RAG prompt
