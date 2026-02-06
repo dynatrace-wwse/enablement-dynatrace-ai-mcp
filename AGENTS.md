@@ -49,7 +49,7 @@ solutions/           # Reference instrumented app (instructor use)
 
 | Variable | Required Value | Notes |
 |----------|----------------|-------|
-| `AZURE_OPENAI_API_VERSION` | `2025-07-01-preview` | Newer versions return 404 |
+| `AZURE_OPENAI_API_VERSION` | `2024-08-01-preview` | Other versions may return 404 |
 | `DT_ENDPOINT` | Must end with `/api/v2/otlp` | Common mistake to omit suffix |
 | `AZURE_OPENAI_EMBEDDING_DEPLOYMENT` | `dynatraceRAG` | Uses `text-embedding-3-large` |
 
