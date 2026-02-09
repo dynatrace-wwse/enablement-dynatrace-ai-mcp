@@ -89,7 +89,7 @@ Click on your service to select the **Additional Telemetry** page. You'll see:
 Use the filter to show only traces from your service:
 
 1. Click **Spans** on the left
-4. Choose `ai-chat-service-{YOUR_ATTENDEE_ID}`
+2. Choose `ai-chat-service-{YOUR_ATTENDEE_ID}`
 
 ### 3.3 Select a Trace
 
@@ -232,23 +232,12 @@ Dynatrace Notebooks provide powerful querying capabilities for AI observability.
 1. Navigate to **Notebooks** in the left-hand menu
 2. Click **+ Notebook** on the top to create a new notebook
 3. Name it: `AI Observability - {YOUR_ATTENDEE_ID}`
+4. For each DQL query, create a new DQL tile in your Notebook.
 
-### 7.2 Query: Token Usage Over Time
-
-Add a new section and enter this DQL query:
-
-```sql
-fetch spans
-| filter service.name == "ai-chat-service-{YOUR_ATTENDEE_ID}"
-| filter isNotNull(gen_ai.usage.input_tokens)
-| makeTimeseries total_input_tokens = sum(gen_ai.usage.input_tokens),
-    total_output_tokens = sum(gen_ai.usage.output_tokens),
-    request_count = count()
-```
-
-### 7.3 Query: Model Usage Distribution
+### 7.2 Query: Model Usage Distribution
 
 ```sql
+//Model Usage Distribution
 fetch spans
 | filter service.name == "ai-chat-service-{YOUR_ATTENDEE_ID}"
 | filter isNotNull(gen_ai.request.model)
@@ -256,9 +245,13 @@ fetch spans
 | sort request_count desc
 ```
 
-### 7.4 Query: Average Response Time by Operation
+Consider changing the visualization to make the data more intuitive!
+Click **Options** > **Visualization** and select "Pie".
+
+### 7.3 Query: Average Response Time by Operation
 
 ```sql
+//Average Response Time by Operation
 fetch spans
 | filter service.name == "ai-chat-service-{YOUR_ATTENDEE_ID}"
 | summarize 
@@ -266,6 +259,9 @@ fetch spans
   by: {span.name}
 | sort avg_duration desc
 ```
+
+Consider changing the visualization to make the data more intuitive!
+Click **Options** > **Visualization** and select "Categorical".
 
 ---
 
@@ -284,6 +280,7 @@ Tokens directly translate to cost. Here's the current Azure OpenAI pricing:
 ### 8.1 Find Your Biggest Token Spenders
 
 ```sql
+//Find Your Biggest Token Spenders
 fetch spans
 | filter service.name == "ai-chat-service-{YOUR_ATTENDEE_ID}"
 | filter isNotNull(gen_ai.usage.input_tokens)
@@ -305,6 +302,7 @@ fetch spans
 Azure OpenAI caches prompts > 1024 tokens. Check your cache hit rate:
 
 ```sql
+//Prompt Caching Effectiveness
 fetch spans
 | filter service.name == "ai-chat-service-{YOUR_ATTENDEE_ID}"
 | filter isNotNull(gen_ai.usage.cache_read_input_tokens)
@@ -321,6 +319,7 @@ fetch spans
 Track token usage over time to catch runaway costs early:
 
 ```sql
+//Token Trend Analysis
 fetch spans
 | filter service.name == "ai-chat-service-{YOUR_ATTENDEE_ID}"
 | filter isNotNull(gen_ai.usage.input_tokens)
