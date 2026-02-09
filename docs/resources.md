@@ -21,6 +21,12 @@ Quick reference links and additional learning materials for Dynatrace AI Observa
 | Grail & DQL | [DQL Documentation](https://docs.dynatrace.com/docs/platform/grail/dynatrace-query-language) |
 | Dynatrace MCP | [MCP Server Documentation](https://docs.dynatrace.com/docs/platform/davis-ai/mcp) |
 
+### ✨ Dynatrace Intelligence
+| Resource | Link |
+|----------|------|
+| Blog post | [Announcement](https://www.dynatrace.com/news/blog/dynatrace-intelligence-at-the-core-of-autonomous-operations/)|
+| Learn more | [Documentation](https://docs.dynatrace.com) |
+
 ### OpenLLMetry / Traceloop
 
 | Resource | Link |
