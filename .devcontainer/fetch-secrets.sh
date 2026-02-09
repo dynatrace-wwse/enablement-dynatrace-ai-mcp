@@ -7,6 +7,7 @@
 
 SECRETS_SERVER_URL="${SECRETS_SERVER_URL:-https://workshop-secrets-server.azurewebsites.net/api}"
 BASHRC_FILE="$HOME/.bashrc"
+MCP_FILE="/workspaces/dynatrace-ai-mcp-workshop/.vscode/mcp.json"
 
 # Ensure jq is installed for JSON parsing
 if ! command -v jq &> /dev/null; then
@@ -102,13 +103,19 @@ if [ "$http_code" = "200" ]; then
         add_secret_to_bashrc "AZURE_OPENAI_API_VERSION" "${azure_openai_api_version}"
         add_secret_to_bashrc "DT_MCP_BEARER_TOKEN" "${dt_mcp_bearer_token}"
         
+        if [ -f "$MCP_FILE" ]; then
+            escaped_token=$(printf '%s' "$DT_MCP_BEARER_TOKEN" | sed -e 's/[\\&/]/\\&/g')
+            sed -i "s/\"Authorization\"[[:space:]]*:[[:space:]]*\"Bearer[^\"]*\"/\"Authorization\": \"Bearer ${escaped_token}\"/" "$MCP_FILE"
+        fi
+
         echo ""
         echo "✅ Azure OpenAI credentials configured!"
         echo ""
         echo "╔══════════════════════════════════════════════════════════════════╗"
-        echo "║  ⚠️  IMPORTANT: Close this terminal and open a new one!          ║"
+        echo "║  ⚠️  IMPORTANT: Reload VS Code Window for MCP updates            ║"
         echo "║                                                                  ║"
-        echo "║  Or run this command to reload:  source ~/.bashrc               ║"
+        echo "║  Press Ctrl+Shift+P (Cmd+Shift+P on Mac), then                   ║"
+        echo "║  run: Developer: Reload Window                                   ║"
         echo "╚══════════════════════════════════════════════════════════════════╝"
         echo ""
     else
