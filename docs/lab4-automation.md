@@ -143,10 +143,9 @@ Token usage exceeded threshold!
 {% endraw %}
    (Adjust threshold based on your expected usage)
 
-### 2.6 Save and Deploy
+### 2.6 Save and Run
 
-1. Click **Deploy**
-2. Click **Save and Deploy** on the pop-up
+1. Click **Create/Save draft**
 2. Click **Run**
 
 </div>
@@ -231,6 +230,12 @@ fetch spans
 
 ```
 {% endraw %}
+
+### 3.6 Save and Run
+
+1. Click **Create/Save draft**
+2. Click **Run**
+
 </div>
 
 ---
