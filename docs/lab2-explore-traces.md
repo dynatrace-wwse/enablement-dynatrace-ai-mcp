@@ -217,24 +217,75 @@ Click on the `chroma.query` span to see database attributes:
 | `db.chroma.query.n_results` | Number of documents retrieved (e.g., 3) |
 | `db.chroma.query.embeddings_count` | Number of embeddings in the query (e.g., 1) |
 
+---
+
+## 🔧 Step 7: Token Optimization
+
+### Understanding Token Limits
+
+All AI models have maximum input and output tokens that they can accomodate. In our case, we're using GPT-4o with the following limits:
+
+| Model | Max Input Tokens | Max Output Tokens |
+|-------|---------------------------|-----------------------------|
+| GPT-4o | 128,000 | 16,384 |
+
+### Lookup Tables
+
+For this lab, we've made use of [`lookup tables`](https://docs.dynatrace.com/docs/shortlink/grail-lookup-data). Lookup tables allow us to upload referencable tables that we can use to enrich our data in Dynatrace. In this case, we've created a lookup table with the maximum input/output tokens for our LLM model to make our following DQL queries more dynamic and robust in case prices ever change in the future.
+
+To see the table for this lab, run the following DQL query: 
+```sql
+load "/lookups/ai/azure-openai/model-max-tokens"
+```
+
+To see all lookup tables, run the following DQL query:
+```sql
+fetch dt.system.files
+```
+
+[Documentation](https://docs.dynatrace.com/docs/shortlink/grail-lookup-data)
+
+### 7.1 Find the Biggest Token Spenders and Understand What Percentage of Token Limits are Used
+
+```sql
+//Find the Biggest Token Spenders and Understand What Percentage of Token Limits are Used
+fetch spans
+| filter service.name == "ai-chat-service-clydeanderson"
+| filter isNotNull(gen_ai.usage.input_tokens)
+| summarize 
+    total_input = sum(gen_ai.usage.input_tokens),
+    total_output = sum(gen_ai.usage.output_tokens),
+    avg_input = avg(gen_ai.usage.input_tokens),
+    avg_output = avg(gen_ai.usage.output_tokens),
+    request_count = count(),
+  by: {gen_ai.request.model}
+| fieldsAdd total_tokens = total_input + total_output
+| lookup [load "/lookups/ai/azure-openai/model-max-tokens"], sourceField:gen_ai.request.model, lookupField:model
+| filter isNotNull(lookup.model)
+| fieldsAdd input_token_usage_percent = (avg_input / lookup.max.tokens.input)*100
+| fieldsAdd output_token_usage_percent = (avg_output / lookup.max.tokens.output)*100
+| fieldsRemove "lookup*"
+| fields gen_ai.request.model, request_count, total_input, total_output, avg_input, avg_output, input_token_usage_percent, output_token_usage_percent
+```
+
 </div>
 
 ---
 
 <div class="persona-box sre" markdown="1">
 
-## 🔧 Step 7: Using Notebooks for AI Analysis
+## 🔧 Step 8: Using Notebooks for AI Analysis
 
 Dynatrace Notebooks provide powerful querying capabilities for AI observability.
 
-### 7.1 Create a New Notebook
+### 8.1 Create a New Notebook
 
 1. Navigate to **Notebooks** in the left-hand menu
 2. Click **+ Notebook** on the top to create a new notebook
 3. Name it: `AI Observability - {YOUR_ATTENDEE_ID}`
 4. For each DQL query, create a new DQL tile in your Notebook.
 
-### 7.2 Query: Model Usage Distribution
+### 8.2 Query: Model Usage Distribution
 
 ```sql
 //Model Usage Distribution
@@ -248,7 +299,7 @@ fetch spans
 Consider changing the visualization to make the data more intuitive!
 Click **Options** > **Visualization** and select "Pie".
 
-### 7.3 Query: Average Response Time by Operation
+### 8.3 Query: Average Response Time by Operation
 
 ```sql
 //Average Response Time by Operation
@@ -265,7 +316,7 @@ Click **Options** > **Visualization** and select "Categorical".
 
 ---
 
-## 🔧 Step 8: Token Economics Analysis
+## 🔧 Step 9: Token Economics Analysis
 
 ### Understanding Token Costs
 
@@ -277,27 +328,45 @@ Tokens directly translate to cost. Here's the current Azure OpenAI pricing:
 | GPT-4o-mini | $0.15 | $0.60 |
 | text-embedding-3-large | $0.13 | N/A |
 
-### 8.1 Find Your Biggest Token Spenders
+### Lookup Tables
+
+For this lab, we've made use of [`lookup tables`](https://docs.dynatrace.com/docs/shortlink/grail-lookup-data). Lookup tables allow us to upload referencable tables that we can use to enrich our data in Dynatrace. In this case, we've created a lookup table with our Azure pricing to make our following DQL queries more dynamic and robust in case prices ever change in the future.
+
+To see the table for this lab, run the following DQL query: 
+```sql
+load "/lookups/ai/azure-openai/model-costs"
+```
+
+To see all lookup tables, run the following DQL query:
+```sql
+fetch dt.system.files
+```
+
+[Documentation](https://docs.dynatrace.com/docs/shortlink/grail-lookup-data)
+
+### 9.1 Find Your Biggest Token Spenders
 
 ```sql
 //Find Your Biggest Token Spenders
 fetch spans
-| filter service.name == "ai-chat-service-{YOUR_ATTENDEE_ID}"
+| filter service.name == "ai-chat-service-clydeanderson"
 | filter isNotNull(gen_ai.usage.input_tokens)
 | summarize 
     total_input = sum(gen_ai.usage.input_tokens),
     total_output = sum(gen_ai.usage.output_tokens),
     avg_input = avg(gen_ai.usage.input_tokens),
     request_count = count(),
-  by: {span.name}
+    by: {gen_ai.request.model}
 | fieldsAdd total_tokens = total_input + total_output
-| fieldsAdd estimated_cost_usd = (total_input * 2.50 + total_output * 10.00) / 1000000
+| lookup [load "/lookups/ai/azure-openai/model-costs"], sourceField:gen_ai.request.model, lookupField:model
+| fieldsAdd estimated_cost_usd = (total_input * lookup.input.cost + total_output * if(isNull(lookup.output.cost),0.00,else:lookup.output.cost)) / 1000000
+| fieldsRemove "lookup*"
 | sort estimated_cost_usd desc
 ```
 
 > 💡 **Tip:** High avg_input tokens? Your system prompt or context might be too large. Consider summarizing retrieved documents before adding to context.
 
-### 8.2 Prompt Caching Effectiveness
+### 9.2 Prompt Caching Effectiveness
 
 Azure OpenAI caches prompts > 1024 tokens. Check your cache hit rate:
 
@@ -314,7 +383,7 @@ fetch spans
 
 > 💡 **Tip:** Low cache rate (<30%)? You're paying more than necessary! Standardize system prompts and use longer static prefixes (1024+ tokens).
 
-### 8.3 Token Trend Analysis
+### 9.3 Token Trend Analysis
 
 Track token usage over time to catch runaway costs early:
 
@@ -329,7 +398,7 @@ fetch spans
     request_count = count()
 ```
 
-### 8.4 What To Do With Token Data
+### 9.4 What To Do With Token Data
 
 | Finding | Indicates | Action |
 |---------|-----------|--------|

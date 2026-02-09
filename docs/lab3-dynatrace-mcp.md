@@ -109,6 +109,16 @@ If configured correctly, Copilot will query Dynatrace and return a list of servi
 
 ---
 
+# 🎭 New! Dynatrace Intelligence ✨
+
+Dynatrace Intelligence provides agentic workflows that go beyond simple queries. These exercises showcase the latest capabilities for each persona. What this means is that with Dynatrace's MCP server, your personal AI agent (GitHub CoPilot for this lab) can actually interact with various agents provided by Dynatrace! When running the below queries, notice how your AI agent will interact with various agents from Dynatrace (e.g. Grail Query Agent, Data Analysis Agent, Root Cause Agent, etc.).
+
+Learn more here:
+* [Dynatrace Intelligence - Announcement](https://www.dynatrace.com/news/blog/dynatrace-intelligence-at-the-core-of-autonomous-operations/)
+* [Dynatrace Intelligence - Documentation](https://docs.dynatrace.com/docs/shortlink/dynatrace-intelligence-landing)
+
+---
+
 ## 🎭 Your Mission (Choose Your Persona)
 
 From this point forward, you'll focus on different use cases depending on your role.
@@ -311,6 +321,8 @@ If so, what's the root cause and which services are impacted?
 Draft a Slack message summarizing the incident.
 ```
 
+**Note**: In this case, we don't anticipate that Dynatrace will have detected any problems due to lack of data and the small timeframe that this lab generates data. This example is meant to serve as inspiration for other types of questions you could ask!
+
 ### 6.2 Service Architecture
 
 ```
@@ -374,11 +386,11 @@ Is this affecting all users or just specific request types?
 Rank them by frequency.
 ```
 
-### Root Cause with Davis AI
+### Root Cause with Dynatrace Intelligence
 
 ```
 @dynatrace Analyze the error patterns in my ai-chat-service-{YOUR_ATTENDEE_ID} service.
-What is Davis AI's assessment of the root cause?
+What is Dynatrace Intelligence's assessment of the root cause?
 Which component is the source of the failures?
 ```
 
@@ -396,9 +408,28 @@ including: affected service, error types, error rate, and preliminary root cause
 
 ---
 
-## 🎭 New! Dynatrace Intelligence Exercises
+# Bonus - Dynatrace Intelligence in the Dynatrace Platform
 
-Dynatrace Intelligence provides agentic workflows that go beyond simple queries. These exercises showcase the latest capabilities for each persona.
+Want to make use of Dynatrace Intelligence before even setting up the MCP? *Try it out directly in the Dynatrace UI.*
+
+1. Open Dynatrace
+2. Find **✨ Assist** in the left-hand menu
+3. Try out the following question: 
+```sql
+What errors are impacting the ai-chat-service-clydeanderson service today? Check the spans
+```
+
+> **Pro tip:** This is just one example. Dynatrace Intelligence is available in several parts of the platform including the Problems app, Notebooks and Dashboards, Logs app, Databases app, and more!
+
+Learn more here:
+* [Dynatrace Intelligence - Announcement](https://www.dynatrace.com/news/blog/dynatrace-intelligence-at-the-core-of-autonomous-operations/)
+* [Dynatrace Intelligence - Documentation](https://docs.dynatrace.com/docs/shortlink/dynatrace-intelligence-landing)
+
+---
+
+## 🎭 Going Beyond the Basics
+
+Below are some more advanced examples to get the most out of Dynatrace Intelligence and your AI agents!
 
 <div class="persona-box developer" markdown="1">
 
