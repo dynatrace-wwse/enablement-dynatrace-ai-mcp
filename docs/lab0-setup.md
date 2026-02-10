@@ -77,10 +77,16 @@ Enter your workshop token: dynatrace2026
 
 ### 2.3 Load Your Credentials
 
-Reload VS Code to properly load credentials:
+You will need to load your credentials into the terminal session with the following command:
+```bash
+source ~/.bashrc
+```
+
+Then reload VS Code:
 
 1. Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac)
 2. Run: **Developer: Reload Window**
+
 ---
 
 ## Step 3: Configure Dynatrace Credentials
