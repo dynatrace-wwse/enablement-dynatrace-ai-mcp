@@ -57,37 +57,6 @@ Other tools let you *see* traces. Dynatrace MCP lets you:
 
 The Dynatrace MCP server is already pre-configured in this workshop! The authentication token was automatically configured when you ran the setup script in Lab 0.
 
-### 1.1 Open the MCP Configuration
-
-The MCP configuration file is located at `.vscode/mcp.json` in your workspace. Open it:
-
-1. In the Explorer panel, expand the `.vscode` folder
-2. Click on `mcp.json` to open it
-
-You'll see the following configuration:
-
-```json
-{
-  "servers": {
-    "Dynatrace-MCP": {
-      "type": "sse",
-      "url": "https://your-dynatrace-tenant.apps.dynatrace.com/platform-reserved/mcp-gateway/v0.1/servers/dynatrace-mcp/mcp",
-      "headers": {
-        "Authorization": "Bearer ${env:DT_MCP_BEARER_TOKEN}"
-      }
-    }
-  }
-}
-```
-
-> **✅ Already Configured:** The `DT_MCP_BEARER_TOKEN` environment variable was automatically set when you ran the secrets setup in Lab 0. No manual token entry required!
-
-### 1.2 Reload VS Code
-
-1. Open the Command Palette (`Cmd+Shift+P` or `Ctrl+Shift+P`)
-2. Type **"Developer: Reload Window"**
-3. Press Enter
-
 ---
 
 ## Step 2: Verify MCP Connection
