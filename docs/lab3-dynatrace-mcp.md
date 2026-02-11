@@ -384,8 +384,8 @@ Want to make use of Dynatrace Intelligence before even setting up the MCP? *Try 
 1. Open Dynatrace
 2. Find **✨ Assist** in the left-hand menu
 3. Try out the following question: 
-```sql
-What errors are impacting the ai-chat-service-clydeanderson service today? Check the spans
+```
+What errors are impacting the ai-chat-service-{YOUR_ATTENDEE_ID} service today? Check the spans
 ```
 
 > **Pro tip:** This is just one example. Dynatrace Intelligence is available in several parts of the platform including the Problems app, Notebooks and Dashboards, Logs app, Databases app, and more!
