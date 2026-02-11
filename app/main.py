@@ -165,6 +165,21 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+# ═══════════════════════════════════════════════════════════════════════════
+# FastAPI OpenTelemetry Instrumentation
+# ═══════════════════════════════════════════════════════════════════════════
+
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+
+# Instrument FastAPI to create spans for all HTTP endpoints
+# This creates parent spans that encompass downstream LLM/AI calls
+FastAPIInstrumentor.instrument_app(app)
+logger.info("FastAPI instrumented with OpenTelemetry", extra={
+    "attendee_id": ATTENDEE_ID
+})
+print("✅ FastAPI instrumented - HTTP endpoints will create trace spans")
+
+
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,

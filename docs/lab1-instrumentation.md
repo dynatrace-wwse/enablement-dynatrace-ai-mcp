@@ -44,7 +44,7 @@ opentelemetry-exporter-otlp==1.39.1
 In the terminal, run:
 
 ```bash
-pip install traceloop-sdk opentelemetry-exporter-otlp
+pip install traceloop-sdk opentelemetry-exporter-otlp opentelemetry-instrumentation-fastapi
 ```
 
 Expected output:
