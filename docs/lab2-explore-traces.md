@@ -84,7 +84,7 @@ This will allow you to view your service health metrics such as Errors, Traffic 
 
 This is where you access deeper data about your AI service.
 
-   <img src="assets/images/service_health.png" alt="Explore Prompts" class="zoomable" style="max-width: 100%; height: auto; max-height: 400px;" title="Click to enlarge" />
+   <img src="assets/images/explore_prompts.png" alt="Explore Prompts" class="zoomable" style="max-width: 100%; height: auto; max-height: 400px;" title="Click to enlarge" />
 
 ### 3.2 Access Traces and Spans
 
