@@ -19,7 +19,7 @@ nav_order: 1
 
 ## 📋 Workshop Overview
 
-| **Duration** | 2 - 2.5 hours |
+| **Duration** | 1.5 - 2 hours |
 | **Level** | Intermediate |
 | **Prerequisites** | GitHub account, basic Python knowledge |
 
