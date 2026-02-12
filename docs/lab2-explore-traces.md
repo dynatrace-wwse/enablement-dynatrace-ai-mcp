@@ -57,43 +57,48 @@ Use the credentials provided by your instructor.
 
 ## Step 2: Find Your Service
 
-### 2.1 Navigate to Services
+### 2.1 Navigate to the AI Observability App
 
-1. In the left navigation menu, click **Services** (or use the search bar)
-2. Click the **Explorer** tab on the top and look for your service: `ai-chat-service-{YOUR_ATTENDEE_ID}`
+1. In the left navigation menu, click **Search**
+2. Search for **AI Observability** and select the app from the list to open
 
-   For example: `ai-chat-service-{YOUR_ATTENDEE_ID}`
+   <img src="assets/images/open_ai_app.png" alt="Open AI Observability App" class="zoomable" style="max-width: 100%; height: auto; max-height: 400px;" title="Click to enlarge" />
 
-   <img src="assets/images/find-service.png" alt="Find Your Service" class="zoomable" style="max-width: 100%; height: auto; max-height: 400px;" title="Click to enlarge" />
+### 2.2 Explore Service Health
 
-### 2.2 Open Service Details
+1. Click **Service Health** on the top
+2. Choose `ai-chat-service-{YOUR_ATTENDEE_ID}` from the list on the left and click **Update**
 
-Click on your service to select the **Additional Telemetry** page. You'll see:
+   <img src="assets/images/service_health.png" alt="Service Health" class="zoomable" style="max-width: 100%; height: auto; max-height: 400px;" title="Click to enlarge" />
 
-- Request rate
-- Request duration
-- Tokens used
-- Embeddings vector size
+This will allow you to view your service health metrics such as Errors, Traffic and Latency, Cost, and Guardrails.
 
 ---
 
-## Step 3: Explore Distributed Traces
+## Step 3: Explore Prompt and Trace Data
 
-### 3.1 Navigate to Traces
+### 3.1 Explore Prompts
 
-1. From your service page, click on **View traces** in the left panel
-2. Or navigate via: **Distributed traces**
+1. Click **Explorer** on the top
+2. Choose `ai-chat-service-{YOUR_ATTENDEE_ID}` from the list
 
-### 3.2 Filter for Your Service
+This is where you access deeper data about your AI service.
 
-Use the filter to show only traces from your service:
+   <img src="assets/images/service_health.png" alt="Explore Prompts" class="zoomable" style="max-width: 100%; height: auto; max-height: 400px;" title="Click to enlarge" />
 
-1. Click **Spans** on the left
-2. Choose `ai-chat-service-{YOUR_ATTENDEE_ID}`
+### 3.2 Access Traces and Spans
+
+Select the **View traces** on the top right
+
+   <img src="assets/images/view_traces.png" alt="View Traces" class="zoomable" style="max-width: 100%; height: auto; max-height: 400px;" title="Click to enlarge" />
+
+This will bring you to the **Distributed Tracing** app with a list of spans.
+   <img src="assets/images/spans_list.png" alt="Spans List" class="zoomable" style="max-width: 100%; height: auto; max-height: 400px;" title="Click to enlarge" />
 
 ### 3.3 Select a Trace
 
 Click on any trace to view the details. You should see traces for your `/chat` endpoint.
+   <img src="assets/images/trace_dive.png" alt="Trace Dive" class="zoomable" style="max-width: 100%; height: auto; max-height: 400px;" title="Click to enlarge" />
 
 ---
 
@@ -229,25 +234,32 @@ All AI models have maximum input and output tokens that they can accomodate. In 
 |-------|---------------------------|-----------------------------|
 | GPT-4o | 128,000 | 16,384 |
 
+### 7.1 Create a New Notebook
+
+1. Navigate to **Notebooks** in the left-hand menu
+2. Click **+ Notebook** on the top to create a new notebook
+3. Name it: `AI Observability - {YOUR_ATTENDEE_ID}`
+4. For each DQL query, create a new DQL tile in your Notebook.
+
 ### Lookup Tables
 
 For this lab, we've made use of [`lookup tables`](https://docs.dynatrace.com/docs/shortlink/grail-lookup-data). Lookup tables allow us to upload referencable tables that we can use to enrich our data in Dynatrace. In this case, we've created a lookup table with the maximum input/output tokens for our LLM model to make our following DQL queries more dynamic and robust in case prices ever change in the future.
 
 To see the table for this lab, run the following DQL query: 
-```sql
+```
 load "/lookups/ai/azure-openai/model-max-tokens"
 ```
 
 To see all lookup tables, run the following DQL query:
-```sql
+```
 fetch dt.system.files
 ```
 
 [Documentation](https://docs.dynatrace.com/docs/shortlink/grail-lookup-data)
 
-### 7.1 Find the Biggest Token Spenders and Understand What Percentage of Token Limits are Used
+### 7.2 Find the Biggest Token Spenders and Understand What Percentage of Token Limits are Used
 
-```sql
+```
 //Find the Biggest Token Spenders and Understand What Percentage of Token Limits are Used
 fetch spans
 | filter service.name == "ai-chat-service-clydeanderson"
@@ -287,7 +299,7 @@ Dynatrace Notebooks provide powerful querying capabilities for AI observability.
 
 ### 8.2 Query: Model Usage Distribution
 
-```sql
+```
 //Model Usage Distribution
 fetch spans
 | filter service.name == "ai-chat-service-{YOUR_ATTENDEE_ID}"
@@ -301,7 +313,7 @@ Click **Options** > **Visualization** and select "Pie".
 
 ### 8.3 Query: Average Response Time by Operation
 
-```sql
+```
 //Average Response Time by Operation
 fetch spans
 | filter service.name == "ai-chat-service-{YOUR_ATTENDEE_ID}"
@@ -333,12 +345,12 @@ Tokens directly translate to cost. Here's the current Azure OpenAI pricing:
 For this lab, we've made use of [`lookup tables`](https://docs.dynatrace.com/docs/shortlink/grail-lookup-data). Lookup tables allow us to upload referencable tables that we can use to enrich our data in Dynatrace. In this case, we've created a lookup table with our Azure pricing to make our following DQL queries more dynamic and robust in case prices ever change in the future.
 
 To see the table for this lab, run the following DQL query: 
-```sql
+```
 load "/lookups/ai/azure-openai/model-costs"
 ```
 
 To see all lookup tables, run the following DQL query:
-```sql
+```
 fetch dt.system.files
 ```
 
@@ -346,7 +358,7 @@ fetch dt.system.files
 
 ### 9.1 Find Your Biggest Token Spenders
 
-```sql
+```
 //Find Your Biggest Token Spenders
 fetch spans
 | filter service.name == "ai-chat-service-clydeanderson"
@@ -370,7 +382,7 @@ fetch spans
 
 Azure OpenAI caches prompts > 1024 tokens. Check your cache hit rate:
 
-```sql
+```
 //Prompt Caching Effectiveness
 fetch spans
 | filter service.name == "ai-chat-service-{YOUR_ATTENDEE_ID}"
@@ -387,7 +399,7 @@ fetch spans
 
 Track token usage over time to catch runaway costs early:
 
-```sql
+```
 //Token Trend Analysis
 fetch spans
 | filter service.name == "ai-chat-service-{YOUR_ATTENDEE_ID}"
