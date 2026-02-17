@@ -20,6 +20,7 @@ app = func.FunctionApp()
 # Blob storage configuration
 CONTAINER_NAME = "workshop-config"
 TOKEN_BLOB_NAME = "workshop-token.txt"
+MCP_TOKEN_BLOB_NAME = "mcp-bearer-token.txt"
 
 
 def get_blob_client():
@@ -37,6 +38,23 @@ def get_blob_client():
         pass  # Container already exists
     
     return container_client.get_blob_client(TOKEN_BLOB_NAME)
+
+
+def get_mcp_token_blob_client():
+    """Get Azure Blob client for MCP token storage."""
+    connection_string = os.environ.get("AzureWebJobsStorage")
+    if not connection_string:
+        return None
+    blob_service = BlobServiceClient.from_connection_string(connection_string)
+    container_client = blob_service.get_container_client(CONTAINER_NAME)
+    
+    # Create container if it doesn't exist
+    try:
+        container_client.create_container()
+    except Exception:
+        pass  # Container already exists
+    
+    return container_client.get_blob_client(MCP_TOKEN_BLOB_NAME)
 
 
 def get_workshop_token() -> str:
@@ -67,6 +85,38 @@ def set_workshop_token(token: str) -> bool:
             return True
     except Exception as e:
         logging.error(f"Could not write token to blob storage: {e}")
+    return False
+
+
+def get_mcp_bearer_token() -> str:
+    """
+    Get the MCP bearer token from blob storage.
+    Falls back to environment variable if blob storage is empty.
+    """
+    try:
+        blob_client = get_mcp_token_blob_client()
+        if blob_client and blob_client.exists():
+            token = blob_client.download_blob().readall().decode("utf-8").strip()
+            if token:
+                return token
+    except Exception as e:
+        logging.warning(f"Could not read MCP token from blob storage: {e}")
+    
+    # Fall back to environment variable
+    return (os.environ.get("DT_MCP_BEARER_TOKEN") or "").strip()
+
+
+def set_mcp_bearer_token(token: str) -> bool:
+    """
+    Store the MCP bearer token in blob storage.
+    """
+    try:
+        blob_client = get_mcp_token_blob_client()
+        if blob_client:
+            blob_client.upload_blob(token.encode("utf-8"), overwrite=True)
+            return True
+    except Exception as e:
+        logging.error(f"Could not write MCP token to blob storage: {e}")
     return False
 
 
@@ -118,8 +168,8 @@ def get_credentials(req: func.HttpRequest) -> func.HttpResponse:
     azure_openai_embedding_deployment = (os.environ.get("AZURE_OPENAI_EMBEDDING_DEPLOYMENT") or "text-embedding-ada-002").strip()
     azure_openai_api_version = (os.environ.get("AZURE_OPENAI_API_VERSION") or "2024-08-01-preview").strip()
     
-    # Dynatrace MCP Bearer Token for Lab 3
-    dt_mcp_bearer_token = (os.environ.get("DT_MCP_BEARER_TOKEN") or "").strip()
+    # Dynatrace MCP Bearer Token for Lab 3 (from blob storage or fallback to env var)
+    dt_mcp_bearer_token = get_mcp_bearer_token()
     
     # Validate configuration
     if not valid_token:
@@ -315,3 +365,82 @@ def get_current_token(req: func.HttpRequest) -> func.HttpResponse:
         status_code=200,
         mimetype="application/json"
     )
+
+
+@app.route(route="update-mcp-token", methods=["POST"], auth_level=func.AuthLevel.ANONYMOUS)
+def update_mcp_token(req: func.HttpRequest) -> func.HttpResponse:
+    """
+    Update the Dynatrace MCP bearer token. Requires admin secret for authentication.
+    
+    Request body:
+    {
+        "admin_secret": "the-admin-secret",
+        "mcp_token": "the-dynatrace-platform-token"
+    }
+    
+    Response (success):
+    {
+        "success": true,
+        "message": "MCP bearer token updated successfully"
+    }
+    """
+    logging.info("MCP token update request received")
+    
+    # Get admin secret from environment
+    admin_secret = (os.environ.get("ADMIN_SECRET") or "").strip()
+    
+    if not admin_secret:
+        logging.error("ADMIN_SECRET not configured in App Settings")
+        return func.HttpResponse(
+            json.dumps({"error": "Server configuration error. ADMIN_SECRET not set."}),
+            status_code=500,
+            mimetype="application/json"
+        )
+    
+    # Parse request
+    try:
+        req_body = req.get_json()
+        provided_secret = req_body.get("admin_secret", "")
+        new_mcp_token = req_body.get("mcp_token", "").strip()
+    except (ValueError, AttributeError):
+        return func.HttpResponse(
+            json.dumps({"error": "Invalid request body. Expected JSON with 'admin_secret' and 'mcp_token'."}),
+            status_code=400,
+            mimetype="application/json"
+        )
+    
+    # Validate admin secret
+    if not provided_secret or not constant_time_compare(provided_secret, admin_secret):
+        logging.warning("Invalid admin secret attempt for MCP token update")
+        time.sleep(1)  # Delay to prevent brute force
+        return func.HttpResponse(
+            json.dumps({"error": "Unauthorized"}),
+            status_code=401,
+            mimetype="application/json"
+        )
+    
+    # Validate new token
+    if not new_mcp_token or len(new_mcp_token) < 10:
+        return func.HttpResponse(
+            json.dumps({"error": "MCP token must be at least 10 characters"}),
+            status_code=400,
+            mimetype="application/json"
+        )
+    
+    # Store the new token
+    if set_mcp_bearer_token(new_mcp_token):
+        logging.info("MCP bearer token updated successfully")
+        return func.HttpResponse(
+            json.dumps({
+                "success": True,
+                "message": "MCP bearer token updated successfully"
+            }),
+            status_code=200,
+            mimetype="application/json"
+        )
+    else:
+        return func.HttpResponse(
+            json.dumps({"error": "Failed to store MCP token. Check storage configuration."}),
+            status_code=500,
+            mimetype="application/json"
+        )

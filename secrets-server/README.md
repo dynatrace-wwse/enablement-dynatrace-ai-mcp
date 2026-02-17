@@ -208,12 +208,40 @@ Get the current workshop token. Requires admin authentication. Useful for instru
 }
 ```
 
+### POST /api/update-mcp-token
+
+Update the Dynatrace MCP bearer token. Requires admin authentication. Used by the "Update MCP Token" GitHub Action.
+
+**Request:**
+```json
+{
+  "admin_secret": "your-admin-secret",
+  "mcp_token": "your-dynatrace-platform-token"
+}
+```
+
+**Success Response (200):**
+```json
+{
+  "success": true,
+  "message": "MCP bearer token updated successfully"
+}
+```
+
+**Error Response (401):**
+```json
+{
+  "error": "Unauthorized"
+}
+```
+
 ## Security Considerations
 
 - Tokens are compared using constant-time comparison to prevent timing attacks
 - A small delay is added on failed attempts to slow brute-force attacks
 - Azure OpenAI credentials are stored in Azure Function App Settings (encrypted at rest)
-- Workshop tokens are stored in Azure Blob Storage (using the function's built-in storage account)
-- The `ADMIN_SECRET` protects the token rotation and retrieval endpoints
+- Workshop tokens and MCP bearer tokens are stored in Azure Blob Storage (using the function's built-in storage account)
+- The `ADMIN_SECRET` protects the token rotation, retrieval, and MCP token update endpoints
 - Rotate the workshop token after each workshop session using the GitHub Action or API
+- The MCP bearer token should be updated when running workshops with different Dynatrace tenants
 - Consider adding rate limiting via Azure API Management for production use

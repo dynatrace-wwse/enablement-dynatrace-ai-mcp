@@ -1,64 +1,157 @@
 # Dynatrace AI Observability Workshop - Instructor Guide
 
-This document provides guidance for instructors running the workshop.
+This document provides comprehensive guidance for instructors running the workshop.
 
-## Pre-Workshop Checklist
+---
 
-### 1 Week Before
+## 🛤️ Choose Your Setup Path
 
+There are **two ways** to run this workshop:
+
+| Path | Best For | What's Provided | What You Provide |
+|------|----------|-----------------|------------------|
+| **Option A: Use Existing Infrastructure** | Most instructors | Azure OpenAI pipeline + secrets server | Dynatrace tenant + collaborator access |
+| **Option B: Stand Up Your Own** | Complete independence | Nothing | Everything (Azure OpenAI + secrets server + Dynatrace) |
+
+---
+
+## Option A: Use Existing Infrastructure (Recommended)
+
+This is the **fastest and easiest way** to run the workshop. The Azure OpenAI resources and secrets server are already deployed and running at `workshop-secrets-server.azurewebsites.net`.
+
+### Prerequisites
+
+| Requirement | Details |
+|-------------|---------|
+| **Collaborator Access** | ⚠️ **Required!** You must be added as a collaborator on the [dynatrace-ai-mcp-workshop](https://github.com/sudosmitty/dynatrace-ai-mcp-workshop) repository to rotate workshop tokens via GitHub Actions. Contact the repository owner to request access. |
+| **Dynatrace Environment** | Your own playground/demo tenant for attendees to send traces to |
+| **GitHub Account** | With Codespaces enabled |
+
+### How It Works
+
+1. **Azure OpenAI** — Already provisioned with `gpt-4o` and `text-embedding-3-large` deployments
+2. **Secrets Server** — Already deployed and running, distributes Azure OpenAI credentials to attendees
+3. **Token Rotation** — You rotate the workshop token via GitHub Actions (requires collaborator access)
+4. **Dynatrace** — You provide your own Dynatrace tenant and API token to attendees
+
+### Create Dynatrace Platform Token for MCP (Option A)
+
+> ⚠️ **Required for Lab 3 (MCP)!** Attendees need this token to use the Dynatrace Remote MCP server.
+
+1. In your Dynatrace tenant, go to **Access tokens** (Settings → Access tokens)
+2. Create a new **Platform token** with these scopes:
+   - `mcp-gateway:servers:invoke`
+   - `mcp-gateway:servers:read`
+   - `davis:analyzers:read`
+   - `davis:analyzers:execute`
+   - `davis-copilot:conversations:execute`
+   - `davis-copilot:nl2dql:execute`
+   - `davis-copilot:dql2nl:execute`
+   - `davis-copilot:document-search:execute`
+   - `storage:events:read`
+   - `storage:metrics:read`
+   - `storage:logs:read`
+   - `storage:buckets:read`
+   - `storage:files:read`
+   - `storage:security.events:read`
+   - `storage:entities:read`
+   - `storage:spans:read`
+   - `storage:bizevents:read`
+   - `storage:smartscape:read`
+3. Copy the token value
+4. **Add to Secrets Server:** Use the **"Update MCP Token"** GitHub Action:
+   - Go to **Actions** → **Update MCP Token**
+   - Click **Run workflow**
+   - Paste your Dynatrace Platform token
+   - Click **Run workflow**
+
+The `fetch-secrets.sh` script will automatically distribute this token to attendees along with the Azure OpenAI credentials.
+
+### Pre-Workshop Checklist (Option A)
+
+#### 1 Week Before
+
+- [ ] **Verify collaborator access** — Confirm you can see the **Actions** tab and run workflows in the repository
 - [ ] Verify Dynatrace playground tenant access
-- [ ] Create API token with required permissions
-- [ ] Verify Azure OpenAI resource is provisioned and accessible
-- [ ] Verify the secrets server Azure Function is accessible (already deployed at `workshop-secrets-server.azurewebsites.net`)
+- [ ] Create Dynatrace API token with required permissions (for OTLP traces)
+- [ ] **Create Dynatrace Platform token for MCP** (see above) and update secrets server
 - [ ] Test Codespace creation end-to-end
 - [ ] Prepare attendee credential sharing document
 
-> **Important:** Attendees share the same repository—they don't fork it. Each attendee launches their own isolated Codespace environment where all code modifications stay private to their session.
-
-### Day Before
+#### Day Before
 
 - [ ] Verify Dynatrace tenant is accessible
 - [ ] Test API token is working
-- [ ] Verify Azure OpenAI deployments are responding
-- [ ] Generate a new workshop token and update the secrets server
+- [ ] **Rotate workshop token** using the GitHub Action (see below)
 - [ ] Test the full flow: Codespace → workshop token → app runs
 - [ ] Prepare backup credentials if needed
 - [ ] Send reminder to attendees with GitHub account requirements
 
-### Day Of
+#### Day Of
 
 - [ ] Verify all systems operational
 - [ ] Have backup plans ready
 - [ ] Prepare screen sharing for demos
 - [ ] Have troubleshooting guide handy
 
+### Rotating the Workshop Token (Option A)
+
+> ⚠️ **You must be a repository collaborator to run this GitHub Action.**
+
+1. Go to the repository's **Actions** tab
+2. Select **"Rotate Workshop Token"** workflow
+3. Click **"Run workflow"**
+4. Enter a custom token (e.g., `dynatrace2026`) or leave empty to auto-generate
+5. Click **"Run workflow"**
+6. View the workflow summary to see the new token
+
+> 💡 **Tip:** Use simple, memorable words that are easy to share verbally and type correctly.
+
+If you cannot see the **Actions** tab or cannot run workflows, you need to request collaborator access from the repository owner.
+
 ---
 
-## Secrets Server Setup
+## Option B: Stand Up Your Own Infrastructure
 
-The workshop uses an Azure Function to securely distribute Azure OpenAI credentials to attendees. This avoids sharing raw API keys and allows token rotation per workshop.
+Choose this option if you want **complete independence** — using your own Azure OpenAI resources, secrets server, and Dynatrace tenant. This is ideal for organizations that want to run the workshop entirely on their own infrastructure.
 
-> **Note:** The secrets server is already deployed at `https://workshop-secrets-server.azurewebsites.net`. You typically do **not** need to redeploy it. The sections below are provided for reference in case you need to set up a new instance or troubleshoot the existing one.
+### Prerequisites
 
-### Initial Deployment (Reference Only - Already Deployed)
+| Requirement | Details |
+|-------------|---------|
+| **Azure Subscription** | With permissions to create Azure OpenAI and Azure Functions resources |
+| **Dynatrace Environment** | Your own tenant |
+| **GitHub Repository** | Fork this repository for your own use |
+
+### Infrastructure Components to Deploy
+
+#### 1. Azure OpenAI Resource
+
+Deploy an Azure OpenAI resource with these model deployments:
+
+| Deployment Name | Model | Purpose |
+|-----------------|-------|---------|
+| `gpt-4o` (or similar) | GPT-4o | Chat completions |
+| `dynatraceRAG` | `text-embedding-3-large` | Document embeddings |
+
+> **Critical:** Use API version `2025-07-01-preview` — other versions may return 404 errors.
+
+#### 2. Secrets Server (Azure Function)
+
+Deploy the secrets server from the `secrets-server/` directory. See [secrets-server/README.md](secrets-server/README.md) for detailed deployment instructions.
 
 ```bash
-# Login to Azure
-az login
-
-# Create resource group
+# Quick deployment commands
 az group create --name rg-workshop-secrets --location eastus
 
-# Create storage account (required for Azure Functions)
 az storage account create \
   --name stworkshopsecrets \
   --resource-group rg-workshop-secrets \
   --location eastus \
   --sku Standard_LRS
 
-# Create Function App
 az functionapp create \
-  --name workshop-secrets-server \
+  --name YOUR-FUNCTION-APP-NAME \
   --resource-group rg-workshop-secrets \
   --storage-account stworkshopsecrets \
   --consumption-plan-location eastus \
@@ -67,72 +160,82 @@ az functionapp create \
   --functions-version 4 \
   --os-type linux
 
-# Deploy the function
 cd secrets-server
-func azure functionapp publish workshop-secrets-server
+func azure functionapp publish YOUR-FUNCTION-APP-NAME
 ```
 
-### Configure Azure OpenAI Credentials (Reference Only)
+#### 3. Configure Secrets Server
 
-> **Current Configuration:** The secrets server is already configured with the correct Azure OpenAI credentials. Only update these if credentials have changed.
+Configure the Azure OpenAI credentials and Dynatrace MCP token in the function app:
 
 ```bash
 az functionapp config appsettings set \
-  --name workshop-secrets-server \
+  --name YOUR-FUNCTION-APP-NAME \
   --resource-group rg-workshop-secrets \
   --settings \
+    ADMIN_SECRET="your-secure-admin-secret" \
     AZURE_OPENAI_ENDPOINT="https://your-resource.openai.azure.com" \
     AZURE_OPENAI_API_KEY="your-azure-openai-api-key" \
     AZURE_OPENAI_CHAT_DEPLOYMENT="gpt-4o" \
     AZURE_OPENAI_EMBEDDING_DEPLOYMENT="dynatraceRAG" \
-    AZURE_OPENAI_API_VERSION="2025-07-01-preview"
+    AZURE_OPENAI_API_VERSION="2024-08-01-preview" \
+    DT_MCP_BEARER_TOKEN="your-dynatrace-platform-token"
 ```
 
-> **Critical:** The API version must be `2025-07-01-preview` - newer versions return 404 errors. The embedding deployment uses `text-embedding-3-large` under the name `dynatraceRAG`.
+> **Important:** The `DT_MCP_BEARER_TOKEN` is a Dynatrace Platform token required for Lab 3 (MCP). See the "Create Dynatrace Platform Token for MCP" section under Option A for the full list of required scopes.
+>
+> **Note for Option B:** You can set the MCP token either via the `az functionapp config appsettings` command above (for initial setup) or via the **"Update MCP Token"** GitHub Action in your forked repository (for updates). The MCP token is stored in blob storage and distributed automatically via `fetch-secrets.sh`.
 
-### Generate Workshop Token (Per Workshop)
+#### 4. Configure Your Forked Repository
 
-You can rotate the workshop token using the GitHub Actions workflow or manually via Azure CLI.
+In your forked repository, set up GitHub Actions secrets and variables:
 
-#### Option A: GitHub Actions (Recommended)
+| Type | Name | Description |
+|------|------|-------------|
+| Secret | `ADMIN_SECRET` | Must match the `ADMIN_SECRET` in your Azure Function App Settings |
+| Variable | `AZURE_FUNCTION_APP_NAME` | Your function app name (e.g., `my-workshop-secrets-server`) |
 
-1. Go to the repository's **Actions** tab
-2. Select **"Rotate Workshop Token"** workflow
-3. Click **"Run workflow"**
-4. Enter a custom token (e.g., `dynatrace2026`)
-5. Click **"Run workflow"**
-6. View the workflow summary to see the new token
+#### 5. Update Codespace Configuration
 
-#### Option B: Azure CLI (Manual)
+Modify `.devcontainer/fetch-secrets.sh` to point to your secrets server:
 
 ```bash
-# Use a simple word or phrase - easy to share verbally!
-# Examples: dynatrace2026, aiworkshop, observability
-NEW_TOKEN="dynatrace2026"
+# Change this line:
+SECRETS_URL="https://workshop-secrets-server.azurewebsites.net/api/get-credentials"
 
-# Update the function app setting
-az functionapp config appsettings set \
-  --name workshop-secrets-server \
-  --resource-group rg-workshop-secrets \
-  --settings WORKSHOP_TOKEN="$NEW_TOKEN"
-
-echo "Workshop Token: $NEW_TOKEN"
+# To your function app URL:
+SECRETS_URL="https://YOUR-FUNCTION-APP-NAME.azurewebsites.net/api/get-credentials"
 ```
 
-> **Tip:** Use simple, memorable words that are easy to share verbally and type correctly.
-
-### Verify Setup
+#### 6. Verify Your Setup
 
 ```bash
-# Test the endpoint
-curl -X POST https://workshop-secrets-server.azurewebsites.net/api/get-credentials \
+curl -X POST https://YOUR-FUNCTION-APP-NAME.azurewebsites.net/api/get-credentials \
   -H "Content-Type: application/json" \
   -d '{"workshop_token": "YOUR_TOKEN_HERE"}'
 ```
 
+### Pre-Workshop Checklist (Option B)
+
+#### 1 Week Before
+
+- [ ] Deploy and test Azure OpenAI resource
+- [ ] Deploy and test secrets server
+- [ ] Configure GitHub Actions secrets/variables in your fork
+- [ ] Verify Dynatrace tenant access
+- [ ] Create Dynatrace API token with required permissions (for OTLP traces)
+- [ ] **Create Dynatrace Platform token for MCP** and add to secrets server as `DT_MCP_BEARER_TOKEN`
+- [ ] Test end-to-end flow
+
+#### Day Before
+
+- [ ] Rotate workshop token via your GitHub Actions
+- [ ] Test full flow: Codespace → workshop token → app runs
+- [ ] Verify all Azure resources are operational
+
 ---
 
-## How Secrets Work
+## How Secrets Work (Both Options)
 
 The workshop uses a security-first approach to credential distribution:
 
@@ -262,6 +365,14 @@ Create a simple slide or document to share with attendees:
 1. Verify the workshop token on your slide matches the one configured in the secrets server
 2. Check for copy/paste errors (extra spaces, missing characters)
 3. Have attendee re-run: `bash .devcontainer/fetch-secrets.sh`
+
+### Cannot Run GitHub Action (Token Rotation)
+
+**Symptom:** Cannot see or run the "Rotate Workshop Token" workflow
+**Solution:**
+1. **Verify you have collaborator access** to the repository
+2. Contact the repository owner to be added as a collaborator
+3. If using your own fork (Option B), verify GitHub Actions secrets are configured
 
 ### No Traces in Dynatrace
 
