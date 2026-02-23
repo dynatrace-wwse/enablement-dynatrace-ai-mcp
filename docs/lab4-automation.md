@@ -118,7 +118,7 @@ fetch spans
 
 {% raw %}
 ```
-🚨 AI Token Alert - sudosmitty
+🚨 AI Token Alert - {YOUR_ATTENDEE_ID}
 
 Token usage exceeded threshold!
 
