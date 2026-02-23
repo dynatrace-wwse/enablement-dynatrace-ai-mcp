@@ -381,11 +381,11 @@ including: affected service, error types, error rate, and preliminary root cause
 
 Want to make use of Dynatrace Intelligence before even setting up the MCP? *Try it out directly in the Dynatrace UI.*
 
-1. Open Dynatrace
-2. Find **✨ Assist** in the left-hand menu
+1. Open a Dynatrace Notebook
+2. Add a **✨ Prompt** tile
 3. Try out the following question: 
 ```
-What errors are impacting the ai-chat-service-{YOUR_ATTENDEE_ID} service today? Check the spans
+I would like to see top 5 spans summarized by token usage and span name for service "ai-chat-service-{YOUR_ATTENDEE_ID}" in descending order
 ```
 
 > **Pro tip:** This is just one example. Dynatrace Intelligence is available in several parts of the platform including the Problems app, Notebooks and Dashboards, Logs app, Databases app, and more!
