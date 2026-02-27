@@ -262,7 +262,7 @@ fetch dt.system.files
 ```
 //Find the Biggest Token Spenders and Understand What Percentage of Token Limits are Used
 fetch spans
-| filter service.name == "ai-chat-service-clydeanderson"
+| filter service.name == "ai-chat-service-{YOUR_ATTENDEE_ID}"
 | filter isNotNull(gen_ai.usage.input_tokens)
 | summarize 
     total_input = sum(gen_ai.usage.input_tokens),
