@@ -139,8 +139,7 @@ Let's make sure everything is working before we add instrumentation.
 In your VS Code terminal, run:
 
 ```bash
-cd app
-python main.py
+python app/main.py
 ```
 
 ### 3.2 Expected Output
