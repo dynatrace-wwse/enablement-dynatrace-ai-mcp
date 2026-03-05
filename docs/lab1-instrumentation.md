@@ -160,8 +160,7 @@ Now let's restart the application with instrumentation enabled.
 If the application is still running, stop it with `Ctrl+C`, then start it again:
 
 ```bash
-cd app
-python main.py
+python app/main.py
 ```
 
 ### 4.2 Verify Instrumentation

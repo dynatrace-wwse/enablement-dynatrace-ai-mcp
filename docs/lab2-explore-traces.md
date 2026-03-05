@@ -270,14 +270,14 @@ fetch spans
     avg_input = avg(gen_ai.usage.input_tokens),
     avg_output = avg(gen_ai.usage.output_tokens),
     request_count = count(),
-  by: {gen_ai.request.model}
+  by: {gen_ai.response.model}
 | fieldsAdd total_tokens = total_input + total_output
-| lookup [load "/lookups/ai/azure-openai/model-max-tokens"], sourceField:gen_ai.request.model, lookupField:model
+| lookup [load "/lookups/ai/azure-openai/model-max-tokens"], sourceField:gen_ai.response.model, lookupField:model
 | filter isNotNull(lookup.model)
 | fieldsAdd input_token_usage_percent = (avg_input / lookup.max.tokens.input)*100
 | fieldsAdd output_token_usage_percent = (avg_output / lookup.max.tokens.output)*100
 | fieldsRemove "lookup*"
-| fields gen_ai.request.model, request_count, total_input, total_output, avg_input, avg_output, input_token_usage_percent, output_token_usage_percent
+| fields gen_ai.response.model, request_count, total_input, total_output, avg_input, avg_output, input_token_usage_percent, output_token_usage_percent
 ```
 
 </div>
@@ -303,8 +303,8 @@ Dynatrace Notebooks provide powerful querying capabilities for AI observability.
 //Model Usage Distribution
 fetch spans
 | filter service.name == "ai-chat-service-{YOUR_ATTENDEE_ID}"
-| filter isNotNull(gen_ai.request.model)
-| summarize request_count = count(), by: {gen_ai.request.model}
+| filter isNotNull(gen_ai.response.model)
+| summarize request_count = count(), by: {gen_ai.response.model}
 | sort request_count desc
 ```
 
@@ -368,9 +368,10 @@ fetch spans
     total_output = sum(gen_ai.usage.output_tokens),
     avg_input = avg(gen_ai.usage.input_tokens),
     request_count = count(),
-    by: {gen_ai.request.model}
+    by: {gen_ai.response.model}
 | fieldsAdd total_tokens = total_input + total_output
-| lookup [load "/lookups/ai/azure-openai/model-costs"], sourceField:gen_ai.request.model, lookupField:model
+| lookup [load "/lookups/ai/azure-openai/model-costs"], sourceField:gen_ai.response.model, lookupField:model
+| filter isNotNull(lookup.model)
 | fieldsAdd estimated_cost_usd = (total_input * lookup.input.cost + total_output * if(isNull(lookup.output.cost),0.00,else:lookup.output.cost)) / 1000000
 | fieldsRemove "lookup*"
 | sort estimated_cost_usd desc
