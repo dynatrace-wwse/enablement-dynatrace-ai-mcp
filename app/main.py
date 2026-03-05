@@ -647,7 +647,8 @@ def initialize_rag():
             api_key=AZURE_OPENAI_API_KEY,
             azure_deployment=AZURE_OPENAI_CHAT_DEPLOYMENT,
             api_version=AZURE_OPENAI_API_VERSION,
-            temperature=0.7
+            temperature=0.7,
+            model=AZURE_OPENAI_CHAT_DEPLOYMENT
         )
         
         # Create prompt template (uses extended system prompt for caching)
@@ -791,7 +792,8 @@ async def chat(request: ChatRequest):
                 api_key=AZURE_OPENAI_API_KEY,
                 azure_deployment=AZURE_OPENAI_CHAT_DEPLOYMENT,
                 api_version=AZURE_OPENAI_API_VERSION,
-                temperature=0.7
+                temperature=0.7,
+                model=AZURE_OPENAI_CHAT_DEPLOYMENT
             )
             response = direct_llm.invoke(request.message)
             response_text = response.content
