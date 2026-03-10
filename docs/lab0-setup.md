@@ -71,7 +71,7 @@ You'll be prompted for:
 Enter your attendee ID (e.g., your name or initials, no spaces) [press enter to generate]: {YOUR_ATTENDEE_ID}
 ✅ Attendee ID: {YOUR_ATTENDEE_ID}
 
-Enter your workshop token: dynatrace2026
+Enter your workshop token: *INSTRUCTOR PROVIDED*
 ✅ Azure OpenAI credentials configured!
 ```
 
