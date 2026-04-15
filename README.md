@@ -1,5 +1,8 @@
 # 🎯 Dynatrace AI Observability & MCP Workshop
 
+> [!IMPORTANT]  
+> Collaborators are not being added, and the workshop token is not being rotated to avoid impacting active workshops. Please contact the internal team to obtain the current workshop token.
+
 A hands-on workshop for learning AI/LLM observability with Dynatrace and the Model Context Protocol (MCP).
 
 ---
