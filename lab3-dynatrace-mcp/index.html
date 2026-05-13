@@ -1,0 +1,2102 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../lab2-explore-traces/">
+      
+      
+        <link rel="next" href="../lab4-automation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Lab 3: Dynatrace MCP - Dynatrace AI Observability & MCP Workshop</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+  
+      
+    
+  
+
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lab-3-using-dynatrace-mcp-for-agentic-ai" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Dynatrace AI Observability &amp; MCP Workshop" class="md-header__button md-logo" aria-label="Dynatrace AI Observability & MCP Workshop" data-md-component="logo">
+      
+  <img src="https://cdn.bfldr.com/B686QPH3/at/w5hnjzb32k5wcrcxnwcx4ckg/Dynatrace_signet_RGB_HTML.svg?auto=webp&format=pngg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Dynatrace AI Observability & MCP Workshop
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lab 3: Dynatrace MCP
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dynatrace-wwse/enablement-dynatrace-ai-mcp" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    View Code on GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Dynatrace AI Observability &amp; MCP Workshop" class="md-nav__button md-logo" aria-label="Dynatrace AI Observability & MCP Workshop" data-md-component="logo">
+      
+  <img src="https://cdn.bfldr.com/B686QPH3/at/w5hnjzb32k5wcrcxnwcx4ckg/Dynatrace_signet_RGB_HTML.svg?auto=webp&format=pngg" alt="logo">
+
+    </a>
+    Dynatrace AI Observability & MCP Workshop
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dynatrace-wwse/enablement-dynatrace-ai-mcp" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    View Code on GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab0-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 0: Environment Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab1-instrumentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 1: AI Instrumentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab2-explore-traces/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 2: Explore Traces
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 3: Dynatrace MCP
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 3: Dynatrace MCP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Objectives
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is MCP?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-configure-the-dynatrace-mcp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Configure the Dynatrace MCP Server
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: Configure the Dynatrace MCP Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-open-the-mcp-configuration-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Open the MCP Configuration File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-update-your-dynatrace-tenant-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Update Your Dynatrace Tenant URL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-reload-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Reload VS Code
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-verify-mcp-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Verify MCP Connection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2: Verify MCP Connection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-open-github-copilot-chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Open GitHub Copilot Chat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-test-the-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Test the Connection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynatrace-intelligence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dynatrace Intelligence ✨
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choose-your-persona" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choose Your Persona
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#developer-i-want-to-debug-without-leaving-my-ide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 Developer: "I want to debug without leaving my IDE"
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="💻 Developer: &#34;I want to debug without leaving my IDE&#34;">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-3-query-your-ai-service-developer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Query Your AI Service (Developer)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3: Query Your AI Service (Developer)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-find-your-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Find Your Service
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-analyze-token-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Analyze Token Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-debug-while-you-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Debug While You Code
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-agentic-debugging-workflows-developer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Agentic Debugging Workflows (Developer)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4: Agentic Debugging Workflows (Developer)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-find-the-bottleneck" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Find the Bottleneck
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-proactive-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Proactive Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-debugging-assistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Debugging Assistance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-44-investigate-errors-with-mcp-developer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4.4: Investigate Errors with MCP (Developer)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4.4: Investigate Errors with MCP (Developer)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generate Errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find-your-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Find Your Errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#view-log-entries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        View Log Entries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deep-dive-on-a-specific-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep Dive on a Specific Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-root-cause-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get Root Cause Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sreplatform-i-need-faster-incident-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔧 SRE/Platform: "I need faster incident response"
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔧 SRE/Platform: &#34;I need faster incident response&#34;">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-5-query-your-ai-service-sre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Query Your AI Service (SRE)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 5: Query Your AI Service (SRE)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-find-your-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Find Your Service
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-check-for-anomalies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Check for Anomalies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-analyze-token-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Analyze Token Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-agentic-incident-response-sre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Agentic Incident Response (SRE)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 6: Agentic Incident Response (SRE)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-incident-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Incident Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-service-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Service Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-capacity-planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Capacity Planning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-64-error-triage-with-mcp-sre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6.4: Error Triage with MCP (SRE)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 6.4: Error Triage with MCP (SRE)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-errors_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generate Errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rapid-error-assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rapid Error Assessment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analyze-error-timeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analyze Error Timeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#root-cause-with-dynatrace-intelligence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Root Cause with Dynatrace Intelligence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-incident-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create Incident Communication
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bonus-dynatrace-intelligence-in-the-dynatrace-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bonus: Dynatrace Intelligence in the Dynatrace Platform
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-beyond-the-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going Beyond the Basics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Going Beyond the Basics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#developer-propose-fix-regressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 Developer: Propose &amp; Fix Regressions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sre-agentic-incident-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔧 SRE: Agentic Incident Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-mcp-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: MCP Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checkpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checkpoint
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab4-automation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 4: Workflow Automation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Objectives
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is MCP?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-configure-the-dynatrace-mcp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Configure the Dynatrace MCP Server
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: Configure the Dynatrace MCP Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-open-the-mcp-configuration-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Open the MCP Configuration File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-update-your-dynatrace-tenant-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Update Your Dynatrace Tenant URL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-reload-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Reload VS Code
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-verify-mcp-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Verify MCP Connection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2: Verify MCP Connection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-open-github-copilot-chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Open GitHub Copilot Chat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-test-the-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Test the Connection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynatrace-intelligence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dynatrace Intelligence ✨
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choose-your-persona" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choose Your Persona
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#developer-i-want-to-debug-without-leaving-my-ide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 Developer: "I want to debug without leaving my IDE"
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="💻 Developer: &#34;I want to debug without leaving my IDE&#34;">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-3-query-your-ai-service-developer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Query Your AI Service (Developer)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3: Query Your AI Service (Developer)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-find-your-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Find Your Service
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-analyze-token-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Analyze Token Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-debug-while-you-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Debug While You Code
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-agentic-debugging-workflows-developer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Agentic Debugging Workflows (Developer)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4: Agentic Debugging Workflows (Developer)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-find-the-bottleneck" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Find the Bottleneck
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-proactive-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Proactive Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-debugging-assistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Debugging Assistance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-44-investigate-errors-with-mcp-developer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4.4: Investigate Errors with MCP (Developer)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4.4: Investigate Errors with MCP (Developer)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generate Errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find-your-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Find Your Errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#view-log-entries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        View Log Entries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deep-dive-on-a-specific-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep Dive on a Specific Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-root-cause-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get Root Cause Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sreplatform-i-need-faster-incident-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔧 SRE/Platform: "I need faster incident response"
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔧 SRE/Platform: &#34;I need faster incident response&#34;">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-5-query-your-ai-service-sre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Query Your AI Service (SRE)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 5: Query Your AI Service (SRE)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-find-your-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Find Your Service
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-check-for-anomalies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Check for Anomalies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-analyze-token-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Analyze Token Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-agentic-incident-response-sre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Agentic Incident Response (SRE)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 6: Agentic Incident Response (SRE)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-incident-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Incident Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-service-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Service Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-capacity-planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Capacity Planning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-64-error-triage-with-mcp-sre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6.4: Error Triage with MCP (SRE)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 6.4: Error Triage with MCP (SRE)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-errors_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generate Errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rapid-error-assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rapid Error Assessment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analyze-error-timeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analyze Error Timeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#root-cause-with-dynatrace-intelligence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Root Cause with Dynatrace Intelligence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-incident-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create Incident Communication
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bonus-dynatrace-intelligence-in-the-dynatrace-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bonus: Dynatrace Intelligence in the Dynatrace Platform
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-beyond-the-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going Beyond the Basics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Going Beyond the Basics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#developer-propose-fix-regressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 Developer: Propose &amp; Fix Regressions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sre-agentic-incident-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔧 SRE: Agentic Incident Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-mcp-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: MCP Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checkpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checkpoint
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="lab-3-using-dynatrace-mcp-for-agentic-ai">Lab 3: Using Dynatrace MCP for Agentic AI<a class="headerlink" href="#lab-3-using-dynatrace-mcp-for-agentic-ai" title="Permanent link">#</a></h1>
+<p><strong>Duration:</strong> ~30 minutes</p>
+<p>In this lab, you'll configure and use the Dynatrace MCP (Model Context Protocol) server to interact with Dynatrace directly from your IDE using AI assistants like GitHub Copilot.</p>
+<hr />
+<h2 id="learning-objectives">Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">#</a></h2>
+<ul>
+<li>Understand what MCP is and how it enables agentic AI</li>
+<li>Configure the Dynatrace MCP server in VS Code</li>
+<li>Use natural language to query Dynatrace from VS Code</li>
+<li>Analyze problems and traces using AI assistance</li>
+<li>Explore real-world use cases for observability-driven AI</li>
+</ul>
+<hr />
+<h2 id="what-is-mcp">What is MCP?<a class="headerlink" href="#what-is-mcp" title="Permanent link">#</a></h2>
+<p><strong>Model Context Protocol (MCP)</strong> is an open standard that allows AI assistants to interact with external tools and data sources. With Dynatrace MCP, you can:</p>
+<ul>
+<li>Query Dynatrace using natural language</li>
+<li>Analyze problems and incidents</li>
+<li>Retrieve metrics, traces, and logs</li>
+<li>Get AI-powered insights about your applications</li>
+</ul>
+<p>Think of it as giving your AI assistant <strong>direct access to Dynatrace</strong>!</p>
+<div class="admonition tip">
+<p class="admonition-title">Why Dynatrace MCP is Different</p>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>Basic AI Assistants</th>
+<th>Dynatrace MCP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Query observability data</td>
+<td>❌ No access</td>
+<td>✅ Natural language queries</td>
+</tr>
+<tr>
+<td>Correlate AI + infrastructure</td>
+<td>❌ Separate tools</td>
+<td>✅ Unified view via Davis AI</td>
+</tr>
+<tr>
+<td>Root cause analysis</td>
+<td>❌ You investigate</td>
+<td>✅ Davis AI explains issues</td>
+</tr>
+<tr>
+<td>Take action</td>
+<td>❌ Copy/paste to other tools</td>
+<td>✅ Trigger workflows from IDE</td>
+</tr>
+<tr>
+<td>Business context</td>
+<td>❌ Technical data only</td>
+<td>✅ Link tokens to user impact</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="step-1-configure-the-dynatrace-mcp-server">Step 1: Configure the Dynatrace MCP Server<a class="headerlink" href="#step-1-configure-the-dynatrace-mcp-server" title="Permanent link">#</a></h2>
+<h3 id="11-open-the-mcp-configuration-file">1.1 Open the MCP Configuration File<a class="headerlink" href="#11-open-the-mcp-configuration-file" title="Permanent link">#</a></h3>
+<p>In VS Code, open <code>.vscode/mcp.json</code>. You'll see:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;servers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Dynatrace-MCP&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sse&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://YOUR_TENANT_ID.apps.dynatrace.com/platform-reserved/mcp-gateway/v0.1/servers/dynatrace-mcp/mcp&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;Authorization&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bearer ${env:DT_MCP_BEARER_TOKEN}&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="12-update-your-dynatrace-tenant-url">1.2 Update Your Dynatrace Tenant URL<a class="headerlink" href="#12-update-your-dynatrace-tenant-url" title="Permanent link">#</a></h3>
+<p>Replace <code>YOUR_TENANT_ID</code> with your actual Dynatrace environment ID:</p>
+<ul>
+<li>If your Dynatrace URL is <code>https://abc12345.apps.dynatrace.com</code></li>
+<li>Then your URL becomes: <code>https://abc12345.apps.dynatrace.com/platform-reserved/mcp-gateway/v0.1/servers/dynatrace-mcp/mcp</code></li>
+</ul>
+<p>Save the file.</p>
+<div class="admonition info">
+<p class="admonition-title">About the Authorization Token</p>
+<p>The <code>${env:DT_MCP_BEARER_TOKEN}</code> is automatically configured by the <code>fetch-secrets.sh</code> script you ran in Lab 0. No need to set it manually.</p>
+</div>
+<h3 id="13-reload-vs-code">1.3 Reload VS Code<a class="headerlink" href="#13-reload-vs-code" title="Permanent link">#</a></h3>
+<p>After saving the configuration:</p>
+<ol>
+<li>Press <code>Ctrl+Shift+P</code> (or <code>Cmd+Shift+P</code> on Mac)</li>
+<li>Run: <strong>Developer: Reload Window</strong></li>
+</ol>
+<hr />
+<h2 id="step-2-verify-mcp-connection">Step 2: Verify MCP Connection<a class="headerlink" href="#step-2-verify-mcp-connection" title="Permanent link">#</a></h2>
+<h3 id="21-open-github-copilot-chat">2.1 Open GitHub Copilot Chat<a class="headerlink" href="#21-open-github-copilot-chat" title="Permanent link">#</a></h3>
+<ol>
+<li>Click on the Copilot icon on the top bar</li>
+<li>Or use: <code>Cmd+Shift+I</code> (Mac) / <code>Ctrl+Shift+I</code> (Windows)</li>
+</ol>
+<h3 id="22-test-the-connection">2.2 Test the Connection<a class="headerlink" href="#22-test-the-connection" title="Permanent link">#</a></h3>
+<p>In the Copilot chat, type:</p>
+<div class="highlight"><pre><span></span><code>@dynatrace What services are available in my environment?
+</code></pre></div>
+<p>If configured correctly, Copilot will query Dynatrace and return a list of services!</p>
+<hr />
+<h2 id="dynatrace-intelligence">Dynatrace Intelligence ✨<a class="headerlink" href="#dynatrace-intelligence" title="Permanent link">#</a></h2>
+<p>Dynatrace Intelligence provides agentic workflows that go beyond simple queries. When running the queries below, notice how your AI agent interacts with various Dynatrace agents (Grail Query Agent, Data Analysis Agent, Root Cause Agent, etc.).</p>
+<p>Learn more:</p>
+<ul>
+<li><a href="https://www.dynatrace.com/news/blog/dynatrace-intelligence-at-the-core-of-autonomous-operations/">Dynatrace Intelligence — Announcement</a></li>
+<li><a href="https://docs.dynatrace.com/docs/shortlink/dynatrace-intelligence-landing">Dynatrace Intelligence — Documentation</a></li>
+</ul>
+<hr />
+<h2 id="choose-your-persona">Choose Your Persona<a class="headerlink" href="#choose-your-persona" title="Permanent link">#</a></h2>
+<hr />
+<h2 id="developer-i-want-to-debug-without-leaving-my-ide">💻 Developer: "I want to debug without leaving my IDE"<a class="headerlink" href="#developer-i-want-to-debug-without-leaving-my-ide" title="Permanent link">#</a></h2>
+<p><strong>Your story:</strong> You're deep in code, fixing a bug in your RAG pipeline. Every time you need performance data, you context-switch to Dynatrace. With MCP, you can just <em>ask</em>.</p>
+<h3 id="step-3-query-your-ai-service-developer">Step 3: Query Your AI Service (Developer)<a class="headerlink" href="#step-3-query-your-ai-service-developer" title="Permanent link">#</a></h3>
+<h4 id="31-find-your-service">3.1 Find Your Service<a class="headerlink" href="#31-find-your-service" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>@dynatrace Tell me about the service called ai-chat-service-{YOUR_ATTENDEE_ID}
+</code></pre></div>
+<h4 id="32-analyze-token-usage">3.2 Analyze Token Usage<a class="headerlink" href="#32-analyze-token-usage" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>@dynatrace What is the total input and output token usage for spans in regards to the ai-chat-service-{YOUR_ATTENDEE_ID}
+</code></pre></div>
+<h4 id="33-debug-while-you-code">3.3 Debug While You Code<a class="headerlink" href="#33-debug-while-you-code" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>I&#39;m looking at main.py where I call Azure OpenAI.
+@dynatrace What&#39;s the average latency for Azure OpenAI calls from my ai-chat-service-{YOUR_ATTENDEE_ID} service?
+</code></pre></div>
+<hr />
+<h3 id="step-4-agentic-debugging-workflows-developer">Step 4: Agentic Debugging Workflows (Developer)<a class="headerlink" href="#step-4-agentic-debugging-workflows-developer" title="Permanent link">#</a></h3>
+<h4 id="41-find-the-bottleneck">4.1 Find the Bottleneck<a class="headerlink" href="#41-find-the-bottleneck" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>I&#39;m seeing slow responses in my RAG pipeline. 
+@dynatrace Analyze the trace data and tell me which step is the bottleneck for my ai-chat-service-{YOUR_ATTENDEE_ID} service.
+Is it embeddings, vector search, or the LLM call?
+</code></pre></div>
+<h4 id="42-proactive-analysis">4.2 Proactive Analysis<a class="headerlink" href="#42-proactive-analysis" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>@dynatrace Analyze my ai-chat-service-{YOUR_ATTENDEE_ID} service and suggest optimizations to reduce token usage while maintaining response quality
+</code></pre></div>
+<h4 id="43-debugging-assistance">4.3 Debugging Assistance<a class="headerlink" href="#43-debugging-assistance" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>@dynatrace Help me understand why some of my RAG queries might be slow. Look at the trace data for patterns.
+</code></pre></div>
+<hr />
+<h3 id="step-44-investigate-errors-with-mcp-developer">Step 4.4: Investigate Errors with MCP (Developer)<a class="headerlink" href="#step-44-investigate-errors-with-mcp-developer" title="Permanent link">#</a></h3>
+<h4 id="generate-errors">Generate Errors<a class="headerlink" href="#generate-errors" title="Permanent link">#</a></h4>
+<ol>
+<li>Go to your AI Chat Service UI (http://localhost:8000)</li>
+<li>Enable the <strong>🐛 Simulate Errors</strong> toggle</li>
+<li>Send 5-10 messages to trigger various error types</li>
+</ol>
+<p>The app will randomly generate realistic RAG/LLM errors:</p>
+<ul>
+<li><code>EMB_NULL_VECTOR</code>: Embedding service returning null vectors</li>
+<li><code>CHROMA_COLLECTION_ERR</code>: Vector store connection issues</li>
+<li><code>LLM_MALFORMED_RESPONSE</code>: Invalid LLM responses</li>
+<li><code>CTX_WINDOW_EXCEEDED</code>: Context window limit errors</li>
+<li><code>CONTENT_FILTER_BLOCK</code>: Content policy violations</li>
+</ul>
+<h4 id="find-your-errors">Find Your Errors<a class="headerlink" href="#find-your-errors" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>@dynatrace Show me all errors in the last 15 minutes for my ai-chat-service-{YOUR_ATTENDEE_ID} service.
+What error codes are appearing most frequently?
+</code></pre></div>
+<h4 id="view-log-entries">View Log Entries<a class="headerlink" href="#view-log-entries" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>@dynatrace Show me the log entries for EMB_NULL_VECTOR errors in my ai-chat-service-{YOUR_ATTENDEE_ID}.
+Include the error_message, stage, and timestamp for each.
+</code></pre></div>
+<h4 id="deep-dive-on-a-specific-error">Deep Dive on a Specific Error<a class="headerlink" href="#deep-dive-on-a-specific-error" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>@dynatrace I&#39;m seeing CTX_WINDOW_EXCEEDED errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service. 
+Show me the full log details for these errors and explain what&#39;s happening.
+</code></pre></div>
+<h4 id="get-root-cause-analysis">Get Root Cause Analysis<a class="headerlink" href="#get-root-cause-analysis" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>@dynatrace What&#39;s causing the errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service?
+Analyze the error logs and tell me which component is failing most often.
+</code></pre></div>
+<hr />
+<h2 id="sreplatform-i-need-faster-incident-response">🔧 SRE/Platform: "I need faster incident response"<a class="headerlink" href="#sreplatform-i-need-faster-incident-response" title="Permanent link">#</a></h2>
+<p><strong>Your story:</strong> It's 2 AM and you get paged. Instead of fumbling through dashboards, you can ask about the issue.</p>
+<h3 id="step-5-query-your-ai-service-sre">Step 5: Query Your AI Service (SRE)<a class="headerlink" href="#step-5-query-your-ai-service-sre" title="Permanent link">#</a></h3>
+<h4 id="51-find-your-service">5.1 Find Your Service<a class="headerlink" href="#51-find-your-service" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>@dynatrace Tell me about the service called ai-chat-service-{YOUR_ATTENDEE_ID}
+</code></pre></div>
+<h4 id="52-check-for-anomalies">5.2 Check for Anomalies<a class="headerlink" href="#52-check-for-anomalies" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>@dynatrace Are there any anomalies in the last hour for my ai-chat-service-{YOUR_ATTENDEE_ID} service?
+What&#39;s the current error rate and how does it compare to the baseline?
+</code></pre></div>
+<h4 id="53-analyze-token-usage">5.3 Analyze Token Usage<a class="headerlink" href="#53-analyze-token-usage" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>@dynatrace What is the total input and output token usage for spans in regards to the ai-chat-service-{YOUR_ATTENDEE_ID} service?
+</code></pre></div>
+<hr />
+<h3 id="step-6-agentic-incident-response-sre">Step 6: Agentic Incident Response (SRE)<a class="headerlink" href="#step-6-agentic-incident-response-sre" title="Permanent link">#</a></h3>
+<h4 id="61-incident-response">6.1 Incident Response<a class="headerlink" href="#61-incident-response" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>@dynatrace Are there any open problems affecting my ai-chat-service-{YOUR_ATTENDEE_ID} service?
+If so, what&#39;s the root cause and which services are impacted?
+Draft a Slack message summarizing the incident.
+</code></pre></div>
+<h4 id="62-service-architecture">6.2 Service Architecture<a class="headerlink" href="#62-service-architecture" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>@dynatrace Generate a summary of my ai-chat-service-{YOUR_ATTENDEE_ID} service&#39;s architecture based on the service flow data
+</code></pre></div>
+<h4 id="63-capacity-planning">6.3 Capacity Planning<a class="headerlink" href="#63-capacity-planning" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>@dynatrace Analyze my ai-chat-service-{YOUR_ATTENDEE_ID} service and suggest optimizations to reduce token usage while maintaining response quality
+</code></pre></div>
+<hr />
+<h3 id="step-64-error-triage-with-mcp-sre">Step 6.4: Error Triage with MCP (SRE)<a class="headerlink" href="#step-64-error-triage-with-mcp-sre" title="Permanent link">#</a></h3>
+<h4 id="generate-errors_1">Generate Errors<a class="headerlink" href="#generate-errors_1" title="Permanent link">#</a></h4>
+<ol>
+<li>Go to your AI Chat Service UI (http://localhost:8000)</li>
+<li>Enable the <strong>🐛 Simulate Errors</strong> toggle</li>
+<li>Send 10-15 messages rapidly</li>
+</ol>
+<h4 id="rapid-error-assessment">Rapid Error Assessment<a class="headerlink" href="#rapid-error-assessment" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>@dynatrace Give me a quick summary of all errors hitting my ai-chat-service-{YOUR_ATTENDEE_ID} service in the last 15 minutes.
+How many errors occurred? What types? What&#39;s the error rate percentage?
+</code></pre></div>
+<h4 id="analyze-error-timeline">Analyze Error Timeline<a class="headerlink" href="#analyze-error-timeline" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>@dynatrace When did errors start occurring in my ai-chat-service-{YOUR_ATTENDEE_ID} service?
+Show me the timeline of errors over the last 15 minutes.
+</code></pre></div>
+<h4 id="root-cause-with-dynatrace-intelligence">Root Cause with Dynatrace Intelligence<a class="headerlink" href="#root-cause-with-dynatrace-intelligence" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>@dynatrace Analyze the error patterns in my ai-chat-service-{YOUR_ATTENDEE_ID} service.
+What is Dynatrace Intelligence&#39;s assessment of the root cause?
+Which component is the source of the failures?
+</code></pre></div>
+<h4 id="create-incident-communication">Create Incident Communication<a class="headerlink" href="#create-incident-communication" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>@dynatrace I need to communicate an incident to stakeholders.
+Based on the errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service, draft a brief incident summary
+including: affected service, error types, error rate, and preliminary root cause.
+</code></pre></div>
+<hr />
+<h2 id="bonus-dynatrace-intelligence-in-the-dynatrace-platform">Bonus: Dynatrace Intelligence in the Dynatrace Platform<a class="headerlink" href="#bonus-dynatrace-intelligence-in-the-dynatrace-platform" title="Permanent link">#</a></h2>
+<p>Try Dynatrace Intelligence directly in the UI:</p>
+<ol>
+<li>Open a Dynatrace Notebook</li>
+<li>Add a <strong>✨ Prompt</strong> tile</li>
+<li>Try:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>I would like to see top 5 spans summarized by token usage and span name for service &quot;ai-chat-service-{YOUR_ATTENDEE_ID}&quot; in descending order
+</code></pre></div>
+<p>Dynatrace Intelligence is available in: Problems app, Notebooks, Dashboards, Logs app, Databases app, and more.</p>
+<hr />
+<h2 id="going-beyond-the-basics">Going Beyond the Basics<a class="headerlink" href="#going-beyond-the-basics" title="Permanent link">#</a></h2>
+<h3 id="developer-propose-fix-regressions">💻 Developer: Propose &amp; Fix Regressions<a class="headerlink" href="#developer-propose-fix-regressions" title="Permanent link">#</a></h3>
+<div class="highlight"><pre><span></span><code>@dynatrace Look at the error traces for my ai-chat-service-{YOUR_ATTENDEE_ID} service.
+Can you identify which function or code path is causing the failures?
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>@dynatrace Based on the EMB_NULL_VECTOR errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service, 
+what code changes would you recommend to handle this error gracefully?
+Show me a Python code example for proper error handling.
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>@dynatrace Generate a DQL query to find all logs where error_code equals &#39;CTX_WINDOW_EXCEEDED&#39; 
+for my ai-chat-service-{YOUR_ATTENDEE_ID} service in the last hour.
+Explain what the query does.
+</code></pre></div>
+<h3 id="sre-agentic-incident-response">🔧 SRE: Agentic Incident Response<a class="headerlink" href="#sre-agentic-incident-response" title="Permanent link">#</a></h3>
+<div class="highlight"><pre><span></span><code>@dynatrace For the errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service, 
+show me the full dependency map. Which downstream services are affected?
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>@dynatrace Create a comprehensive incident report for the issues affecting 
+my ai-chat-service-{YOUR_ATTENDEE_ID} service. Include:
+- Timeline of when errors started
+- Affected components and their relationships
+- Error counts by type
+- Recommended severity level
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>@dynatrace Generate a DQL query for a dashboard tile that shows:
+- Error rate over time for my ai-chat-service-{YOUR_ATTENDEE_ID} service
+- Breakdown by error_code
+- 5-minute time buckets for the last hour
+</code></pre></div>
+<hr />
+<h2 id="step-7-mcp-best-practices">Step 7: MCP Best Practices<a class="headerlink" href="#step-7-mcp-best-practices" title="Permanent link">#</a></h2>
+<p><strong>Good prompts are specific:</strong></p>
+<p>✅ Good: <code>@dynatrace Show me the P95 response time for my ai-chat-service-{YOUR_ATTENDEE_ID} service over the last 4 hours</code></p>
+<p>❌ Vague: <code>@dynatrace How is my service doing?</code></p>
+<p><strong>Iterative queries — start broad, drill down:</strong></p>
+<ol>
+<li><code>@dynatrace Show me an overview of my AI service</code></li>
+<li><code>@dynatrace What are the slowest endpoints?</code></li>
+<li><code>@dynatrace Why is /chat endpoint slow?</code></li>
+<li><code>@dynatrace Show me slow traces for /chat</code></li>
+</ol>
+<hr />
+<h2 id="checkpoint">Checkpoint<a class="headerlink" href="#checkpoint" title="Permanent link">#</a></h2>
+<ul>
+<li>[ ] Updated <code>YOUR_TENANT_ID</code> in <code>.vscode/mcp.json</code></li>
+<li>[ ] Reloaded VS Code after saving the configuration</li>
+<li>[ ] Can query Dynatrace using <code>@dynatrace</code> in Copilot Chat</li>
+<li>[ ] Retrieved information about your AI service</li>
+<li>[ ] Used 🐛 Simulate Errors to generate test errors</li>
+<li>[ ] Investigated errors using MCP without leaving your IDE</li>
+<li>[ ] Explored Dynatrace Intelligence agentic workflows</li>
+</ul>
+<hr />
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">#</a></h2>
+<p><strong>"@dynatrace not recognized"</strong></p>
+<ol>
+<li>Check that <code>.vscode/mcp.json</code> has the correct tenant URL</li>
+<li>Verify JSON syntax is valid</li>
+<li>Reload VS Code window (<code>Developer: Reload Window</code>)</li>
+</ol>
+<p><strong>"Authentication failed" or "401 Unauthorized"</strong></p>
+<ol>
+<li>Verify your tenant URL in <code>.vscode/mcp.json</code> — format: <code>https://YOUR_ENV_ID.apps.dynatrace.com/...</code></li>
+<li>Verify <code>DT_MCP_BEARER_TOKEN</code> is set: <code>echo $DT_MCP_BEARER_TOKEN</code></li>
+<li>If empty, re-run: <code>bash .devcontainer/fetch-secrets.sh</code></li>
+</ol>
+<p><strong>"No data returned"</strong></p>
+<ol>
+<li>Check your service is sending data to Dynatrace</li>
+<li>Try a simpler query: <code>@dynatrace List all services</code></li>
+</ol>
+<hr />
+<p><a href="../lab2-explore-traces/">← Lab 2: Explore Traces</a> | <a href="../lab4-automation/">Lab 4: Automation →</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.code.annotate", "navigation.instant", "navigation.tracking", "navigation.top", "search.highlight", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
