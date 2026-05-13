@@ -11,3 +11,6 @@ nav:
   - "Lab 3: Dynatrace MCP": lab3-dynatrace-mcp.md
   - "Lab 4: Workflow Automation": lab4-automation.md
   - "Resources": resources.md
+
+extra:
+  rum_snippet: "https://js-cdn.dynatrace.com/jstag/1612cf70810/bf81393wlb/31e645b19c551e22_complete.js"
