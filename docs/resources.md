@@ -1,16 +1,10 @@
----
-layout: default
-title: Resources
-nav_order: 6
----
-
-# 📚 Workshop Resources
+# Workshop Resources
 
 Quick reference links and additional learning materials for Dynatrace AI Observability.
 
 ---
 
-## 🔗 Official Documentation
+## Official Documentation
 
 ### Dynatrace
 
@@ -21,10 +15,11 @@ Quick reference links and additional learning materials for Dynatrace AI Observa
 | Grail & DQL | [DQL Documentation](https://docs.dynatrace.com/docs/platform/grail/dynatrace-query-language) |
 | Dynatrace MCP | [MCP Server Documentation](https://docs.dynatrace.com/docs/platform/davis-ai/mcp) |
 
-### ✨ Dynatrace Intelligence
+### Dynatrace Intelligence
+
 | Resource | Link |
 |----------|------|
-| Blog post | [Announcement](https://www.dynatrace.com/news/blog/dynatrace-intelligence-at-the-core-of-autonomous-operations/)|
+| Blog post | [Announcement](https://www.dynatrace.com/news/blog/dynatrace-intelligence-at-the-core-of-autonomous-operations/) |
 | Learn more | [Documentation](https://docs.dynatrace.com) |
 
 ### OpenLLMetry / Traceloop
@@ -45,7 +40,7 @@ Quick reference links and additional learning materials for Dynatrace AI Observa
 
 ---
 
-## 🛠️ Workshop Code Reference
+## Workshop Code Reference
 
 ### Dynatrace Instrumentation Template
 
@@ -85,7 +80,7 @@ opentelemetry-exporter-otlp>=1.22.0
 
 ---
 
-## 📊 Useful DQL Queries
+## Useful DQL Queries
 
 ### LLM Token Usage
 
@@ -135,9 +130,9 @@ fetch spans
 
 ---
 
-## 🔐 API Token Permissions
+## API Token Permissions
 
-For this workshop, your Dynatrace API token needs these scopes:
+For this workshop, your Dynatrace API token needs:
 
 | Permission | Purpose |
 |------------|---------|
@@ -150,7 +145,7 @@ For this workshop, your Dynatrace API token needs these scopes:
 
 ---
 
-## 🎓 Further Learning
+## Further Learning
 
 ### Dynatrace University
 
@@ -165,34 +160,22 @@ For this workshop, your Dynatrace API token needs these scopes:
 
 ### GitHub Resources
 
-- [This Workshop Repository](https://github.com/sudosmitty/dynatrace-ai-mcp-workshop)
+- [This Workshop Repository](https://github.com/dynatrace-wwse/enablement-dynatrace-ai-mcp)
 - [Dynatrace GitHub](https://github.com/Dynatrace)
 - [OpenLLMetry](https://github.com/traceloop/openllmetry)
 
 ---
 
-## 🆘 Getting Help
+## Getting Help
 
-### During the Workshop
+**During the Workshop:** Raise your hand for instructor assistance.
 
-- Raise your hand for instructor assistance
-- Use the workshop chat/Slack channel
-
-### After the Workshop
+**After the Workshop:**
 
 - [Dynatrace Community](https://community.dynatrace.com/)
 - [Dynatrace Support](https://support.dynatrace.com/)
-- [Stack Overflow - dynatrace tag](https://stackoverflow.com/questions/tagged/dynatrace)
+- [Stack Overflow — dynatrace tag](https://stackoverflow.com/questions/tagged/dynatrace)
 
 ---
 
-## 📝 Feedback
-
-We'd love to hear your feedback on this workshop! Please share your thoughts with your instructor or via the feedback form provided.
-
----
-
-<div class="lab-nav">
-  <a href="lab3-dynatrace-mcp">← Lab 3: Dynatrace MCP</a>
-  <a href="./">Back to Home →</a>
-</div>
+[← Lab 4: Automation](lab4-automation.md) | [Back to Home →](index.md)

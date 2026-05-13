@@ -101,7 +101,8 @@ venv.bak/
 
 # IDE
 .idea/
-.vscode/
+.vscode/*
+!.vscode/mcp.json
 *.swp
 *.swo
 
@@ -124,3 +125,17 @@ logs/
 # Temporary files
 tmp/
 temp/
+
+
+# Framework cache
+.devcontainer/.cache/
+
+# Framework runtime files
+.devcontainer/util/.count*
+
+# Framework base config and theme assets fetched at runtime
+mkdocs-base.yaml
+docs/stylesheets/extra.css
+
+# Temporary Dockerfile from cache for local builds
+Dockerfile.framework

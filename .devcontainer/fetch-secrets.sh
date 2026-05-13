@@ -7,7 +7,7 @@
 
 SECRETS_SERVER_URL="${SECRETS_SERVER_URL:-https://workshop-secrets-server.azurewebsites.net/api}"
 BASHRC_FILE="$HOME/.bashrc"
-MCP_FILE="/workspaces/dynatrace-ai-mcp-workshop/.vscode/mcp.json"
+MCP_FILE="/workspaces/enablement-dynatrace-ai-mcp/.vscode/mcp.json"
 
 # Ensure jq is installed for JSON parsing
 if ! command -v jq &> /dev/null; then

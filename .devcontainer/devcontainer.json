@@ -1,41 +1,50 @@
 {
-  "name": "Dynatrace AI Observability Workshop",
-  "image": "mcr.microsoft.com/devcontainers/python:3.11",
-  "features": {
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "20"
-    },
-    "ghcr.io/devcontainers/features/common-utils:2": {
-      "installZsh": false,
-      "configureZshAsDefaultShell": false,
-      "installOhMyZsh": false,
-      "upgradePackages": false
-    }
-  },
+  "name": "Dynatrace AI Observability & MCP Workshop",
+  // Pulling the image from Dockerhub, runs on AMD64 and ARM64.
+  "image": "shinojosa/dt-enablement:v1.2",
+  // When running locally, pass secrets via runArgs "--env-file",".devcontainer/.env"
+  "runArgs": ["--init", "--privileged", "--network=host"],
+  "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
+  // Entrypoint and CMD are overwritten by VSCode
+  "overrideCommand": false,
+
+  "remoteUser": "vscode",
+
+  "postCreateCommand": "./.devcontainer/post-create.sh",
+
+  "postStartCommand": "./.devcontainer/post-start.sh",
+
+  "features": {},
   "customizations": {
     "vscode": {
-      "extensions": [
-        "ms-python.python",
-        "ms-python.vscode-pylance",
-        "github.copilot",
-        "github.copilot-chat",
-        "redhat.vscode-yaml",
-        "esbenp.prettier-vscode"
-      ],
       "settings": {
-        "python.defaultInterpreterPath": "/usr/local/bin/python",
-        "python.terminal.activateEnvironment": true,
-        "editor.formatOnSave": true,
-        "terminal.integrated.defaultProfile.linux": "bash"
-      }
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      },
+      "extensions": []
     }
   },
-  "postCreateCommand": "bash .devcontainer/setup.sh",
+
   "forwardPorts": [8000],
   "portsAttributes": {
     "8000": {
-      "label": "🤖 AI Chat UI",
+      "label": "AI Chat UI",
       "onAutoForward": "openBrowser"
+    }
+  },
+
+  "hostRequirements": {
+    "cpus": 4
+  },
+
+  "secrets": {
+    "WORKSHOP_TOKEN": {
+      "description": "Workshop token provided by your instructor — used to fetch Azure OpenAI credentials automatically"
+    },
+    "DT_ENVIRONMENT": {
+      "description": "URL to your Dynatrace Platform, e.g. https://abc123.apps.dynatrace.com"
+    },
+    "DT_API_TOKEN": {
+      "description": "Dynatrace API token with openTelemetryTrace.ingest and metrics.ingest permissions"
     }
   }
 }

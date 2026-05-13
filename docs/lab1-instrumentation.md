@@ -1,10 +1,4 @@
----
-layout: default
-title: Lab 1 - AI Instrumentation
-nav_order: 3
----
-
-# 🔬 Lab 1: AI Instrumentation with OpenLLMetry
+# Lab 1: AI Instrumentation with OpenLLMetry
 
 **Duration:** ~15 minutes
 
@@ -12,7 +6,7 @@ In this lab, you'll add OpenLLMetry instrumentation to the sample RAG applicatio
 
 ---
 
-## 🎯 Learning Objectives
+## Learning Objectives
 
 - Understand how OpenLLMetry works with OpenTelemetry
 - Add Traceloop instrumentation to a Python AI application
@@ -22,8 +16,6 @@ In this lab, you'll add OpenLLMetry instrumentation to the sample RAG applicatio
 ---
 
 ## Step 1: Install OpenLLMetry Dependencies
-
-First, we need to add the traceloop SDK and OpenTelemetry exporter packages.
 
 ### 1.1 Update requirements.txt
 
@@ -41,13 +33,12 @@ opentelemetry-exporter-otlp==1.39.1
 
 ### 1.2 Install the Dependencies
 
-In the terminal, run:
-
 ```bash
 pip install traceloop-sdk opentelemetry-exporter-otlp opentelemetry-instrumentation-fastapi
 ```
 
 Expected output:
+
 ```
 Successfully installed traceloop-sdk-0.50.1 opentelemetry-exporter-otlp-1.39.1 ...
 ```
@@ -55,8 +46,6 @@ Successfully installed traceloop-sdk-0.50.1 opentelemetry-exporter-otlp-1.39.1 .
 ---
 
 ## Step 2: Add Dynatrace Instrumentation
-
-Now we'll add the instrumentation code to our application.
 
 ### 2.1 Open the Main Application File
 
@@ -71,9 +60,6 @@ Find this comment block near the top of the file:
 # ║  🔬 LAB 1: INSTRUMENTATION SECTION                                        ║
 # ║                                                                           ║
 # ║  TODO: Add Dynatrace OpenLLMetry instrumentation here                    ║
-# ║  Follow the instructions in the workshop guide to add the                 ║
-# ║  Traceloop initialization code below this comment block.                  ║
-# ║                                                                           ║
 # ╚══════════════════════════════════════════════════════════════════════════╝
 
 # ---> ADD YOUR INSTRUMENTATION CODE HERE <---
@@ -81,7 +67,7 @@ Find this comment block near the top of the file:
 
 ### 2.3 Add the Instrumentation Code
 
-Replace `# ---> ADD YOUR INSTRUMENTATION CODE HERE <---` with the following code:
+Replace `# ---> ADD YOUR INSTRUMENTATION CODE HERE <---` with:
 
 ```python
 from traceloop.sdk import Traceloop
@@ -115,8 +101,6 @@ else:
 
 ## Step 3: Understanding the Code
 
-Let's break down what each part does:
-
 ### 3.1 Import Statement
 
 ```python
@@ -131,21 +115,14 @@ The Traceloop SDK provides automatic instrumentation for LLM frameworks like Ope
 os.environ["OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE"] = "delta"
 ```
 
-> **⚠️ Critical for Dynatrace:** Dynatrace expects metrics with **Delta temporality**, not Cumulative. This environment variable must be set before initializing Traceloop.
+!!! warning "Critical for Dynatrace"
+    Dynatrace expects metrics with **Delta temporality**, not Cumulative. This environment variable must be set **before** initializing Traceloop.
 
 ### 3.3 Traceloop Initialization
 
-```python
-Traceloop.init(
-    app_name=f"ai-chat-service-{ATTENDEE_ID}",  # Your unique service name
-    api_endpoint=DT_ENDPOINT,                     # Dynatrace OTLP endpoint
-    headers=headers                               # API Token authentication
-)
-```
-
 | Parameter | Description |
 |-----------|-------------|
-| `app_name` | Service name that appears in Dynatrace (includes your attendee ID) |
+| `app_name` | Service name in Dynatrace (includes your attendee ID) |
 | `api_endpoint` | The Dynatrace OTLP ingestion endpoint |
 | `headers` | Authentication header with your API token |
 
@@ -153,184 +130,78 @@ Traceloop.init(
 
 ## Step 4: Restart the Application
 
-Now let's restart the application with instrumentation enabled.
-
-### 4.1 Start the Application
-
-If the application is still running, stop it with `Ctrl+C`, then start it again:
+Stop if running (`Ctrl+C`), then:
 
 ```bash
 python app/main.py
 ```
 
-### 4.2 Verify Instrumentation
-
-You should see the new instrumentation messages:
+You should see:
 
 ```
 ✅ Traceloop initialized - sending traces to Dynatrace
    Service Name: ai-chat-service-{YOUR_ATTENDEE_ID}
    Endpoint: https://abc12345.live.dynatrace.com/api/v2/otlp
-
-╔══════════════════════════════════════════════════════════════════════╗
-║         🚀 AI Chat Service Starting...                               ║
-║                                                                      ║
-║         Attendee ID: {YOUR_ATTENDEE_ID}                                          ║
-║         Service: ai-chat-service-{YOUR_ATTENDEE_ID}                              ║
-╚══════════════════════════════════════════════════════════════════════╝
-
-✅ RAG initialized successfully for attendee: {YOUR_ATTENDEE_ID}
-INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 ```
 
 ---
 
 ## Step 5: Generate Test Traffic
 
-Let's create some traces by using the chat interface!
-
 ### 5.1 Open the Chat UI
 
-Your application includes a beautiful chat interface. When you start the app, GitHub Codespaces will detect the port and show a popup—click **"Open in Browser"** to access it.
-
-If you miss the popup, you can:
-1. Click the **Ports** tab in the VS Code terminal panel
-2. Find port `8000` and click the globe icon 🌐 to open in browser
+When you start the app, Codespaces detects port 8000 and shows a popup — click **"Open in Browser"**.
 
 ### 5.2 Chat with the AI Assistant
 
-Use the chat interface to send several messages and generate traces:
+Send several messages:
 
-**Try these example questions:**
 - "What is Dynatrace and what does it do?"
 - "How does OpenTelemetry work with Dynatrace?"
 - "Explain observability for AI applications"
 - "What is the Dynatrace MCP?"
 
-> **💡 Tip:** The UI has quick-action buttons for common questions. Click them to send pre-written queries!
-
 ### 5.3 Toggle RAG Mode
 
-The chat interface includes a toggle for "Use RAG (Knowledge Base)":
-- **✅ Checked:** Uses the vector store to find relevant context before answering
-- **❌ Unchecked:** Sends your question directly to the LLM without context
+- **RAG On:** Uses vector store to find relevant context before answering
+- **RAG Off:** Sends question directly to the LLM without context
 
-Try sending the same question with RAG on and off to see the difference!
+Try the same question both ways to see the difference!
 
-### 5.4 What Gets Traced?
+### 5.4 What Gets Traced
 
-Each request generates traces for:
-- **HTTP Request** - The incoming FastAPI request
-- **Embedding Generation** - Azure OpenAI embeddings for vector search
-- **Vector Store Query** - ChromaDB retrieval
-- **LLM Completion** - Azure OpenAI chat completion
-- **Token Usage** - Input/output token counts
-
----
-
-## Step 6: Verify in Terminal Logs
-
-As traces are sent, you may see OpenTelemetry log messages in the terminal indicating successful exports.
+| Span | Description |
+|------|-------------|
+| HTTP Request | Incoming FastAPI request |
+| Embedding Generation | Azure OpenAI embeddings for vector search |
+| Vector Store Query | ChromaDB retrieval |
+| LLM Completion | Azure OpenAI chat completion |
+| Token Usage | Input/output token counts |
 
 ---
 
-## ✅ Checkpoint
+## Checkpoint
 
-Before proceeding to Lab 2, verify:
-
-- [ ] The `traceloop-sdk` and `opentelemetry-exporter-otlp` packages are installed
-- [ ] The instrumentation code is added to `main.py`
-- [ ] The application starts with "✅ Traceloop initialized" message
+- [ ] `traceloop-sdk` and `opentelemetry-exporter-otlp` packages installed
+- [ ] Instrumentation code added to `main.py`
+- [ ] Application starts with "✅ Traceloop initialized" message
 - [ ] You've sent at least 3-4 chat requests
-- [ ] No errors appear in the terminal
+- [ ] No errors in the terminal
 
 ---
 
-## 🔍 Code Review: Your Updated main.py
+## Troubleshooting
 
-The top of your `main.py` should now look like this:
+**"Module traceloop not found"**
 
-```python
-"""
-Dynatrace AI Observability Workshop
-"""
-
-import os
-from dotenv import load_dotenv
-
-# Load environment variables
-load_dotenv()
-
-# ╔══════════════════════════════════════════════════════════════════════════╗
-# ║  🔬 LAB 1: INSTRUMENTATION SECTION                                        ║
-# ╚══════════════════════════════════════════════════════════════════════════╝
-
-from traceloop.sdk import Traceloop
-
-# Get Dynatrace configuration from environment
-ATTENDEE_ID = os.getenv("ATTENDEE_ID", "workshop-attendee")
-DT_ENDPOINT = os.getenv("DT_ENDPOINT")
-DT_API_TOKEN = os.getenv("DT_API_TOKEN")
-
-# ⚠️ IMPORTANT: Dynatrace requires Delta temporality for metrics
-os.environ["OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE"] = "delta"
-
-# Initialize Traceloop with Dynatrace endpoint
-if DT_ENDPOINT and DT_API_TOKEN:
-    headers = {"Authorization": f"Api-Token {DT_API_TOKEN}"}
-    Traceloop.init(
-        app_name=f"ai-chat-service-{ATTENDEE_ID}",
-        api_endpoint=DT_ENDPOINT,
-        headers=headers
-    )
-    print(f"✅ Traceloop initialized - sending traces to Dynatrace")
-    # ... rest of init logging
-else:
-    print("⚠️  Dynatrace configuration not found.")
-
-# ════════════════════════════════════════════════════════════════════════════
-
-from fastapi import FastAPI, HTTPException
-# ... rest of imports and application code
-```
-
----
-
-## 🆘 Troubleshooting
-
-### "Module traceloop not found"
-
-Run the pip install command again:
 ```bash
 pip install traceloop-sdk opentelemetry-exporter-otlp
 ```
 
-### "401 Unauthorized" in logs
+**"401 Unauthorized" in logs** — Check the token in `.env` has `openTelemetryTrace.ingest` permission.
 
-Your API token may be incorrect. Double-check:
-1. The token in your `.env` file
-2. That it has `openTelemetryTrace.ingest` permission
-3. No extra spaces or quotes around the token
-
-### "Traceloop not initialized" message
-
-Check your `.env` file has both:
-- `DT_ENDPOINT` set correctly
-- `DT_API_TOKEN` set correctly
-
-### Application crashes after adding instrumentation
-
-1. Check for syntax errors in your code
-2. Ensure imports are at the top of the file
-3. Verify the `load_dotenv()` is called before accessing environment variables
+**"Traceloop not initialized"** — Check `.env` has both `DT_ENDPOINT` and `DT_API_TOKEN`.
 
 ---
 
-## 🎉 Excellent Work!
-
-You've successfully instrumented an AI application for Dynatrace! Now let's explore the traces in the Dynatrace UI.
-
-<div class="lab-nav">
-  <a href="lab0-setup">← Lab 0: Setup</a>
-  <a href="lab2-explore-traces">Lab 2: Explore Traces →</a>
-</div>
+[← Lab 0: Setup](lab0-setup.md) | [Lab 2: Explore Traces →](lab2-explore-traces.md)

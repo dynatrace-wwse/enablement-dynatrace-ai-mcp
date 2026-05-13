@@ -7,7 +7,7 @@ echo "🚀 Setting up Dynatrace AI Observability Workshop Environment..."
 # Configuration
 # ═══════════════════════════════════════════════════════════════════════════
 SECRETS_SERVER_URL="${SECRETS_SERVER_URL:-https://workshop-secrets-server.azurewebsites.net/api}"
-ENV_FILE="/workspaces/dynatrace-ai-mcp-workshop/.env"
+ENV_FILE="/workspaces/enablement-dynatrace-ai-mcp/.env"
 BASHRC_FILE="$HOME/.bashrc"
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -108,7 +108,7 @@ fi
 # Install Python dependencies
 echo "📦 Installing Python dependencies..."
 pip install --upgrade pip
-pip install -r /workspaces/dynatrace-ai-mcp-workshop/app/requirements.txt
+pip install -r /workspaces/enablement-dynatrace-ai-mcp/app/requirements.txt
 
 # ═══════════════════════════════════════════════════════════════════════════
 # Set up hidden secrets file (sourced by shell, not visible in .env)
@@ -190,7 +190,7 @@ echo "║  📝 ACTION REQUIRED:                                            ║"
 echo "║     Edit .env file to add your Dynatrace credentials            ║"
 echo "║                                                                  ║"
 echo "║  📚 Workshop Guide:                                             ║"
-echo "║     https://sudosmitty.github.io/dynatrace-ai-mcp-workshop       ║"
+echo "║     https://dynatrace-wwse.github.io/enablement-dynatrace-ai-mcp       ║"
 echo "║                                                                  ║"
 echo "╚══════════════════════════════════════════════════════════════════╝"
 echo ""

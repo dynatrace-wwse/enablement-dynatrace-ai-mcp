@@ -1,5 +1,13 @@
 # 🎯 Dynatrace AI Observability & MCP Workshop
 
+[![Dynatrace](https://img.shields.io/badge/Dynatrace-Intelligence-purple?logo=dynatrace&logoColor=white)](https://dynatrace-wwse.github.io/codespaces-framework/dynatrace-integration/#mcp-server-integration)
+[![Mastering](https://img.shields.io/badge/Mastering-Complexity-8A2BE2?logo=dynatrace)](https://dynatrace-wwse.github.io)
+[![Downloads](https://img.shields.io/docker/pulls/shinojosa/dt-enablement?logo=docker)](https://hub.docker.com/r/shinojosa/dt-enablement)
+[![Integration tests](https://github.com/dynatrace-wwse/enablement-dynatrace-ai-mcp/actions/workflows/integration-tests.yaml/badge.svg)](https://github.com/dynatrace-wwse/enablement-dynatrace-ai-mcp/actions)
+[![Version](https://img.shields.io/github/v/release/dynatrace-wwse/enablement-dynatrace-ai-mcp?color=blueviolet)](https://github.com/dynatrace-wwse/enablement-dynatrace-ai-mcp/releases)
+[![Commits](https://img.shields.io/github/commits-since/dynatrace-wwse/enablement-dynatrace-ai-mcp/latest?color=ff69b4&include_prereleases)](https://github.com/dynatrace-wwse/enablement-dynatrace-ai-mcp/graphs/commit-activity)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg?color=green)](https://github.com/dynatrace-wwse/enablement-dynatrace-ai-mcp/blob/main/LICENSE)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-green)](https://dynatrace-wwse.github.io/enablement-dynatrace-ai-mcp/)
 > [!IMPORTANT]  
 > Collaborators are not being added, and the workshop token is not being rotated to avoid impacting active workshops. Please contact the internal team to obtain the current workshop token.
 
@@ -9,7 +17,7 @@ A hands-on workshop for learning AI/LLM observability with Dynatrace and the Mod
 
 > ## 🚀 **Workshop Attendees: Start Here!**
 > 
-> ### [![📖 Open Workshop Guide](https://img.shields.io/badge/📖_Open_Workshop_Guide-Click_Here_to_Start-blue?style=for-the-badge&logoColor=white)](https://sudosmitty.github.io/dynatrace-ai-mcp-workshop)
+> ### [![📖 Open Workshop Guide](https://img.shields.io/badge/📖_Open_Workshop_Guide-Click_Here_to_Start-blue?style=for-the-badge&logoColor=white)](https://dynatrace-wwse.github.io/enablement-dynatrace-ai-mcp/)
 >
 > The guide walks you through launching your Codespace, configuring your environment, and completing all labs with detailed instructions, code snippets, and screenshots.
 
@@ -37,11 +45,11 @@ A hands-on workshop for learning AI/LLM observability with Dynatrace and the Mod
 
 | Lab | Duration | Description |
 |-----|----------|-------------|
-| [Lab 0: Setup](https://sudosmitty.github.io/dynatrace-ai-mcp-workshop/lab0-setup.html) | 15 min | Environment configuration |
-| [Lab 1: Instrumentation](https://sudosmitty.github.io/dynatrace-ai-mcp-workshop/lab1-instrumentation.html) | 15 min | Add OpenLLMetry to the sample app |
-| [Lab 2: Explore Traces](https://sudosmitty.github.io/dynatrace-ai-mcp-workshop/lab2-explore-traces.html) | 30 min | Analyze AI traces in Dynatrace |
-| [Lab 3: Dynatrace MCP](https://sudosmitty.github.io/dynatrace-ai-mcp-workshop/lab3-dynatrace-mcp.html) | 30 min | Use MCP for agentic AI |
-| [Lab 4: Automation](https://sudosmitty.github.io/dynatrace-ai-mcp-workshop/lab4-automation.html) | 30 min | Create automated workflows |
+| [Lab 0: Setup](https://dynatrace-wwse.github.io/enablement-dynatrace-ai-mcp/lab0-setup.html) | 15 min | Environment configuration |
+| [Lab 1: Instrumentation](https://dynatrace-wwse.github.io/enablement-dynatrace-ai-mcp/lab1-instrumentation.html) | 15 min | Add OpenLLMetry to the sample app |
+| [Lab 2: Explore Traces](https://dynatrace-wwse.github.io/enablement-dynatrace-ai-mcp/lab2-explore-traces.html) | 30 min | Analyze AI traces in Dynatrace |
+| [Lab 3: Dynatrace MCP](https://dynatrace-wwse.github.io/enablement-dynatrace-ai-mcp/lab3-dynatrace-mcp.html) | 30 min | Use MCP for agentic AI |
+| [Lab 4: Automation](https://dynatrace-wwse.github.io/enablement-dynatrace-ai-mcp/lab4-automation.html) | 30 min | Create automated workflows |
 
 ---
 
@@ -235,3 +243,5 @@ This workshop is provided for educational purposes. See [LICENSE](LICENSE) for d
 - [OpenLLMetry / Traceloop](https://github.com/traceloop/openllmetry)
 - [Dynatrace](https://www.dynatrace.com)
 - [OpenTelemetry](https://opentelemetry.io)
+
+## [📖 View the Lab Guide](https://dynatrace-wwse.github.io/enablement-dynatrace-ai-mcp/)

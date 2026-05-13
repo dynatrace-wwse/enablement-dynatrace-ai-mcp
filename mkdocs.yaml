@@ -1,0 +1,13 @@
+INHERIT: mkdocs-base.yaml
+
+site_name: "Dynatrace AI Observability & MCP Workshop"
+repo_name: "View Code on GitHub"
+repo_url: "https://github.com/dynatrace-wwse/enablement-dynatrace-ai-mcp"
+nav:
+  - "About": index.md
+  - "Lab 0: Environment Setup": lab0-setup.md
+  - "Lab 1: AI Instrumentation": lab1-instrumentation.md
+  - "Lab 2: Explore Traces": lab2-explore-traces.md
+  - "Lab 3: Dynatrace MCP": lab3-dynatrace-mcp.md
+  - "Lab 4: Workflow Automation": lab4-automation.md
+  - "Resources": resources.md

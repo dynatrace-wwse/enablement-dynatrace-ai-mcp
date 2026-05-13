@@ -1,10 +1,4 @@
----
-layout: default
-title: Lab 4 - Workflow Automation
-nav_order: 6
----
-
-# ⚡ Lab 4: Workflow Automation - Become the AI Cost Guardian
+# Lab 4: Workflow Automation — Become the AI Cost Guardian
 
 **Duration:** ~30 minutes
 
@@ -12,7 +6,7 @@ In this lab, you'll create automated workflows that transform you from someone w
 
 ---
 
-## 🎯 Learning Objectives
+## Learning Objectives
 
 - Create a Dynatrace Workflow for AI observability
 - Set up automated token usage monitoring
@@ -22,80 +16,53 @@ In this lab, you'll create automated workflows that transform you from someone w
 
 ---
 
-<div class="why-dynatrace" markdown="1">
+!!! tip "Why Dynatrace? The Automation Advantage"
+    | Capability | Other Tools | Dynatrace |
+    |------------|-------------|-----------|
+    | Trace collection | ✅ Manual thresholds | ✅ Davis AI anomaly detection |
+    | Alert configuration | ❌ You define every threshold | ✅ Auto-baselines, smart alerts |
+    | Root cause | ❌ You investigate | ✅ Davis AI automatic RCA |
+    | Remediation | ❌ External tools | ✅ Built-in Workflows + integrations |
+    | Context | Token counts only | ✅ Tokens + infrastructure + user impact |
 
-## 🏆 Why Dynatrace? The Automation Advantage
-
-| Capability | Other Tools | Dynatrace |
-|------------|-------------|-----------|
-| Trace collection | ✅ Manual thresholds | ✅ Davis AI anomaly detection |
-| Alert configuration | ❌ You define every threshold | ✅ Auto-baselines, smart alerts |
-| Root cause | ❌ You investigate | ✅ Davis AI automatic RCA |
-| Remediation | ❌ External tools (PagerDuty, etc.) | ✅ Built-in Workflows + integrations |
-| Context | Token counts only | ✅ Tokens + infrastructure + user impact |
-
-**The difference:** Other tools tell you *something is wrong*. Dynatrace tells you *what's wrong, why, and can fix it automatically*.
-
-</div>
+    **The difference:** Other tools tell you *something is wrong*. Dynatrace tells you *what's wrong, why, and can fix it automatically*.
 
 ---
 
 ## Step 1: Navigate to Workflows
 
-### 1.1 Access the Workflows App
-
-1. In Dynatrace, click on the **Workflows** app in the left navigation (or search for it)
+In Dynatrace, click on the **Workflows** app in the left navigation (or search for it).
 
 ---
 
-## 🎭 Choose Your Persona
+## Choose Your Persona
 
-From here, focus on the workflows most relevant to your role. Complete at least one workflow.
-
-<div class="persona-box developer" markdown="1">
-
-### 💻 Developer Path
-
-**Your goal:** Create workflows that alert you before users complain. Sleep better knowing automation has your back.
-
-**Must-do:** Step 2 (Token Usage Alert)
-
-</div>
-
-<div class="persona-box sre" markdown="1">
-
-### 🔧 SRE/Platform Path
-
-**Your goal:** Build the automation that makes you the AI Cost Guardian. This is your "hero moment"!
-
-**Must-do:** Step 3 (Daily Summary)
-
-</div>
+Complete at least one workflow from your persona path.
 
 ---
 
-<div class="persona-box developer" markdown="1">
+## 💻 Developer Path: Token Usage Alert
 
-## 💻 Step 2: Create a Token Usage Alert Workflow
+**Goal:** Create workflows that alert you before users complain. Sleep better knowing automation has your back.
 
-This workflow will alert you when token usage exceeds a threshold — perfect for catching runaway AI costs.
+### Step 2: Create a Token Usage Alert Workflow
 
-### 2.1 Create a New Workflow
+#### 2.1 Create a New Workflow
 
 1. Click **+ Workflow**
 2. Name it: `Token Usage Alert - {YOUR_ATTENDEE_ID}`
 
-### 2.2 Set the Trigger
+#### 2.2 Set the Trigger
 
-1. Click on the trigger block (the starting point)
-2. Select **Time Interval trigger**:
-   - Set to run every **15 minutes** for testing
+1. Click on the trigger block
+2. Select **Time Interval trigger**: run every **15 minutes** for testing
 
-### 2.3 Add a DQL Query Action
+#### 2.3 Add a DQL Query Action
 
 1. Click **+ Add task**
 2. Select **Execute DQL query**
-3. Enter this query:
+3. Name this task: `get_token_usage`
+4. Enter this query:
 
 ```sql
 fetch spans
@@ -109,12 +76,9 @@ fetch spans
 | fieldsAdd estimated_cost_usd = (total_input_tokens * 2.50 + total_output_tokens * 10.00) / 1000000
 ```
 
-4. Name this task: `get_token_usage`
+#### 2.4 Add a Notification Action
 
-### 2.4 Add a Notification Action
-
-1. Add an **Email** -> **Send email** task
-3. Configure your message:
+Add an **Email** → **Send email** task. Configure your message:
 
 {% raw %}
 ```
@@ -128,49 +92,47 @@ Token usage exceeded threshold!
 • Output Tokens: {{ result("get_token_usage").records[0].total_output_tokens }}
 • Estimated Cost: ${{ result("get_token_usage").records[0].estimated_cost_usd | round(4) }}
 • Request Count: {{ result("get_token_usage").records[0].request_count }}
-
 ```
 {% endraw %}
 
-### 2.4 Add a Condition
+#### 2.5 Add a Condition
 
-1. Select **Condition**
-2. Set the condition:
+Select **Condition** and set:
+
 {% raw %}
-   ```
-   {{ result("get_token_usage").records[0].total_tokens > 1000 }}
-   ```
+```
+{{ result("get_token_usage").records[0].total_tokens > 1000 }}
+```
 {% endraw %}
-   (Adjust threshold based on your expected usage)
 
-### 2.6 Save and Run
+Adjust threshold based on your expected usage.
+
+#### 2.6 Save and Run
 
 1. Click **Create/Save draft**
 2. Click **Run**
 
-</div>
-
 ---
 
-<div class="persona-box sre" markdown="1">
+## 🔧 SRE/Platform Path: Daily AI Cost Summary
 
-## 🔧 Step 3: Daily AI Cost Summary Workflow
+**Goal:** Build the automation that makes you the AI Cost Guardian!
 
-Create a workflow that sends you a daily summary — no more surprise bills!
+### Step 3: Daily AI Cost Summary Workflow
 
-### 3.1 Create a New Workflow
+#### 3.1 Create a New Workflow
 
 1. Click **+ Workflow**
 2. Name it: `Daily AI Summary - {YOUR_ATTENDEE_ID}`
 
-### 3.2 Set Schedule Trigger
+#### 3.2 Set Schedule Trigger
 
 1. Select **Fix Time trigger**
 2. Configure: **Daily at 9:00 AM** (or your preferred time)
 
-### 3.3 Add Comprehensive DQL Query
+#### 3.3 Add Comprehensive DQL Query
 
-Add a **Execute DQL query** task named `usage` with:
+Add an **Execute DQL query** task named `usage`:
 
 ```sql
 fetch spans
@@ -188,9 +150,9 @@ fetch spans
 | limit 10
 ```
 
-### 3.4 Add Summary Query
+#### 3.4 Add Summary Query
 
-Add another **Execute DQL query** task named `cost` with:
+Add another **Execute DQL query** task named `cost`:
 
 ```sql
 fetch spans
@@ -205,10 +167,9 @@ fetch spans
 | fieldsAdd projected_monthly_cost = estimated_daily_cost * 30
 ```
 
-### 3.5 Send Daily Report
+#### 3.5 Send Daily Report
 
-1. Add an **Email** -> **Send email** task
-3. Configure your message:
+Add an **Email** → **Send email** task. Configure your message:
 
 {% raw %}
 ```
@@ -227,91 +188,59 @@ fetch spans
 • Total Input Tokens: {{ result("usage").records | map(attribute="total_input") | map("int") | sum }}
 • Total Output Tokens: {{ result("usage").records | map(attribute="total_output") | map("int") | sum }}
 • Avg Response Time: {{ result("cost").records[0].avg_latency_ms }}ms
-
 ```
 {% endraw %}
 
-### 3.6 Save and Run
+#### 3.6 Save and Run
 
 1. Click **Create/Save draft**
 2. Click **Run**
 
-</div>
-
 ---
 
-## ✅ Checkpoint
-
-Before completing this lab, verify:
+## Checkpoint
 
 - [ ] Created a workflow
 - [ ] Set up notification
 - [ ] Tested workflow execution
-- [ ] Understood how Davis AI can trigger workflows
+- [ ] Understand how Davis AI can trigger workflows
 - [ ] Know how to add conditions and notifications
 
 ---
 
-## 🆘 Troubleshooting
+## Troubleshooting
 
-### "Workflow not triggering"
+**"Workflow not triggering"** — Verify the workflow is **Enabled**. Use **Run** to test manually.
 
-1. Verify the workflow is set to **Enabled**
-2. Check that your service is generating data
-3. For scheduled triggers, wait for the next scheduled run
-4. Use **Run** to test manually
+**"DQL query returns no data"** — Verify your service name matches exactly. Ensure your app has processed requests recently.
 
-### "DQL query returns no data"
-
-1. Verify your service name matches exactly
-2. Check the time range in your query
-3. Ensure your application has processed requests recently
-
-### "Notification not received"
-
-1. Verify the notification channel configuration
-2. Check for authentication/permission issues
-3. Test the notification channel independently
+**"Notification not received"** — Verify the notification channel configuration.
 
 ---
 
-## 🎓 What You've Learned
-
-<div class="persona-box developer" markdown="1">
+## What You've Learned
 
 ### 💻 Developer Takeaways
 
-You've built automation that watches your AI service:
+1. Create scheduled workflows that run DQL queries
+2. Set up token usage alerts with thresholds
+3. Configure notifications (Slack, Teams, Email)
+4. Add conditions to avoid alert noise
 
-1. ✅ Create scheduled workflows that run DQL queries
-2. ✅ Set up token usage alerts with thresholds
-3. ✅ Configure notifications (Slack, Teams, Email)
-4. ✅ Add conditions to avoid alert noise
-
-**Sleep better:** Your workflow will alert you if token usage spikes — before users complain or the bill arrives.
-
-</div>
-
-<div class="persona-box sre" markdown="1">
+**Sleep better:** Your workflow alerts you if token usage spikes — before users complain or the bill arrives.
 
 ### 🔧 SRE/Platform Takeaways
 
-You're now the AI Cost Guardian:
+1. Build daily cost summary workflows
+2. Calculate projected monthly costs automatically
+3. Identify top token consumers by operation
+4. Trigger workflows from Davis AI problems
 
-1. ✅ Build daily cost summary workflows
-2. ✅ Calculate projected monthly costs automatically
-3. ✅ Identify top token consumers by operation
-4. ✅ Trigger workflows from Davis AI problems
-
-**Take back to your team:** These workflows are production-ready. Customize the thresholds and notification channels for your environment.
-
-</div>
+**Take back to your team:** These workflows are production-ready. Customize thresholds and notification channels for your environment.
 
 ---
 
-## 🚀 Take It Further
-
-Ideas for production workflows:
+## Take It Further
 
 | Workflow | Trigger | Action |
 |----------|---------|--------|
@@ -323,11 +252,4 @@ Ideas for production workflows:
 
 ---
 
-## 🎉 Lab Complete!
-
-You've built automation that will save your team time and money. These workflows demonstrate the Dynatrace difference — not just observability, but **actionable automation**.
-
-<div class="lab-nav">
-  <a href="lab3-dynatrace-mcp">← Lab 3: Dynatrace MCP</a>
-  <a href="resources">View Resources →</a>
-</div>
+[← Lab 3: Dynatrace MCP](lab3-dynatrace-mcp.md) | [Resources →](resources.md)
