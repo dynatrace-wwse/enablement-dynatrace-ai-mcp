@@ -5,7 +5,7 @@ source .devcontainer/util/source_framework.sh
 setUpTerminal
 
 printInfoSection "Installing Python dependencies"
-pip install -r app/requirements.txt --quiet || printWarn "Some dependencies failed — run: pip install -r app/requirements.txt"
+pip install --break-system-packages -r app/requirements.txt --quiet || printWarn "Some dependencies failed — run: pip install --break-system-packages -r app/requirements.txt"
 
 printInfoSection "Configuring workshop credentials"
 
