@@ -175,6 +175,11 @@
       </label>
       <nav class="md-search__options" aria-label="Search">
         
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
@@ -1009,25 +1014,25 @@
 <p>After the Codespace starts, configure credentials.</p>
 <h3 id="21-run-the-setup-script">2.1 Run the Setup Script<a class="headerlink" href="#21-run-the-setup-script" title="Permanent link">#</a></h3>
 <p>In the VS Code terminal:</p>
-<div class="highlight"><pre><span></span><code>bash<span class="w"> </span>.devcontainer/fetch-secrets.sh
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>bash<span class="w"> </span>.devcontainer/fetch-secrets.sh
+</span></code></pre></div>
 <h3 id="22-enter-your-credentials">2.2 Enter Your Credentials<a class="headerlink" href="#22-enter-your-credentials" title="Permanent link">#</a></h3>
 <p>You'll be prompted for:</p>
 <ol>
 <li><strong>Attendee ID</strong> — Enter your ID (e.g., <code>{YOUR_ATTENDEE_ID}</code>)</li>
 <li><strong>Workshop Token</strong> — Your instructor will provide this</li>
 </ol>
-<div class="highlight"><pre><span></span><code>🔐 Workshop Credentials Setup
-
-Enter your attendee ID (e.g., your name or initials, no spaces) [press enter to generate]: {YOUR_ATTENDEE_ID}
-✅ Attendee ID: {YOUR_ATTENDEE_ID}
-
-Enter your workshop token: *INSTRUCTOR PROVIDED*
-✅ Azure OpenAI credentials configured!
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>🔐 Workshop Credentials Setup
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Enter your attendee ID (e.g., your name or initials, no spaces) [press enter to generate]: {YOUR_ATTENDEE_ID}
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>✅ Attendee ID: {YOUR_ATTENDEE_ID}
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>Enter your workshop token: *INSTRUCTOR PROVIDED*
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>✅ Azure OpenAI credentials configured!
+</span></code></pre></div>
 <h3 id="23-load-your-credentials">2.3 Load Your Credentials<a class="headerlink" href="#23-load-your-credentials" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>~/.bashrc
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">source</span><span class="w"> </span>~/.bashrc
+</span></code></pre></div>
 <p>Then reload VS Code:</p>
 <ol>
 <li>Press <code>Ctrl+Shift+P</code> (or <code>Cmd+Shift+P</code> on Mac)</li>
@@ -1039,14 +1044,14 @@ Enter your workshop token: *INSTRUCTOR PROVIDED*
 <p>In the VS Code Explorer, open the <code>.env</code> file in the root directory.</p>
 <h3 id="32-add-dynatrace-credentials">3.2 Add Dynatrace Credentials<a class="headerlink" href="#32-add-dynatrace-credentials" title="Permanent link">#</a></h3>
 <p>Your instructor will provide the following values:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Include /api/v2/otlp at the end of DT_ENDPOINT</span>
-<span class="nv">DT_ENDPOINT</span><span class="o">=</span>https://YOUR_ENV.live.dynatrace.com/api/v2/otlp
-<span class="nv">DT_API_TOKEN</span><span class="o">=</span>dt0c01.XXXXXXXXXX.YYYYYYYYYYYYYYYY
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Include /api/v2/otlp at the end of DT_ENDPOINT</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">DT_ENDPOINT</span><span class="o">=</span>https://YOUR_ENV.live.dynatrace.com/api/v2/otlp
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nv">DT_API_TOKEN</span><span class="o">=</span>dt0c01.XXXXXXXXXX.YYYYYYYYYYYYYYYY
+</span></code></pre></div>
 <h3 id="33-verify-configuration">3.3 Verify Configuration<a class="headerlink" href="#33-verify-configuration" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Attendee: </span><span class="nv">$ATTENDEE_ID</span><span class="s2">&quot;</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Azure OpenAI: </span><span class="si">${</span><span class="nv">AZURE_OPENAI_ENDPOINT</span><span class="p">:+configured</span><span class="si">}</span><span class="s2">&quot;</span>
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Attendee: </span><span class="nv">$ATTENDEE_ID</span><span class="s2">&quot;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Azure OpenAI: </span><span class="si">${</span><span class="nv">AZURE_OPENAI_ENDPOINT</span><span class="p">:+configured</span><span class="si">}</span><span class="s2">&quot;</span>
+</span></code></pre></div>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
 <p>Azure OpenAI credentials and your Attendee ID are stored as environment variables (not in <code>.env</code>) for security.</p>
@@ -1054,19 +1059,19 @@ Enter your workshop token: *INSTRUCTOR PROVIDED*
 <hr />
 <h2 id="step-4-verify-the-sample-application">Step 4: Verify the Sample Application<a class="headerlink" href="#step-4-verify-the-sample-application" title="Permanent link">#</a></h2>
 <h3 id="41-start-the-application">4.1 Start the Application<a class="headerlink" href="#41-start-the-application" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>app/main.py
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>app/main.py
+</span></code></pre></div>
 <h3 id="42-expected-output">4.2 Expected Output<a class="headerlink" href="#42-expected-output" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>╔══════════════════════════════════════════════════════════════════════╗
-║         🚀 AI Chat Service Starting...                               ║
-║                                                                      ║
-║         Attendee ID: {YOUR_ATTENDEE_ID}                              ║
-║         Service: ai-chat-service-{YOUR_ATTENDEE_ID}                  ║
-╚══════════════════════════════════════════════════════════════════════╝
-
-✅ RAG initialized successfully for attendee: {YOUR_ATTENDEE_ID}
-INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>╔══════════════════════════════════════════════════════════════════════╗
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>║         🚀 AI Chat Service Starting...                               ║
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>║                                                                      ║
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>║         Attendee ID: {YOUR_ATTENDEE_ID}                              ║
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>║         Service: ai-chat-service-{YOUR_ATTENDEE_ID}                  ║
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>╚══════════════════════════════════════════════════════════════════════╝
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>✅ RAG initialized successfully for attendee: {YOUR_ATTENDEE_ID}
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+</span></code></pre></div>
 <h3 id="43-test-the-application">4.3 Test the Application<a class="headerlink" href="#43-test-the-application" title="Permanent link">#</a></h3>
 <ol>
 <li>When the application starts, VS Code shows a popup about port 8000 — click <strong>"Open in Browser"</strong></li>
@@ -1083,19 +1088,19 @@ INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 <hr />
 <h2 id="checkpoint">Checkpoint<a class="headerlink" href="#checkpoint" title="Permanent link">#</a></h2>
 <p>Before proceeding to Lab 1, verify:</p>
-<ul>
-<li>[ ] Your Codespace is running</li>
-<li>[ ] You've set your Attendee ID (remember it — you'll use it throughout)</li>
-<li>[ ] The <code>.env</code> file has <code>DT_ENDPOINT</code> and <code>DT_API_TOKEN</code> from your instructor</li>
-<li>[ ] The sample application starts without errors</li>
-<li>[ ] You can access the application in your browser</li>
-<li>[ ] The chat endpoint responds with AI-generated text</li>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Your Codespace is running</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> You've set your Attendee ID (remember it — you'll use it throughout)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> The <code>.env</code> file has <code>DT_ENDPOINT</code> and <code>DT_API_TOKEN</code> from your instructor</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> The sample application starts without errors</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> You can access the application in your browser</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> The chat endpoint responds with AI-generated text</li>
 </ul>
 <hr />
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">#</a></h2>
 <p><strong>"Azure OpenAI credentials not found"</strong></p>
-<div class="highlight"><pre><span></span><code>bash<span class="w"> </span>.devcontainer/fetch-secrets.sh
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>bash<span class="w"> </span>.devcontainer/fetch-secrets.sh
+</span></code></pre></div>
 <p>Enter the workshop token from your instructor.</p>
 <p><strong>"Invalid workshop token"</strong> — Double-check for extra spaces. Ask your instructor.</p>
 <p><strong>Application crashes on startup</strong> — Check <code>.env</code> for typos. Run <code>pip install -r app/requirements.txt</code>.</p>
@@ -1119,6 +1124,8 @@ INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -1131,6 +1138,46 @@ INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
       </main>
       
         <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: About">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                About
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../lab1-instrumentation/" class="md-footer__link md-footer__link--next" aria-label="Next: Lab 1: AI Instrumentation">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Lab 1: AI Instrumentation
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -1157,11 +1204,22 @@ INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.code.annotate", "navigation.instant", "navigation.tracking", "navigation.top", "search.highlight", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.code.annotate", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.top", "navigation.sections", "navigation.footer", "toc.follow", "search.highlight", "search.suggest", "search.share"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
+  
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof dynatrace !== 'undefined') {
+        dynatrace.sendBizEvent('page_load', {'page': "Lab 0: Environment Setup"});
+      }
+    });
+  </script>
+  
+
   </body>
 </html>

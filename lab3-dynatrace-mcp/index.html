@@ -175,6 +175,11 @@
       </label>
       <nav class="md-search__options" aria-label="Search">
         
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
@@ -1793,18 +1798,18 @@
 <h2 id="step-1-configure-the-dynatrace-mcp-server">Step 1: Configure the Dynatrace MCP Server<a class="headerlink" href="#step-1-configure-the-dynatrace-mcp-server" title="Permanent link">#</a></h2>
 <h3 id="11-open-the-mcp-configuration-file">1.1 Open the MCP Configuration File<a class="headerlink" href="#11-open-the-mcp-configuration-file" title="Permanent link">#</a></h3>
 <p>In VS Code, open <code>.vscode/mcp.json</code>. You'll see:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;servers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;Dynatrace-MCP&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sse&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://YOUR_TENANT_ID.apps.dynatrace.com/platform-reserved/mcp-gateway/v0.1/servers/dynatrace-mcp/mcp&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;Authorization&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bearer ${env:DT_MCP_BEARER_TOKEN}&quot;</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;servers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">&quot;Dynatrace-MCP&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sse&quot;</span><span class="p">,</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">      </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://YOUR_TENANT_ID.apps.dynatrace.com/platform-reserved/mcp-gateway/v0.1/servers/dynatrace-mcp/mcp&quot;</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">      </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="nt">&quot;Authorization&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bearer ${env:DT_MCP_BEARER_TOKEN}&quot;</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">      </span><span class="p">}</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p">}</span>
+</span></code></pre></div>
 <h3 id="12-update-your-dynatrace-tenant-url">1.2 Update Your Dynatrace Tenant URL<a class="headerlink" href="#12-update-your-dynatrace-tenant-url" title="Permanent link">#</a></h3>
 <p>Replace <code>YOUR_TENANT_ID</code> with your actual Dynatrace environment ID:</p>
 <ul>
@@ -1831,8 +1836,8 @@
 </ol>
 <h3 id="22-test-the-connection">2.2 Test the Connection<a class="headerlink" href="#22-test-the-connection" title="Permanent link">#</a></h3>
 <p>In the Copilot chat, type:</p>
-<div class="highlight"><pre><span></span><code>@dynatrace What services are available in my environment?
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>@dynatrace What services are available in my environment?
+</span></code></pre></div>
 <p>If configured correctly, Copilot will query Dynatrace and return a list of services!</p>
 <hr />
 <h2 id="dynatrace-intelligence">Dynatrace Intelligence ✨<a class="headerlink" href="#dynatrace-intelligence" title="Permanent link">#</a></h2>
@@ -1849,28 +1854,28 @@
 <p><strong>Your story:</strong> You're deep in code, fixing a bug in your RAG pipeline. Every time you need performance data, you context-switch to Dynatrace. With MCP, you can just <em>ask</em>.</p>
 <h3 id="step-3-query-your-ai-service-developer">Step 3: Query Your AI Service (Developer)<a class="headerlink" href="#step-3-query-your-ai-service-developer" title="Permanent link">#</a></h3>
 <h4 id="31-find-your-service">3.1 Find Your Service<a class="headerlink" href="#31-find-your-service" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>@dynatrace Tell me about the service called ai-chat-service-{YOUR_ATTENDEE_ID}
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>@dynatrace Tell me about the service called ai-chat-service-{YOUR_ATTENDEE_ID}
+</span></code></pre></div>
 <h4 id="32-analyze-token-usage">3.2 Analyze Token Usage<a class="headerlink" href="#32-analyze-token-usage" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>@dynatrace What is the total input and output token usage for spans in regards to the ai-chat-service-{YOUR_ATTENDEE_ID}
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>@dynatrace What is the total input and output token usage for spans in regards to the ai-chat-service-{YOUR_ATTENDEE_ID}
+</span></code></pre></div>
 <h4 id="33-debug-while-you-code">3.3 Debug While You Code<a class="headerlink" href="#33-debug-while-you-code" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>I&#39;m looking at main.py where I call Azure OpenAI.
-@dynatrace What&#39;s the average latency for Azure OpenAI calls from my ai-chat-service-{YOUR_ATTENDEE_ID} service?
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>I&#39;m looking at main.py where I call Azure OpenAI.
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>@dynatrace What&#39;s the average latency for Azure OpenAI calls from my ai-chat-service-{YOUR_ATTENDEE_ID} service?
+</span></code></pre></div>
 <hr />
 <h3 id="step-4-agentic-debugging-workflows-developer">Step 4: Agentic Debugging Workflows (Developer)<a class="headerlink" href="#step-4-agentic-debugging-workflows-developer" title="Permanent link">#</a></h3>
 <h4 id="41-find-the-bottleneck">4.1 Find the Bottleneck<a class="headerlink" href="#41-find-the-bottleneck" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>I&#39;m seeing slow responses in my RAG pipeline. 
-@dynatrace Analyze the trace data and tell me which step is the bottleneck for my ai-chat-service-{YOUR_ATTENDEE_ID} service.
-Is it embeddings, vector search, or the LLM call?
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>I&#39;m seeing slow responses in my RAG pipeline. 
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>@dynatrace Analyze the trace data and tell me which step is the bottleneck for my ai-chat-service-{YOUR_ATTENDEE_ID} service.
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Is it embeddings, vector search, or the LLM call?
+</span></code></pre></div>
 <h4 id="42-proactive-analysis">4.2 Proactive Analysis<a class="headerlink" href="#42-proactive-analysis" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>@dynatrace Analyze my ai-chat-service-{YOUR_ATTENDEE_ID} service and suggest optimizations to reduce token usage while maintaining response quality
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>@dynatrace Analyze my ai-chat-service-{YOUR_ATTENDEE_ID} service and suggest optimizations to reduce token usage while maintaining response quality
+</span></code></pre></div>
 <h4 id="43-debugging-assistance">4.3 Debugging Assistance<a class="headerlink" href="#43-debugging-assistance" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>@dynatrace Help me understand why some of my RAG queries might be slow. Look at the trace data for patterns.
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>@dynatrace Help me understand why some of my RAG queries might be slow. Look at the trace data for patterns.
+</span></code></pre></div>
 <hr />
 <h3 id="step-44-investigate-errors-with-mcp-developer">Step 4.4: Investigate Errors with MCP (Developer)<a class="headerlink" href="#step-44-investigate-errors-with-mcp-developer" title="Permanent link">#</a></h3>
 <h4 id="generate-errors">Generate Errors<a class="headerlink" href="#generate-errors" title="Permanent link">#</a></h4>
@@ -1888,48 +1893,48 @@ Is it embeddings, vector search, or the LLM call?
 <li><code>CONTENT_FILTER_BLOCK</code>: Content policy violations</li>
 </ul>
 <h4 id="find-your-errors">Find Your Errors<a class="headerlink" href="#find-your-errors" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>@dynatrace Show me all errors in the last 15 minutes for my ai-chat-service-{YOUR_ATTENDEE_ID} service.
-What error codes are appearing most frequently?
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>@dynatrace Show me all errors in the last 15 minutes for my ai-chat-service-{YOUR_ATTENDEE_ID} service.
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>What error codes are appearing most frequently?
+</span></code></pre></div>
 <h4 id="view-log-entries">View Log Entries<a class="headerlink" href="#view-log-entries" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>@dynatrace Show me the log entries for EMB_NULL_VECTOR errors in my ai-chat-service-{YOUR_ATTENDEE_ID}.
-Include the error_message, stage, and timestamp for each.
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>@dynatrace Show me the log entries for EMB_NULL_VECTOR errors in my ai-chat-service-{YOUR_ATTENDEE_ID}.
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>Include the error_message, stage, and timestamp for each.
+</span></code></pre></div>
 <h4 id="deep-dive-on-a-specific-error">Deep Dive on a Specific Error<a class="headerlink" href="#deep-dive-on-a-specific-error" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>@dynatrace I&#39;m seeing CTX_WINDOW_EXCEEDED errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service. 
-Show me the full log details for these errors and explain what&#39;s happening.
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>@dynatrace I&#39;m seeing CTX_WINDOW_EXCEEDED errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service. 
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Show me the full log details for these errors and explain what&#39;s happening.
+</span></code></pre></div>
 <h4 id="get-root-cause-analysis">Get Root Cause Analysis<a class="headerlink" href="#get-root-cause-analysis" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>@dynatrace What&#39;s causing the errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service?
-Analyze the error logs and tell me which component is failing most often.
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>@dynatrace What&#39;s causing the errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service?
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>Analyze the error logs and tell me which component is failing most often.
+</span></code></pre></div>
 <hr />
 <h2 id="sreplatform-i-need-faster-incident-response">🔧 SRE/Platform: "I need faster incident response"<a class="headerlink" href="#sreplatform-i-need-faster-incident-response" title="Permanent link">#</a></h2>
 <p><strong>Your story:</strong> It's 2 AM and you get paged. Instead of fumbling through dashboards, you can ask about the issue.</p>
 <h3 id="step-5-query-your-ai-service-sre">Step 5: Query Your AI Service (SRE)<a class="headerlink" href="#step-5-query-your-ai-service-sre" title="Permanent link">#</a></h3>
 <h4 id="51-find-your-service">5.1 Find Your Service<a class="headerlink" href="#51-find-your-service" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>@dynatrace Tell me about the service called ai-chat-service-{YOUR_ATTENDEE_ID}
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>@dynatrace Tell me about the service called ai-chat-service-{YOUR_ATTENDEE_ID}
+</span></code></pre></div>
 <h4 id="52-check-for-anomalies">5.2 Check for Anomalies<a class="headerlink" href="#52-check-for-anomalies" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>@dynatrace Are there any anomalies in the last hour for my ai-chat-service-{YOUR_ATTENDEE_ID} service?
-What&#39;s the current error rate and how does it compare to the baseline?
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>@dynatrace Are there any anomalies in the last hour for my ai-chat-service-{YOUR_ATTENDEE_ID} service?
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>What&#39;s the current error rate and how does it compare to the baseline?
+</span></code></pre></div>
 <h4 id="53-analyze-token-usage">5.3 Analyze Token Usage<a class="headerlink" href="#53-analyze-token-usage" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>@dynatrace What is the total input and output token usage for spans in regards to the ai-chat-service-{YOUR_ATTENDEE_ID} service?
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>@dynatrace What is the total input and output token usage for spans in regards to the ai-chat-service-{YOUR_ATTENDEE_ID} service?
+</span></code></pre></div>
 <hr />
 <h3 id="step-6-agentic-incident-response-sre">Step 6: Agentic Incident Response (SRE)<a class="headerlink" href="#step-6-agentic-incident-response-sre" title="Permanent link">#</a></h3>
 <h4 id="61-incident-response">6.1 Incident Response<a class="headerlink" href="#61-incident-response" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>@dynatrace Are there any open problems affecting my ai-chat-service-{YOUR_ATTENDEE_ID} service?
-If so, what&#39;s the root cause and which services are impacted?
-Draft a Slack message summarizing the incident.
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>@dynatrace Are there any open problems affecting my ai-chat-service-{YOUR_ATTENDEE_ID} service?
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>If so, what&#39;s the root cause and which services are impacted?
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>Draft a Slack message summarizing the incident.
+</span></code></pre></div>
 <h4 id="62-service-architecture">6.2 Service Architecture<a class="headerlink" href="#62-service-architecture" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>@dynatrace Generate a summary of my ai-chat-service-{YOUR_ATTENDEE_ID} service&#39;s architecture based on the service flow data
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>@dynatrace Generate a summary of my ai-chat-service-{YOUR_ATTENDEE_ID} service&#39;s architecture based on the service flow data
+</span></code></pre></div>
 <h4 id="63-capacity-planning">6.3 Capacity Planning<a class="headerlink" href="#63-capacity-planning" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>@dynatrace Analyze my ai-chat-service-{YOUR_ATTENDEE_ID} service and suggest optimizations to reduce token usage while maintaining response quality
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>@dynatrace Analyze my ai-chat-service-{YOUR_ATTENDEE_ID} service and suggest optimizations to reduce token usage while maintaining response quality
+</span></code></pre></div>
 <hr />
 <h3 id="step-64-error-triage-with-mcp-sre">Step 6.4: Error Triage with MCP (SRE)<a class="headerlink" href="#step-64-error-triage-with-mcp-sre" title="Permanent link">#</a></h3>
 <h4 id="generate-errors_1">Generate Errors<a class="headerlink" href="#generate-errors_1" title="Permanent link">#</a></h4>
@@ -1939,23 +1944,23 @@ Draft a Slack message summarizing the incident.
 <li>Send 10-15 messages rapidly</li>
 </ol>
 <h4 id="rapid-error-assessment">Rapid Error Assessment<a class="headerlink" href="#rapid-error-assessment" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>@dynatrace Give me a quick summary of all errors hitting my ai-chat-service-{YOUR_ATTENDEE_ID} service in the last 15 minutes.
-How many errors occurred? What types? What&#39;s the error rate percentage?
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>@dynatrace Give me a quick summary of all errors hitting my ai-chat-service-{YOUR_ATTENDEE_ID} service in the last 15 minutes.
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>How many errors occurred? What types? What&#39;s the error rate percentage?
+</span></code></pre></div>
 <h4 id="analyze-error-timeline">Analyze Error Timeline<a class="headerlink" href="#analyze-error-timeline" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>@dynatrace When did errors start occurring in my ai-chat-service-{YOUR_ATTENDEE_ID} service?
-Show me the timeline of errors over the last 15 minutes.
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>@dynatrace When did errors start occurring in my ai-chat-service-{YOUR_ATTENDEE_ID} service?
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>Show me the timeline of errors over the last 15 minutes.
+</span></code></pre></div>
 <h4 id="root-cause-with-dynatrace-intelligence">Root Cause with Dynatrace Intelligence<a class="headerlink" href="#root-cause-with-dynatrace-intelligence" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>@dynatrace Analyze the error patterns in my ai-chat-service-{YOUR_ATTENDEE_ID} service.
-What is Dynatrace Intelligence&#39;s assessment of the root cause?
-Which component is the source of the failures?
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>@dynatrace Analyze the error patterns in my ai-chat-service-{YOUR_ATTENDEE_ID} service.
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>What is Dynatrace Intelligence&#39;s assessment of the root cause?
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>Which component is the source of the failures?
+</span></code></pre></div>
 <h4 id="create-incident-communication">Create Incident Communication<a class="headerlink" href="#create-incident-communication" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>@dynatrace I need to communicate an incident to stakeholders.
-Based on the errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service, draft a brief incident summary
-including: affected service, error types, error rate, and preliminary root cause.
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>@dynatrace I need to communicate an incident to stakeholders.
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>Based on the errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service, draft a brief incident summary
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>including: affected service, error types, error rate, and preliminary root cause.
+</span></code></pre></div>
 <hr />
 <h2 id="bonus-dynatrace-intelligence-in-the-dynatrace-platform">Bonus: Dynatrace Intelligence in the Dynatrace Platform<a class="headerlink" href="#bonus-dynatrace-intelligence-in-the-dynatrace-platform" title="Permanent link">#</a></h2>
 <p>Try Dynatrace Intelligence directly in the UI:</p>
@@ -1964,39 +1969,39 @@ including: affected service, error types, error rate, and preliminary root cause
 <li>Add a <strong>✨ Prompt</strong> tile</li>
 <li>Try:</li>
 </ol>
-<div class="highlight"><pre><span></span><code>I would like to see top 5 spans summarized by token usage and span name for service &quot;ai-chat-service-{YOUR_ATTENDEE_ID}&quot; in descending order
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>I would like to see top 5 spans summarized by token usage and span name for service &quot;ai-chat-service-{YOUR_ATTENDEE_ID}&quot; in descending order
+</span></code></pre></div>
 <p>Dynatrace Intelligence is available in: Problems app, Notebooks, Dashboards, Logs app, Databases app, and more.</p>
 <hr />
 <h2 id="going-beyond-the-basics">Going Beyond the Basics<a class="headerlink" href="#going-beyond-the-basics" title="Permanent link">#</a></h2>
 <h3 id="developer-propose-fix-regressions">💻 Developer: Propose &amp; Fix Regressions<a class="headerlink" href="#developer-propose-fix-regressions" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>@dynatrace Look at the error traces for my ai-chat-service-{YOUR_ATTENDEE_ID} service.
-Can you identify which function or code path is causing the failures?
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>@dynatrace Based on the EMB_NULL_VECTOR errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service, 
-what code changes would you recommend to handle this error gracefully?
-Show me a Python code example for proper error handling.
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>@dynatrace Generate a DQL query to find all logs where error_code equals &#39;CTX_WINDOW_EXCEEDED&#39; 
-for my ai-chat-service-{YOUR_ATTENDEE_ID} service in the last hour.
-Explain what the query does.
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>@dynatrace Look at the error traces for my ai-chat-service-{YOUR_ATTENDEE_ID} service.
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>Can you identify which function or code path is causing the failures?
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>@dynatrace Based on the EMB_NULL_VECTOR errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service, 
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>what code changes would you recommend to handle this error gracefully?
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>Show me a Python code example for proper error handling.
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>@dynatrace Generate a DQL query to find all logs where error_code equals &#39;CTX_WINDOW_EXCEEDED&#39; 
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>for my ai-chat-service-{YOUR_ATTENDEE_ID} service in the last hour.
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>Explain what the query does.
+</span></code></pre></div>
 <h3 id="sre-agentic-incident-response">🔧 SRE: Agentic Incident Response<a class="headerlink" href="#sre-agentic-incident-response" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>@dynatrace For the errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service, 
-show me the full dependency map. Which downstream services are affected?
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>@dynatrace Create a comprehensive incident report for the issues affecting 
-my ai-chat-service-{YOUR_ATTENDEE_ID} service. Include:
-- Timeline of when errors started
-- Affected components and their relationships
-- Error counts by type
-- Recommended severity level
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>@dynatrace Generate a DQL query for a dashboard tile that shows:
-- Error rate over time for my ai-chat-service-{YOUR_ATTENDEE_ID} service
-- Breakdown by error_code
-- 5-minute time buckets for the last hour
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>@dynatrace For the errors in my ai-chat-service-{YOUR_ATTENDEE_ID} service, 
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>show me the full dependency map. Which downstream services are affected?
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>@dynatrace Create a comprehensive incident report for the issues affecting 
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>my ai-chat-service-{YOUR_ATTENDEE_ID} service. Include:
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>- Timeline of when errors started
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>- Affected components and their relationships
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>- Error counts by type
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>- Recommended severity level
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>@dynatrace Generate a DQL query for a dashboard tile that shows:
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>- Error rate over time for my ai-chat-service-{YOUR_ATTENDEE_ID} service
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>- Breakdown by error_code
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>- 5-minute time buckets for the last hour
+</span></code></pre></div>
 <hr />
 <h2 id="step-7-mcp-best-practices">Step 7: MCP Best Practices<a class="headerlink" href="#step-7-mcp-best-practices" title="Permanent link">#</a></h2>
 <p><strong>Good prompts are specific:</strong></p>
@@ -2011,14 +2016,14 @@ my ai-chat-service-{YOUR_ATTENDEE_ID} service. Include:
 </ol>
 <hr />
 <h2 id="checkpoint">Checkpoint<a class="headerlink" href="#checkpoint" title="Permanent link">#</a></h2>
-<ul>
-<li>[ ] Updated <code>YOUR_TENANT_ID</code> in <code>.vscode/mcp.json</code></li>
-<li>[ ] Reloaded VS Code after saving the configuration</li>
-<li>[ ] Can query Dynatrace using <code>@dynatrace</code> in Copilot Chat</li>
-<li>[ ] Retrieved information about your AI service</li>
-<li>[ ] Used 🐛 Simulate Errors to generate test errors</li>
-<li>[ ] Investigated errors using MCP without leaving your IDE</li>
-<li>[ ] Explored Dynatrace Intelligence agentic workflows</li>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Updated <code>YOUR_TENANT_ID</code> in <code>.vscode/mcp.json</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Reloaded VS Code after saving the configuration</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Can query Dynatrace using <code>@dynatrace</code> in Copilot Chat</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Retrieved information about your AI service</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Used 🐛 Simulate Errors to generate test errors</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Investigated errors using MCP without leaving your IDE</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Explored Dynatrace Intelligence agentic workflows</li>
 </ul>
 <hr />
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">#</a></h2>
@@ -2058,6 +2063,8 @@ my ai-chat-service-{YOUR_ATTENDEE_ID} service. Include:
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -2070,6 +2077,46 @@ my ai-chat-service-{YOUR_ATTENDEE_ID} service. Include:
       </main>
       
         <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../lab2-explore-traces/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Lab 2: Explore Traces">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Lab 2: Explore Traces
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../lab4-automation/" class="md-footer__link md-footer__link--next" aria-label="Next: Lab 4: Workflow Automation">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Lab 4: Workflow Automation
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -2096,11 +2143,22 @@ my ai-chat-service-{YOUR_ATTENDEE_ID} service. Include:
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.code.annotate", "navigation.instant", "navigation.tracking", "navigation.top", "search.highlight", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.code.annotate", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.top", "navigation.sections", "navigation.footer", "toc.follow", "search.highlight", "search.suggest", "search.share"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
+  
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof dynatrace !== 'undefined') {
+        dynatrace.sendBizEvent('page_load', {'page': "Lab 3: Dynatrace MCP"});
+      }
+    });
+  </script>
+  
+
   </body>
 </html>

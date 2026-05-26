@@ -175,6 +175,11 @@
       </label>
       <nav class="md-search__options" aria-label="Search">
         
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
@@ -1043,71 +1048,71 @@
 <h2 id="step-1-install-openllmetry-dependencies">Step 1: Install OpenLLMetry Dependencies<a class="headerlink" href="#step-1-install-openllmetry-dependencies" title="Permanent link">#</a></h2>
 <h3 id="11-update-requirementstxt">1.1 Update requirements.txt<a class="headerlink" href="#11-update-requirementstxt" title="Permanent link">#</a></h3>
 <p>Open <code>app/requirements.txt</code> and <strong>uncomment</strong> the following lines (remove the <code>#</code>):</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Before (commented out):</span>
-<span class="c1"># traceloop-sdk==0.50.1</span>
-<span class="c1"># opentelemetry-exporter-otlp==1.39.1</span>
-
-<span class="c1"># After (uncommented):</span>
-<span class="n">traceloop</span><span class="o">-</span><span class="n">sdk</span><span class="o">==</span><span class="mf">0.50.1</span>
-<span class="n">opentelemetry</span><span class="o">-</span><span class="n">exporter</span><span class="o">-</span><span class="n">otlp</span><span class="o">==</span><span class="mf">1.39.1</span>
-</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Before (commented out):</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># traceloop-sdk==0.50.1</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># opentelemetry-exporter-otlp==1.39.1</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># After (uncommented):</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">traceloop</span><span class="o">-</span><span class="n">sdk</span><span class="o">==</span><span class="mf">0.50.1</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">opentelemetry</span><span class="o">-</span><span class="n">exporter</span><span class="o">-</span><span class="n">otlp</span><span class="o">==</span><span class="mf">1.39.1</span>
+</span></code></pre></div>
 <h3 id="12-install-the-dependencies">1.2 Install the Dependencies<a class="headerlink" href="#12-install-the-dependencies" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>traceloop-sdk<span class="w"> </span>opentelemetry-exporter-otlp<span class="w"> </span>opentelemetry-instrumentation-fastapi
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>traceloop-sdk<span class="w"> </span>opentelemetry-exporter-otlp<span class="w"> </span>opentelemetry-instrumentation-fastapi
+</span></code></pre></div>
 <p>Expected output:</p>
-<div class="highlight"><pre><span></span><code>Successfully installed traceloop-sdk-0.50.1 opentelemetry-exporter-otlp-1.39.1 ...
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Successfully installed traceloop-sdk-0.50.1 opentelemetry-exporter-otlp-1.39.1 ...
+</span></code></pre></div>
 <hr />
 <h2 id="step-2-add-dynatrace-instrumentation">Step 2: Add Dynatrace Instrumentation<a class="headerlink" href="#step-2-add-dynatrace-instrumentation" title="Permanent link">#</a></h2>
 <h3 id="21-open-the-main-application-file">2.1 Open the Main Application File<a class="headerlink" href="#21-open-the-main-application-file" title="Permanent link">#</a></h3>
 <p>Open <code>app/main.py</code> in VS Code.</p>
 <h3 id="22-locate-the-instrumentation-section">2.2 Locate the Instrumentation Section<a class="headerlink" href="#22-locate-the-instrumentation-section" title="Permanent link">#</a></h3>
 <p>Find this comment block near the top of the file:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># ╔══════════════════════════════════════════════════════════════════════════╗</span>
-<span class="c1"># ║  🔬 LAB 1: INSTRUMENTATION SECTION                                        ║</span>
-<span class="c1"># ║                                                                           ║</span>
-<span class="c1"># ║  TODO: Add Dynatrace OpenLLMetry instrumentation here                    ║</span>
-<span class="c1"># ╚══════════════════════════════════════════════════════════════════════════╝</span>
-
-<span class="c1"># ---&gt; ADD YOUR INSTRUMENTATION CODE HERE &lt;---</span>
-</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># ╔══════════════════════════════════════════════════════════════════════════╗</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># ║  🔬 LAB 1: INSTRUMENTATION SECTION                                        ║</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># ║                                                                           ║</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># ║  TODO: Add Dynatrace OpenLLMetry instrumentation here                    ║</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># ╚══════════════════════════════════════════════════════════════════════════╝</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># ---&gt; ADD YOUR INSTRUMENTATION CODE HERE &lt;---</span>
+</span></code></pre></div>
 <h3 id="23-add-the-instrumentation-code">2.3 Add the Instrumentation Code<a class="headerlink" href="#23-add-the-instrumentation-code" title="Permanent link">#</a></h3>
 <p>Replace <code># ---&gt; ADD YOUR INSTRUMENTATION CODE HERE &lt;---</code> with:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">traceloop.sdk</span><span class="w"> </span><span class="kn">import</span> <span class="n">Traceloop</span>
-
-<span class="c1"># Get Dynatrace configuration from environment</span>
-<span class="n">ATTENDEE_ID</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ATTENDEE_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;workshop-attendee&quot;</span><span class="p">)</span>
-<span class="n">DT_ENDPOINT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DT_ENDPOINT&quot;</span><span class="p">)</span>
-<span class="n">DT_API_TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DT_API_TOKEN&quot;</span><span class="p">)</span>
-
-<span class="c1"># ⚠️ IMPORTANT: Dynatrace requires Delta temporality for metrics</span>
-<span class="c1"># This MUST be set before Traceloop.init()</span>
-<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;delta&quot;</span>
-
-<span class="c1"># Initialize Traceloop with Dynatrace endpoint</span>
-<span class="k">if</span> <span class="n">DT_ENDPOINT</span> <span class="ow">and</span> <span class="n">DT_API_TOKEN</span><span class="p">:</span>
-    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Api-Token </span><span class="si">{</span><span class="n">DT_API_TOKEN</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
-    <span class="n">Traceloop</span><span class="o">.</span><span class="n">init</span><span class="p">(</span>
-        <span class="n">app_name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;ai-chat-service-</span><span class="si">{</span><span class="n">ATTENDEE_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="n">api_endpoint</span><span class="o">=</span><span class="n">DT_ENDPOINT</span><span class="p">,</span>
-        <span class="n">headers</span><span class="o">=</span><span class="n">headers</span>
-    <span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Traceloop initialized - sending traces to Dynatrace&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Service Name: ai-chat-service-</span><span class="si">{</span><span class="n">ATTENDEE_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Endpoint: </span><span class="si">{</span><span class="n">DT_ENDPOINT</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⚠️  Dynatrace configuration not found. Traceloop not initialized.&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Please set DT_ENDPOINT and DT_API_TOKEN in your .env file&quot;</span><span class="p">)</span>
-</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">traceloop.sdk</span><span class="w"> </span><span class="kn">import</span> <span class="n">Traceloop</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># Get Dynatrace configuration from environment</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">ATTENDEE_ID</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ATTENDEE_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;workshop-attendee&quot;</span><span class="p">)</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">DT_ENDPOINT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DT_ENDPOINT&quot;</span><span class="p">)</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">DT_API_TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DT_API_TOKEN&quot;</span><span class="p">)</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1"># ⚠️ IMPORTANT: Dynatrace requires Delta temporality for metrics</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="c1"># This MUST be set before Traceloop.init()</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;delta&quot;</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="c1"># Initialize Traceloop with Dynatrace endpoint</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="k">if</span> <span class="n">DT_ENDPOINT</span> <span class="ow">and</span> <span class="n">DT_API_TOKEN</span><span class="p">:</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Api-Token </span><span class="si">{</span><span class="n">DT_API_TOKEN</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>    <span class="n">Traceloop</span><span class="o">.</span><span class="n">init</span><span class="p">(</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>        <span class="n">app_name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;ai-chat-service-</span><span class="si">{</span><span class="n">ATTENDEE_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>        <span class="n">api_endpoint</span><span class="o">=</span><span class="n">DT_ENDPOINT</span><span class="p">,</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>        <span class="n">headers</span><span class="o">=</span><span class="n">headers</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>    <span class="p">)</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Traceloop initialized - sending traces to Dynatrace&quot;</span><span class="p">)</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Service Name: ai-chat-service-</span><span class="si">{</span><span class="n">ATTENDEE_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Endpoint: </span><span class="si">{</span><span class="n">DT_ENDPOINT</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="k">else</span><span class="p">:</span>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⚠️  Dynatrace configuration not found. Traceloop not initialized.&quot;</span><span class="p">)</span>
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Please set DT_ENDPOINT and DT_API_TOKEN in your .env file&quot;</span><span class="p">)</span>
+</span></code></pre></div>
 <hr />
 <h2 id="step-3-understanding-the-code">Step 3: Understanding the Code<a class="headerlink" href="#step-3-understanding-the-code" title="Permanent link">#</a></h2>
 <h3 id="31-import-statement">3.1 Import Statement<a class="headerlink" href="#31-import-statement" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">traceloop.sdk</span><span class="w"> </span><span class="kn">import</span> <span class="n">Traceloop</span>
-</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">traceloop.sdk</span><span class="w"> </span><span class="kn">import</span> <span class="n">Traceloop</span>
+</span></code></pre></div>
 <p>The Traceloop SDK provides automatic instrumentation for LLM frameworks like OpenAI, LangChain, and more.</p>
 <h3 id="32-delta-temporality-setting">3.2 Delta Temporality Setting<a class="headerlink" href="#32-delta-temporality-setting" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;delta&quot;</span>
-</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;delta&quot;</span>
+</span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Critical for Dynatrace</p>
 <p>Dynatrace expects metrics with <strong>Delta temporality</strong>, not Cumulative. This environment variable must be set <strong>before</strong> initializing Traceloop.</p>
@@ -1138,13 +1143,13 @@
 <hr />
 <h2 id="step-4-restart-the-application">Step 4: Restart the Application<a class="headerlink" href="#step-4-restart-the-application" title="Permanent link">#</a></h2>
 <p>Stop if running (<code>Ctrl+C</code>), then:</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>app/main.py
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>python<span class="w"> </span>app/main.py
+</span></code></pre></div>
 <p>You should see:</p>
-<div class="highlight"><pre><span></span><code>✅ Traceloop initialized - sending traces to Dynatrace
-   Service Name: ai-chat-service-{YOUR_ATTENDEE_ID}
-   Endpoint: https://abc12345.live.dynatrace.com/api/v2/otlp
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>✅ Traceloop initialized - sending traces to Dynatrace
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>   Service Name: ai-chat-service-{YOUR_ATTENDEE_ID}
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>   Endpoint: https://abc12345.live.dynatrace.com/api/v2/otlp
+</span></code></pre></div>
 <hr />
 <h2 id="step-5-generate-test-traffic">Step 5: Generate Test Traffic<a class="headerlink" href="#step-5-generate-test-traffic" title="Permanent link">#</a></h2>
 <h3 id="51-open-the-chat-ui">5.1 Open the Chat UI<a class="headerlink" href="#51-open-the-chat-ui" title="Permanent link">#</a></h3>
@@ -1196,18 +1201,18 @@
 </table>
 <hr />
 <h2 id="checkpoint">Checkpoint<a class="headerlink" href="#checkpoint" title="Permanent link">#</a></h2>
-<ul>
-<li>[ ] <code>traceloop-sdk</code> and <code>opentelemetry-exporter-otlp</code> packages installed</li>
-<li>[ ] Instrumentation code added to <code>main.py</code></li>
-<li>[ ] Application starts with "✅ Traceloop initialized" message</li>
-<li>[ ] You've sent at least 3-4 chat requests</li>
-<li>[ ] No errors in the terminal</li>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>traceloop-sdk</code> and <code>opentelemetry-exporter-otlp</code> packages installed</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Instrumentation code added to <code>main.py</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Application starts with "✅ Traceloop initialized" message</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> You've sent at least 3-4 chat requests</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> No errors in the terminal</li>
 </ul>
 <hr />
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">#</a></h2>
 <p><strong>"Module traceloop not found"</strong></p>
-<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>traceloop-sdk<span class="w"> </span>opentelemetry-exporter-otlp
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>pip<span class="w"> </span>install<span class="w"> </span>traceloop-sdk<span class="w"> </span>opentelemetry-exporter-otlp
+</span></code></pre></div>
 <p><strong>"401 Unauthorized" in logs</strong> — Check the token in <code>.env</code> has <code>openTelemetryTrace.ingest</code> permission.</p>
 <p><strong>"Traceloop not initialized"</strong> — Check <code>.env</code> has both <code>DT_ENDPOINT</code> and <code>DT_API_TOKEN</code>.</p>
 <hr />
@@ -1229,6 +1234,8 @@
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -1241,6 +1248,46 @@
       </main>
       
         <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../lab0-setup/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Lab 0: Environment Setup">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Lab 0: Environment Setup
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../lab2-explore-traces/" class="md-footer__link md-footer__link--next" aria-label="Next: Lab 2: Explore Traces">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Lab 2: Explore Traces
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -1267,11 +1314,22 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.code.annotate", "navigation.instant", "navigation.tracking", "navigation.top", "search.highlight", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.code.annotate", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.top", "navigation.sections", "navigation.footer", "toc.follow", "search.highlight", "search.suggest", "search.share"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
+  
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof dynatrace !== 'undefined') {
+        dynatrace.sendBizEvent('page_load', {'page': "Lab 1: AI Instrumentation"});
+      }
+    });
+  </script>
+  
+
   </body>
 </html>
