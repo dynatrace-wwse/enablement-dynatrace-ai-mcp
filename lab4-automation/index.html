@@ -1236,7 +1236,7 @@
 <li>Enter this query:</li>
 </ol>
 <div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">fetch</span><span class="w"> </span><span class="n">spans</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="o">|</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="ss">&quot;ai-chat-service-{YOUR_ATTENDEE_ID}&quot;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="o">|</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="ss">"ai-chat-service-{YOUR_ATTENDEE_ID}"</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="o">|</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="n">isNotNull</span><span class="p">(</span><span class="n">gen_ai</span><span class="p">.</span><span class="k">usage</span><span class="p">.</span><span class="n">input_tokens</span><span class="p">)</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="o">|</span><span class="w"> </span><span class="n">summarize</span><span class="w"> </span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="n">total_input_tokens</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sum</span><span class="p">(</span><span class="n">gen_ai</span><span class="p">.</span><span class="k">usage</span><span class="p">.</span><span class="n">input_tokens</span><span class="p">),</span>
@@ -1253,16 +1253,16 @@
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Token usage exceeded threshold!
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>📊 Stats:
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>• Total Tokens: {{ result(&quot;get_token_usage&quot;).records[0].total_tokens }}
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>• Input Tokens: {{ result(&quot;get_token_usage&quot;).records[0].total_input_tokens }}
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>• Output Tokens: {{ result(&quot;get_token_usage&quot;).records[0].total_output_tokens }}
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>• Estimated Cost: ${{ result(&quot;get_token_usage&quot;).records[0].estimated_cost_usd | round(4) }}
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>• Request Count: {{ result(&quot;get_token_usage&quot;).records[0].request_count }}
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>• Total Tokens: {{ result("get_token_usage").records[0].total_tokens }}
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>• Input Tokens: {{ result("get_token_usage").records[0].total_input_tokens }}
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>• Output Tokens: {{ result("get_token_usage").records[0].total_output_tokens }}
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>• Estimated Cost: ${{ result("get_token_usage").records[0].estimated_cost_usd | round(4) }}
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>• Request Count: {{ result("get_token_usage").records[0].request_count }}
 </span></code></pre></div></p>
 <h4 id="25-add-a-condition">2.5 Add a Condition<a class="headerlink" href="#25-add-a-condition" title="Permanent link">#</a></h4>
 <p>Select <strong>Condition</strong> and set:</p>
 <p _="%" endraw="endraw">{% raw %}
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>{{ result(&quot;get_token_usage&quot;).records[0].total_tokens &gt; 1000 }}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>{{ result("get_token_usage").records[0].total_tokens &gt; 1000 }}
 </span></code></pre></div></p>
 <p>Adjust threshold based on your expected usage.</p>
 <h4 id="26-save-and-run">2.6 Save and Run<a class="headerlink" href="#26-save-and-run" title="Permanent link">#</a></h4>
@@ -1287,7 +1287,7 @@
 <h4 id="33-add-comprehensive-dql-query">3.3 Add Comprehensive DQL Query<a class="headerlink" href="#33-add-comprehensive-dql-query" title="Permanent link">#</a></h4>
 <p>Add an <strong>Execute DQL query</strong> task named <code>usage</code>:</p>
 <div class="language-sql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">fetch</span><span class="w"> </span><span class="n">spans</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="o">|</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="ss">&quot;ai-chat-service-{YOUR_ATTENDEE_ID}&quot;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="o">|</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="ss">"ai-chat-service-{YOUR_ATTENDEE_ID}"</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="o">|</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="n">isNotNull</span><span class="p">(</span><span class="n">gen_ai</span><span class="p">.</span><span class="k">usage</span><span class="p">.</span><span class="n">input_tokens</span><span class="p">)</span>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="o">|</span><span class="w"> </span><span class="n">summarize</span><span class="w"> </span>
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="n">total_input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sum</span><span class="p">(</span><span class="n">gen_ai</span><span class="p">.</span><span class="k">usage</span><span class="p">.</span><span class="n">input_tokens</span><span class="p">),</span>
@@ -1303,7 +1303,7 @@
 <h4 id="34-add-summary-query">3.4 Add Summary Query<a class="headerlink" href="#34-add-summary-query" title="Permanent link">#</a></h4>
 <p>Add another <strong>Execute DQL query</strong> task named <code>cost</code>:</p>
 <div class="language-sql highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">fetch</span><span class="w"> </span><span class="n">spans</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="o">|</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="ss">&quot;ai-chat-service-{YOUR_ATTENDEE_ID}&quot;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="o">|</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="ss">"ai-chat-service-{YOUR_ATTENDEE_ID}"</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="o">|</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="n">isNotNull</span><span class="p">(</span><span class="n">gen_ai</span><span class="p">.</span><span class="k">usage</span><span class="p">.</span><span class="n">input_tokens</span><span class="p">)</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="o">|</span><span class="w"> </span><span class="n">summarize</span><span class="w"> </span>
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="n">total_input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sum</span><span class="p">(</span><span class="n">gen_ai</span><span class="p">.</span><span class="k">usage</span><span class="p">.</span><span class="n">input_tokens</span><span class="p">),</span>
@@ -1321,16 +1321,16 @@
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>═══════════════════════════════════════
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>💰 COST SUMMARY
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>═══════════════════════════════════════
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>• Today&#39;s Estimated Cost: ${{ result(&quot;cost&quot;).records[0].estimated_daily_cost | round(4) }}
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>• Projected Monthly Cost: ${{ result(&quot;cost&quot;).records[0].projected_monthly_cost | round(2) }}
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>• Today's Estimated Cost: ${{ result("cost").records[0].estimated_daily_cost | round(4) }}
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>• Projected Monthly Cost: ${{ result("cost").records[0].projected_monthly_cost | round(2) }}
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
 </span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>═══════════════════════════════════════
 </span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>📈 USAGE METRICS
 </span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>═══════════════════════════════════════
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>• Total Requests: {{ result(&quot;usage&quot;).records | map(attribute=&quot;request_count&quot;) | map(&quot;int&quot;) | sum }}
-</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>• Total Input Tokens: {{ result(&quot;usage&quot;).records | map(attribute=&quot;total_input&quot;) | map(&quot;int&quot;) | sum }}
-</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>• Total Output Tokens: {{ result(&quot;usage&quot;).records | map(attribute=&quot;total_output&quot;) | map(&quot;int&quot;) | sum }}
-</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>• Avg Response Time: {{ result(&quot;cost&quot;).records[0].avg_latency_ms }}ms
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>• Total Requests: {{ result("usage").records | map(attribute="request_count") | map("int") | sum }}
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>• Total Input Tokens: {{ result("usage").records | map(attribute="total_input") | map("int") | sum }}
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>• Total Output Tokens: {{ result("usage").records | map(attribute="total_output") | map("int") | sum }}
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>• Avg Response Time: {{ result("cost").records[0].avg_latency_ms }}ms
 </span></code></pre></div></p>
 <h4 id="36-save-and-run">3.6 Save and Run<a class="headerlink" href="#36-save-and-run" title="Permanent link">#</a></h4>
 <ol>
