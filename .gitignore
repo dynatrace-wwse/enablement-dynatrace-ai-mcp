@@ -139,3 +139,6 @@ docs/stylesheets/extra.css
 
 # Temporary Dockerfile from cache for local builds
 Dockerfile.framework
+
+
+docs/javascripts/mermaid.min.js
