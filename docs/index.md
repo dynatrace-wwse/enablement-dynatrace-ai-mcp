@@ -1,3 +1,12 @@
+---
+description: Instrument a Python RAG app with OpenLLMetry and explore its prompts, completions and token usage as traces in Dynatrace. Then query observability data from your IDE with the Dynatrace MCP server and build workflows for AI cost alerts and daily summaries.
+tags:
+  - classic
+  - ai
+  - llm
+  - mcp
+---
+
 # Dynatrace AI Observability & MCP Workshop
 
 !!! warning "Not yet migrated to the Dynatrace Enablement App"
