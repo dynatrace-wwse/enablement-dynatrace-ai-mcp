@@ -1,7 +1,7 @@
 {
   "name": "Dynatrace AI Observability & MCP Workshop",
   // Pulling the image from Dockerhub, runs on AMD64 and ARM64.
-  "image": "shinojosa/dt-enablement:v1.2",
+  "image": "shinojosa/dt-enablement:v1.3.2",
   // When running locally, pass secrets via runArgs "--env-file",".devcontainer/.env"
   "runArgs": ["--init", "--privileged", "--network=host"],
   "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
