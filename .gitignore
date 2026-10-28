@@ -142,3 +142,9 @@ Dockerfile.framework
 
 
 docs/javascripts/mermaid.min.js
+
+
+# No generated file
+**/gen/*/*.yaml
+**/gen/**.yaml
+**-gen.yaml
